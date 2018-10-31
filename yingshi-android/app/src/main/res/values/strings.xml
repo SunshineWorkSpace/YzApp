@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">影者</string>
+    <string name="network_error">网络访问异常，请检查您的网络</string>
+    <string name="http_error">非法请求地址</string>
+    <string name="text_server_connect_fail">服务器连接失败，请稍后重试</string>
+    <string name="net_timeout">网络连接超时</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="title_activity_startup_guide">StartupGuideActivity</string>
+    <string name="login_tips">影视制作行业的支付宝\n有态度的影视商业协作APP\n让行业中的不确定减少\n让影视艺人回归创作\n让影视商人回归市场</string>
+    <string name="login">登录</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="please_get_verification_code">请输入验证码</string>
+    <string name="password_format_error">密码为空或少于6位</string>
+    <string name="phone_format_error">请输入正确的手机号码</string>
+    <string name="please_read_agreement_before">请先阅读《影者app协议》</string>
+    <string name="text_request">请求中...</string>
+    <string name="title_activity_startup_login_account">StartupLoginAccountActivity</string>
+    <string name="text_logining">正在登录...</string>
+    <string name="data_load_failed">数据加载失败</string>
+    <string name="camera_tips">请先开启相机拍照权限</string>
+    <string name="title_activity_main_invite">MainInviteActivity</string>
+    <string name="title_activity_main_search">MainSearchActivity</string>
+    <string name="title_activity_main_publish">分享编辑</string>
+    <string name="title_activity_main_settings">个人详情页</string>
+    <string name="title_activity_main_comment">背书点评</string>
+    <string name="text_submiting">提交中...</string>
+    <string name="text_request_auth">请求授权中...</string>
+    <string name="title_activity_main_details">MainDetailsActivity</string>
+    <string name="text_loading">加载中...</string>
+    <string name="tips_not_wifi">You are currently using the mobile network, the player will continue to consume traffic</string>
+    <string name="tips_not_wifi_confirm">Resume</string>
+    <string name="tips_not_wifi_cancel">Stop play</string>
+    <string name="no_url">No mUrl</string>
+    <string name="title_activity_main_details_book">预订档期</string>
+    <string name="previous">Go to previous</string>
+    <string name="next">Go to next</string>
+    <string name="calendar">Calendar</string>
+    <string name="title_activity_user_info">UserInfoActivity</string>
+    <string name="title_activity_main_common">MainCommonActivity</string>
+    <string name="title_activity_main_insurance">MainInsuranceActivity</string>
+    <string name="title_activity_main_insurance_details">MainInsuranceDetailsActivity</string>
+    <string name="title_activity_main_about">关于影者</string>
+    <string name="waiting">请稍后...</string>
+    <string name="title_activity_order_details">订单加载中...</string>
+    <string name="text_pic_upload">图片上传中...</string>
+    <string name="title_activity_main_publish_preview">发布预览</string>
+    <string name="text_is_upload">正在上传作品...</string>
+    <string name="text_is_upload_video">准备上传视频...</string>
+    <string name="title_activity_main_details_change">修改作品</string>
+    <string name="title_activity_main_details_change_price">修改该作品价格</string>
+    <array name="text_feel_status">
+        <item>男</item>
+        <item>女</item>
+    </array>
+    <string name="title_activity_main_authentication">个人详细资料</string>
+    <string name="title_activity_main_authentication_info">认证资料填写</string>
+    <string name="title_activity_main_authentication_money">支付订单</string>
+    <string name="title_activity_main_chat_list">我的消息</string>
+    <string name="title_activity_order_details_reset_date">档期修改</string>
+    <string name="title_activity_order_details_reset_price">订单资料-修改订单</string>
+    <string name="get_order_info">重新获取订单信息...</string>
+    <string name="title_activity_main_video_full_screen">MainVideoFullScreenActivity</string>
+    <string name="title_activity_main_video_player">MainVideoPlayerActivity</string>
+    <string name="title_activity_main_test">MainTestActivity</string>
+    <string name="activity_user_bind_phone_title">绑定手机号</string>
+    <string name="title_activity_user_authentication_select">认证方式</string>
+    <string name="activity_feedback_title">提交问题</string>
+    <string name="activity_company_info_set_title">资料修改列表</string>
+    <string name="activity_main_company_cover_title">作品封面修改</string>
+    <string name="title_activity_main_company_base_info">MainCompanyBaseInfo</string>
+    <string name="activity_main_company_base_info_title">修改企业资料</string>
+    <string name="title_activity_main_company_resume">详细简历</string>
+    <string name="title_activity_main_company_graduation">上传毕业证书</string>
+    <string name="title_activity_main_company_custon_url">作品集地址修改</string>
+    <string name="title_activity_user_info2">UserInfo2Activity</string>
+    <string name="title_activity_main_authentication_school">MainAuthenticationSchoolActivity
+    </string>
+    <string name="auth_school">学生认证</string>
+    <string name="activity_main_publish_lable_title">填写标签</string>
+    <string name="title_activity_main_publish_edit">修改编辑作品</string>
+
+</resources>

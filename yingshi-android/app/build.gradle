@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 21
+        applicationId "com.yingshixiezuovip.yingshi"
+        versionCode 24         //2018-3-22更新
+        versionName "2.0.4"  //2018-3-22更新
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "6787bcce26b2e4add64b1787", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'yingzhe'
+            keyPassword 'yingzhe#123456'
+            storeFile file('../yingzhe.jks')
+            storePassword 'yingzhe#123456'
+        }
+
+        debug {
+            keyAlias 'yingzhe'
+            keyPassword 'yingzhe#123456'
+            storeFile file('../yingzhe.jks')
+            storePassword 'yingzhe#123456'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+        lintOptions {
+            abortOnError false
+        }
+    }
+}
+
+build.doLast {
+    def today = new Date().format('M-d-hhmm');
+
+    copy{
+        from('build/outputs/apk')
+        into('build/outputs/apk')
+        include('app-release.apk')
+        rename('app-release.apk','app-release-' + today + '.apk')
+    }
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation files('libs/SocialSDK_Sina_Simplify.jar')
+    implementation files('libs/SocialSDK_WeChat_Simplify.jar')
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/umeng_social_tool.jar')
+    implementation files('libs/eventbus-2.4.0.jar')
+    implementation files('libs/alipaySingle-20170510.jar')
+    implementation project(':easeui')
+    implementation files('libs/universal-image-loader-1.9.4.jar')
+    implementation 'com.android.support:appcompat-v7:23.4.0'
+    implementation 'com.android.support:support-v4:23.4.0'
+    implementation 'com.android.support:recyclerview-v7:23.4.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.edmodo:cropper:1.0.1'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'cn.jiguang.sdk:jpush:+'
+    implementation 'cn.jiguang.sdk:jcore:+'
+    testCompile 'junit:junit:4.12'
+}

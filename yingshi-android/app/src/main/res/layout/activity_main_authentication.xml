@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EEEEEE"
+            android:gravity="center_vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="头像"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/auth_iv_head"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/icon_auth_profile" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="性别"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/auth_tv_sex"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的性别"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="职业"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/auth_tv_position"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的职业"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="毕业院校"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/auth_tv_school"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的毕业院校"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="当前城市"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/auth_tv_city"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的当前城市"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="出生日"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/auth_tv_birth"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的生日"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="电话"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/auth_tv_phone"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的电话"
+                android:inputType="phone"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="实名"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/auth_tv_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/auth_comm_shape"
+                android:gravity="center_vertical"
+                android:hint="请输入你的姓名"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/line_color"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="可以上传最多三张个人照片(可选填)"
+            android:textColor="@color/colorGray"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/auth_iv_photo_1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_auth_profile" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/auth_iv_photo_2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_auth_profile" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/auth_iv_photo_3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_auth_profile" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

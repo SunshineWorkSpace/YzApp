@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loadingview_bg_shape"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/common_et_input"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/comment_edittext_shape"
+        android:gravity="top"
+        android:hint="输入你对该用户的背书语录..."
+        android:lineSpacingMultiplier="1.2"
+        android:padding="10dp"
+        android:textColorHint="#c7c7c7"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/common_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/comment_btn_seleteor"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/colorWhite"
+        android:textSize="14dp" />
+</LinearLayout>

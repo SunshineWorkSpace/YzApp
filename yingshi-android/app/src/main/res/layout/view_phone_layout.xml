@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/loadingview_bg_shape"
+        android:orientation="vertical">
+
+
+        <View
+            android:id="@+id/dialog_item4_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#d2d2d2"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/dialog_item1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text="显示信息"
+            android:textColor="@color/line_color"
+            android:textSize="14dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#d2d2d2" />
+
+        <TextView
+            android:id="@+id/dialog_item2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="立即拨打"
+            android:textColor="@color/colorRed"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_item3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/loadingview_bg_shape"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/colorBlue"
+        android:textSize="16dp" />
+</LinearLayout>

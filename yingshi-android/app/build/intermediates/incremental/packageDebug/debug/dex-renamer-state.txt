@@ -1,0 +1,4 @@
+#Wed Oct 31 17:15:00 CST 2018
+base.0=/Users/sunshina/Documents/杂/项目/yingzhe_android/yingshi-android/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

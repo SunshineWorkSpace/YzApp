@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView
+            android:id="@+id/search_iv_head"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_head"
+            app:riv_oval="true" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/search_tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:text="RESMIC"
+                android:textColor="@color/colorGray"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/search_tv_position"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:lineSpacingMultiplier="1.2"
+                android:text="RESMIC"
+                android:textColor="@color/colorGray"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/search_tv_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:text="RESMIC"
+                android:textColor="@color/colorOrange"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="15dp">
+
+            <CheckBox
+                android:id="@+id/search_cb_follow"
+                style="@null"
+                android:layout_width="70dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/home_item_top_shape"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="+关注"
+                android:textColor="@drawable/follow_text_selector"
+                android:textSize="14dp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_color" />
+</LinearLayout>

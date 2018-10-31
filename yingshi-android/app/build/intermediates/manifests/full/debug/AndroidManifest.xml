@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yingshixiezuovip.yingshi"
+    android:versionCode="24"
+    android:versionName="2.0.4" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="21" />
+    >
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <permission
+        android:name="com.yingshixiezuovip.yingshi.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.yingshixiezuovip.yingshi.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- Optional for location -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <application
+        android:name="com.yingshixiezuovip.yingshi.base.YingApplication"
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:soundEffectsEnabled="false"
+        android:supportsRtl="true"
+        android:testOnly="true"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="590bf2ec4544cb71fe00177d" />
+
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="cftvc.com"
+                    android:scheme="comeyzapp" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.StartupActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.StartupLoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.StartupLoginAccountActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_startup_login_account" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.WebViewActivity"
+            android:label="@string/title_activity_startup_login_account" />
+        <activity android:name="com.yingshixiezuovip.yingshi.StartupFindpwActivity" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainInviteActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_invite" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainSearchHistoryActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_search" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainPublishActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainSettingsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_settings" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCommentActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_settings" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.WBShareActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainDetailsBookActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_details_book" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.UserInfoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_user_info" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCommonActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainInsuranceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_insurance" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainInsuranceDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_insurance_details" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.quote.media.activities.MediaPickerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainAboutActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_about" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.OrderDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_order_details" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainPublishPreviewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_publish_preview" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainSearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_search" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainDetailsChangeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_details_change" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainDetailsChangePriceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.UserInfoSettingsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainAuthenticationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_authentication" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainAuthenticationInfoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_authentication_info" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainAuthenticationMoneyActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_authentication_money"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.wxapi.WXPayEntryActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainChatListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainChatListDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_chat_list" />
+
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:value="1155170321115168#shadowapp" />
+
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.OrderDetailsResetDateActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_order_details_reset_date" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.OrderDetailsResetPriceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_order_details_reset_price" />
+        <activity android:name="com.yingshixiezuovip.yingshi.MainDetailsCommentActivity" />
+        <activity android:name="com.yingshixiezuovip.yingshi.UserBindPhoneActivity" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.UserAuthenticationSelectActivity"
+            android:label="@string/title_activity_user_authentication_select" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainAuthenticationCompanyActivity"
+            android:label="@string/title_activity_user_authentication_select" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainFeedbackActivity"
+            android:label="@string/activity_feedback_title" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCompanyInfoSetActivity"
+            android:label="@string/activity_feedback_title" />
+
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:process=":multiprocess" />
+
+        <receiver
+            android:name="com.yingshixiezuovip.yingshi.push.PushReciver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.yingshixiezuovip.yingshi" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.NoticeMangerActivity"
+            android:label="@string/activity_feedback_title"
+            android:launchMode="singleTask"
+            android:theme="@style/dialog_translucent" />
+        <activity android:name="com.yingshixiezuovip.yingshi.MainCompanyCoverActivity" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCompanyBaseInfoActivity"
+            android:label="@string/title_activity_main_company_base_info" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCompanyResumeActivity"
+            android:label="@string/title_activity_main_company_resume" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCompanyResumeEditActivity"
+            android:label="@string/title_activity_main_company_resume" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCompanyGraduationActivity"
+            android:label="@string/title_activity_main_company_graduation" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainCompanyCustomUrlActivity"
+            android:label="@string/title_activity_main_company_custon_url" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.UserInfo2Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_main_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.yingshixiezuovip.yingshi.MainAuthenticationSchoolActivity"
+            android:label="@string/title_activity_main_authentication_school" />
+        <activity android:name="com.yingshixiezuovip.yingshi.MainSchoolInfoSetActivity" />
+        <activity android:name="com.yingshixiezuovip.yingshi.MainPublishLableActivity" />
+        <activity android:name="com.yingshixiezuovip.yingshi.MainDetailsEditActivity" />
+        <!-- Rich push 核心功能 since 2.0.6 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle" /> <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.yingshixiezuovip.yingshi" />
+            </intent-filter>
+        </activity> <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.yingshixiezuovip.yingshi" />
+            </intent-filter>
+        </service> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter android:priority="1000" >
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+                <category android:name="com.yingshixiezuovip.yingshi" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" /> <!-- since 3.0.9 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.yingshixiezuovip.yingshi.DataProvider"
+            android:exported="false"
+            android:process=":pushcore" /> <!-- since 3.1.0 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DownloadProvider"
+            android:authorities="com.yingshixiezuovip.yingshi.DownloadProvider"
+            android:exported="true" /> <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="6787bcce26b2e4add64b1787" />
+    </application>
+
+</manifest>

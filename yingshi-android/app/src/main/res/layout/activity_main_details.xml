@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <com.yingshixiezuovip.yingshi.quote.pulltorefresh.PullToRefreshListView
+        android:id="@+id/detalis_image_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@color/colorWhite"
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/white"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:visibility="visible" />
+
+
+    <LinearLayout
+        android:id="@+id/lin_controller_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/black"
+        android:gravity="center_vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/details_btn_consult"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:src="@mipmap/icon_dangqi" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/details_btn_contact"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:src="@mipmap/icon_details_phone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/details_btn_book"
+            android:layout_width="167.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLanse"
+            android:gravity="center"
+            android:text="预定档期"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"/>
+    </LinearLayout>
+</LinearLayout>

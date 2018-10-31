@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/workedit_btn_reedit"
+        android:layout_width="180dp"
+        android:layout_height="35dp"
+        android:background="@color/colorLanse"
+        android:gravity="center"
+        android:text="修改作品"
+        android:textColor="@color/colorWhite"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/workedit_btn_delete"
+        android:layout_width="180dp"
+        android:layout_height="35dp"
+        android:background="@color/colorLanse"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="删除作品"
+        android:textColor="@color/colorWhite"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/workedit_btn_edit"
+        android:layout_width="180dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorLanse"
+        android:gravity="center"
+        android:text="修改该作品价格"
+        android:textColor="@color/colorWhite"
+        android:textSize="15dp" />
+</LinearLayout>

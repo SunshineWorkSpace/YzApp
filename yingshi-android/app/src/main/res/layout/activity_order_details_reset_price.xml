@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/line_color"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="订单"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/orderprice_tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.4"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="订单号：20123131231321\n下单账号：宝宝"
+            android:textColor="@color/colorBlack"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/orderprice_book_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.4"
+        android:lines="1"
+        android:text="预订档期：2017-02-13"
+        android:textColor="@color/colorGray"
+        android:textSize="14dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/line_color"
+            android:padding="3dp"
+            android:text="薪酬"
+            android:textColor="@color/colorGray"
+            android:textSize="14dp" />
+
+        <EditText
+            android:id="@+id/price_et_input"
+            android:layout_width="120dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/details_tv_shape"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:inputType="numberDecimal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/colorGray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="元 "
+            android:textColor="@color/colorGray"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/orderprice_btn_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_color"
+            android:padding="5dp"
+            android:text="修改"
+            android:textColor="@color/colorGray"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/orderprice_btn_submit"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/line_color"
+        android:gravity="center"
+        android:text="修改订单"
+        android:textColor="@color/colorGray"
+        android:textSize="13dp" />
+
+</LinearLayout>

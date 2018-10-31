@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="mcv_pager" type="id" />
+    <item name="publish_et_desc_0" type="id" />
+    <item name="publish_et_position_0" type="id" />
+    <item name="publish_btn_delete_0" type="id" />
+
+    <item name="publish_et_desc_1" type="id" />
+    <item name="publish_et_position_1" type="id" />
+    <item name="publish_btn_delete_1" type="id" />
+
+    <item name="publish_et_desc_2" type="id" />
+    <item name="publish_et_position_2" type="id" />
+    <item name="publish_btn_delete_2" type="id" />
+
+    <item name="publish_et_desc_3" type="id" />
+    <item name="publish_et_position_3" type="id" />
+    <item name="publish_btn_delete_3" type="id" />
+
+    <item name="publish_et_desc_4" type="id" />
+    <item name="publish_et_position_4" type="id" />
+    <item name="publish_btn_delete_4" type="id" />
+
+    <item name="publish_et_desc_5" type="id" />
+    <item name="publish_et_position_5" type="id" />
+    <item name="publish_btn_delete_5" type="id" />
+
+    <item name="publish_et_desc_6" type="id" />
+    <item name="publish_et_position_6" type="id" />
+    <item name="publish_btn_delete_6" type="id" />
+
+    <item name="publish_et_desc_7" type="id" />
+    <item name="publish_et_position_7" type="id" />
+    <item name="publish_btn_delete_7" type="id" />
+
+    <item name="publish_et_desc_8" type="id" />
+    <item name="publish_et_position_8" type="id" />
+    <item name="publish_btn_delete_8" type="id" />
+</resources>

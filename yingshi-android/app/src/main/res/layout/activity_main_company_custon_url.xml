@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改："
+        android:textColor="@color/colorRed"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/custom_tv_default"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="http:///www.baidu.com"
+            android:textColor="@color/colorRed"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/custom_et_url"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:background="@drawable/auth_comm_shape"
+            android:gravity="center_vertical"
+            android:inputType="textCapWords"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/line_color"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="原地址为："
+        android:textColor="@color/colorRed"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/custom_tv_old"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="http:///www.baidu.com"
+        android:textColor="@color/colorOrange"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="温馨提示：修改作品集地址只可修改一次"
+        android:textColor="@color/colorOrange"
+        android:textSize="14sp" />
+</LinearLayout>

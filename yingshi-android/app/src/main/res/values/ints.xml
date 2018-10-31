@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="font_sizes">
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>24</item>
+        <item>30</item>
+        <item>36</item>
+    </integer-array>
+    <string-array name="font_colors">
+        <item>#000000</item>
+        <item>#0A2993</item>
+        <item>#DA65FF</item>
+        <item>#878787</item>
+        <item>#6598C9</item>
+        <item>#F0C832</item>
+        <item>#67127C</item>
+        <item>#1B834F</item>
+        <item>#CF071D</item>
+        <item>#A37DCF</item>
+        <item>#A4C36C</item>
+        <item>#F4A987</item>
+    </string-array>
+</resources>

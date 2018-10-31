@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="#1D1D21">
+
+            <LinearLayout
+                android:id="@+id/main_btn_tab_0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/main_cb_0"
+                    style="@null"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_home_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_btn_tab_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/main_cb_1"
+                    style="@null"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_depart_selector"
+                    android:button="@null"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_btn_tab_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/main_cb_2"
+                    style="@null"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_recruit_selector"
+                    android:button="@null"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_btn_tab_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/main_cb_3"
+                    style="@null"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_notifi_selector"
+                    android:button="@null"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_btn_tab_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/main_cb_4"
+                    style="@null"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_user_selector"
+                    android:button="@null"
+                    android:clickable="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/main_guide_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA000000"
+        android:clickable="true"
+        android:soundEffectsEnabled="false"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/home_guide" />
+
+        <TextView
+            android:id="@+id/main_btn_know"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/guide_btn_shape"
+            android:gravity="center"
+            android:text="知道了"
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp"
+            android:visibility="visible" />
+    </FrameLayout>
+</FrameLayout>

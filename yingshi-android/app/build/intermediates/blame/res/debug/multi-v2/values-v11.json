@@ -1,0 +1,66 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/sunshina/Documents/杂/项目/yingzhe_android/yingshi-android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml",
+            "map": [
+                {
+                    "source": "/Users/sunshina/.gradle/caches/transforms-1/files-1.1/cropper-1.0.1.aar/4bd5bc2394bf60a8cc9c0de6fd2055d2/res/values-v11/values.xml",
+                    "from": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "162",
+                        "endLines": "8",
+                        "endColumns": "12",
+                        "endOffsets": "294"
+                    },
+                    "to": {
+                        "startLines": "5",
+                        "startColumns": "4",
+                        "startOffsets": "224",
+                        "endLines": "7",
+                        "endColumns": "12",
+                        "endOffsets": "356"
+                    }
+                },
+                {
+                    "source": "/Users/sunshina/.gradle/caches/transforms-1/files-1.1/appcompat-v7-24.2.1.aar/2c92e72c51cd3bec35db4f211d0e7dd6/res/values-v11/values-v11.xml",
+                    "from": {
+                        "startLines": "2,8,14,20,26,32,38,39,40,41,46,51,56,58,60,61,62,115,169",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,474,899,1327,1753,2180,2605,2694,2795,2898,3306,3726,4148,4255,4384,4455,4538,8469,12543",
+                        "endLines": "7,13,19,25,31,37,38,39,40,45,50,55,57,59,60,61,114,168,169",
+                        "endColumns": "12,12,12,12,12,12,88,100,102,12,12,12,12,12,70,82,12,12,90",
+                        "endOffsets": "469,894,1322,1748,2175,2600,2689,2790,2893,3301,3721,4143,4250,4379,4450,4533,8464,12538,12629"
+                    },
+                    "to": {
+                        "startLines": "8,14,20,26,32,38,44,45,46,47,52,57,62,64,66,67,68,121,175",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "361,780,1205,1633,2059,2486,2911,3000,3101,3204,3612,4032,4454,4561,4690,4761,4844,8775,12849",
+                        "endLines": "13,19,25,31,37,43,44,45,46,51,56,61,63,65,66,67,120,174,175",
+                        "endColumns": "12,12,12,12,12,12,88,100,102,12,12,12,12,12,70,82,12,12,90",
+                        "endOffsets": "775,1200,1628,2054,2481,2906,2995,3096,3199,3607,4027,4449,4556,4685,4756,4839,8770,12844,12935"
+                    }
+                },
+                {
+                    "source": "/Users/sunshina/Documents/杂/项目/yingzhe_android/yingshi-android/easeui/build/intermediates/bundles/debug/res/values-v11/values-v11.xml",
+                    "from": {
+                        "startLines": "2,5,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,224,399",
+                        "endLines": "4,7,8",
+                        "endColumns": "12,12,84",
+                        "endOffsets": "219,394,479"
+                    },
+                    "to": {
+                        "startLines": "2,176,179",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,12940,13115",
+                        "endLines": "4,178,179",
+                        "endColumns": "12,12,84",
+                        "endOffsets": "219,13110,13195"
+                    }
+                }
+            ]
+        }
+    ]
+}

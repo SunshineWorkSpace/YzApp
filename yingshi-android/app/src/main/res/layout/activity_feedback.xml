@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/feedback_et_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="请输入要提出的内容，客服人员在3个工作日内联系你，谢谢！"
+        android:lineSpacingMultiplier="1.2"
+        android:padding="15dp"
+        android:textColor="@color/colorGray"
+        android:textColorHint="@color/line_color"
+        android:textSize="14dp" />
+</LinearLayout>

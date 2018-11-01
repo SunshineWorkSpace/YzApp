@@ -47,6 +47,7 @@ public class ColorUtils {
         }
     }
 
+
     public static String str2Rgb(String color) {
         String redStr = color.substring(1, 3);
         String greenStr = color.substring(3, 5);

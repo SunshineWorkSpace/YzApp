@@ -326,9 +326,11 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 break;
             case R.id.tv_publish:
                 intent = new Intent(getActivity(), MainPublishActivity.class);
+                window.dismiss();
                 break;
             case R.id.tv_shop:
                 intent = new Intent(getActivity(), HomeShopPublishDetailActivity.class);
+                window.dismiss();
                 break;
             case R.id.pop_cancel:
                 window.dismiss();
@@ -345,7 +347,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
             loadPublish();
             return;
         }
-        if(mPublishIsOkModel.state.equals("1")){
+        if(mPublishIsOkModel.data.state.equals("1")){
             // 用于PopupWindow的View
             View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_home_publish, null, false);
             // 创建PopupWindow对象，其中：
@@ -444,7 +446,6 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                         mHomeTypes.addAll(mHomeTypeModel.data);
                         inflateData();
                     }
-                    loadPublish();
                 } else {
                     showMessage(R.string.data_load_failed);
                 }
@@ -470,9 +471,8 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
             case TASK_TYPE_ISPUBLISH:
                 mPublishIsOkModel=GsonUtil.fromJson(result.toString(),PublishIsOkModel.class);
                 if (mPublishIsOkModel != null) {
-                  /*  if (mPublishIsOkModel.state.equals("1")) {
-                        mHomeTypes.addAll(mHomeTypeModel.data);
-                    }*/
+                    if (mPublishIsOkModel.data.state.equals("1")) {
+                    }
                 } else {
                     showMessage(R.string.data_load_failed);
                 }

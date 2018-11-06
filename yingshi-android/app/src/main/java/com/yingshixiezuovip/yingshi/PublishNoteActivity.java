@@ -18,7 +18,7 @@ public class PublishNoteActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_shop_publish);
+        setContentView(R.layout.activity_home_publish_note);
         setActivityTitle("发布资料补充");
         ((TextView) findViewById(R.id.right_btn_name)).setText("提交");
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);

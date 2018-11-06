@@ -514,6 +514,7 @@ public class HttpUtils {
                 case TASK_TYPE_ISPUBLISH:
                     methodName = "/v2/isuploadindencard.spr";
                     break;
+
                 default:
                     break;
             }

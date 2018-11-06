@@ -1,5 +1,6 @@
 package com.yingshixiezuovip.yingshi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -124,7 +125,8 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
             showMessage("请输入详细地址");
             return;
         }
-
+        Intent it=new Intent(this,HomeShopPublishDetialNextActivitiy.class);
+        startActivity(it);
     }
 
     @Override

@@ -9,5 +9,9 @@ package com.yingshixiezuovip.yingshi.model;
  * 修改备注:
  */
 public class PublishIsOkModel {
-    public String state;
+    public PublishIsOnS data;
+
+    public static class PublishIsOnS {
+        public String state;
+    }
 }

@@ -18,7 +18,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <application
         android:name=".base.YingApplication"
         android:allowBackup="true"
@@ -300,8 +299,15 @@
             android:label="@string/title_activity_main_authentication_school" />
         <activity android:name=".MainSchoolInfoSetActivity" />
         <activity android:name=".MainPublishLableActivity"></activity>
-        <activity android:name=".MainDetailsEditActivity"></activity>
-        <activity android:name=".PublishNoteActivity"></activity>
+        <activity android:name=".MainDetailsEditActivity"
+            android:launchMode="singleTask"></activity>
+        <activity android:name=".PublishNoteActivity"
+            android:launchMode="singleTask"></activity>
+        <activity android:name=".HomeShopPublishDetialNextActivitiy"
+            android:launchMode="singleTask"></activity>
+        <activity android:name=".HomeShopPublishDetailEndActivity"
+            android:launchMode="singleTask"
+            ></activity>
 
     </application>
 

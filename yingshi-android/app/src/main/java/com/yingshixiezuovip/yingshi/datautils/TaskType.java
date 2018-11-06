@@ -93,4 +93,5 @@ public enum TaskType {
     TASK_TYPE_DETAILS_RESUME,///v1/user/v1resumedetail.spr
     TASK_TYPE_UPDATE_USER_INFO_NEW,//user/update.spr
     TASK_TYPE_ISPUBLISH,//v2/isuploadindencard.spr
+
 }

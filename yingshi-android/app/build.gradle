@@ -96,4 +96,13 @@ dependencies {
     implementation 'cn.jiguang.sdk:jpush:+'
     implementation 'cn.jiguang.sdk:jcore:+'
     testCompile 'junit:junit:4.12'
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.squareup.okio:okio:1.9.0'
+    //相册
+    implementation 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    implementation 'io.reactivex:rxjava:1.1.9'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    //权限管理
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
 }

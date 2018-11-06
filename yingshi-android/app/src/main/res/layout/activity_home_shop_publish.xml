@@ -77,6 +77,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <EditText
+            android:inputType="number"
             android:id="@+id/et_single_price"
             android:layout_marginRight="20dp"
             android:gravity="right"
@@ -124,6 +125,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <EditText
+            android:inputType="number"
             android:id="@+id/et_num"
             android:layout_marginRight="20dp"
             android:gravity="right"
@@ -264,6 +266,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <EditText
+            android:inputType="number"
             android:id="@+id/et_phone"
             android:layout_marginRight="20dp"
             android:gravity="right"

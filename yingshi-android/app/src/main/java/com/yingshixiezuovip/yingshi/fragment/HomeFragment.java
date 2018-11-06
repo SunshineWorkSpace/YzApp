@@ -1,6 +1,8 @@
 package com.yingshixiezuovip.yingshi.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -9,12 +11,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import com.yingshixiezuovip.yingshi.HomeShopPublishDetailActivity;
 import com.yingshixiezuovip.yingshi.MainCommentActivity;
 import com.yingshixiezuovip.yingshi.MainCommonActivity;
 import com.yingshixiezuovip.yingshi.MainDetailsActivity;
@@ -35,12 +41,15 @@ import com.yingshixiezuovip.yingshi.datautils.TaskType;
 import com.yingshixiezuovip.yingshi.minterface.OnAdapterClickListener;
 import com.yingshixiezuovip.yingshi.model.HomeListModel;
 import com.yingshixiezuovip.yingshi.model.HomeTypeModel;
+import com.yingshixiezuovip.yingshi.model.PublishIsOkModel;
 import com.yingshixiezuovip.yingshi.quote.pulltorefresh.PullToRefreshBase;
 import com.yingshixiezuovip.yingshi.quote.pulltorefresh.PullToRefreshListView;
 import com.yingshixiezuovip.yingshi.utils.CommUtils;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.SPUtils;
 import com.yingshixiezuovip.yingshi.utils.TimeUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +77,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
     private AuthWindow mAuthWindow;
     private AuthWindow mAuthInfoWindow;
     private boolean isFirstShow = true;
+    private PublishIsOkModel mPublishIsOkModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +90,10 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
 
         initView();
         loadData();
+
     }
+
+
 
     private void initView() {
         mAuthWindow = new AuthWindow(getActivity());
@@ -169,7 +182,11 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
         mLoadWindow.show(R.string.text_request);
         HttpUtils.doPost(TaskType.TASK_TYPE_HOME_TYPE, params, this);
     }
-
+    private void loadPublish() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", mUserInfo.token);
+        HttpUtils.doPost(TaskType.TASK_TYPE_ISPUBLISH, params, this);
+    }
     private void loadListData() {
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         HashMap<String, Object> params = new HashMap<>();
@@ -234,13 +251,15 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 intent = new Intent(getActivity(), MainSearchHistoryActivity.class);
                 break;
             case R.id.home_btn_publish:
+
                 if (mUserInfo.iswanshan == 0) {
                     mAuthInfoWindow.show("完善基本资料才可以使用发布哦", "取消", "完善资料", 1);
                 } else {
                     if (mUserInfo.type == 1 || mUserInfo.type == 3) {
                         if (mUserInfo.type == 1) {
                             if (TextUtils.isEmpty(mUserInfo.invite)) {
-                                intent = new Intent(getActivity(), MainPublishActivity.class);
+//                                intent = new Intent(getActivity(), MainPublishActivity.class);
+                                intentPic();
                             } else {
                                 if (mUserInfo.isrenzhen == 0) {
                                     mAuthWindow.show("填写认证资料并通过审核，才可以使用发布价格等信息哦", "继续发布", 2);
@@ -248,7 +267,8 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                                     if (mUserInfo.isbzj == 0) {
                                         mAuthWindow.show("填写过认证资料，还需要支付会员费用才可以使用成为会员哦", "继续发布", 3);
                                     } else {
-                                        intent = new Intent(getActivity(), MainPublishActivity.class);
+//                                        intent = new Intent(getActivity(), MainPublishActivity.class);
+                                        intentPic();
                                     }
                                 }
                             }
@@ -256,11 +276,13 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                             if (mUserInfo.isbzj == 0) {
                                 mAuthWindow.show("填写过认证资料，还需要支付会员费用才可以使用成为会员哦", "继续发布", 4);
                             } else {
-                                intent = new Intent(getActivity(), MainPublishActivity.class);
+                                intentPic();
+//                                intent = new Intent(getActivity(), MainPublishActivity.class);
                             }
                         }
                     } else {
-                        intent = new Intent(getActivity(), MainPublishActivity.class);
+                        intentPic();
+//                        intent = new Intent(getActivity(), MainPublishActivity.class);
                     }
                 }
                 break;
@@ -298,8 +320,18 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 break;
             case R.id.auth_btn_cancel:
                 if (mAuthWindow.getType() != 1) {
-                    intent = new Intent(getContext(), MainPublishActivity.class);
+                    intentPic();
+//                    intent = new Intent(getContext(), MainPublishActivity.class);
                 }
+                break;
+            case R.id.tv_publish:
+                intent = new Intent(getActivity(), MainPublishActivity.class);
+                break;
+            case R.id.tv_shop:
+                intent = new Intent(getActivity(), HomeShopPublishDetailActivity.class);
+                break;
+            case R.id.pop_cancel:
+                window.dismiss();
                 break;
         }
         if (intent != null) {
@@ -307,7 +339,56 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
         }
 
     }
+    PopupWindow window;
+    private void intentPic() {
+        if(mPublishIsOkModel==null){
+            loadPublish();
+            return;
+        }
+        if(mPublishIsOkModel.state.equals("1")){
+            // 用于PopupWindow的View
+            View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_home_publish, null, false);
+            // 创建PopupWindow对象，其中：
+            // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
+            // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
+            window = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            // 设置PopupWindow的背景
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // 设置PopupWindow是否能响应外部点击事件
+            window.setOutsideTouchable(true);
+            // 设置PopupWindow是否能响应点击事件
+            window.setTouchable(true);
+            // 显示PopupWindow，其中：
+            // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
+//        window.showAsDropDown(anchor, xoff, yoff);
+            // 或者也可以调用此方法显示PopupWindow，其中：
+            // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
+            // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
+            // window.showAtLocation(parent, gravity, x, y);
+            window.setAnimationStyle(R.style.animTranslate);
+            window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    WindowManager.LayoutParams lp = getActivity(). getWindow().getAttributes();
+                    lp.alpha = 1.0f;
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                    getActivity().getWindow().setAttributes(lp);
+                }
+            });
 
+            window.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+            WindowManager.LayoutParams lp =  getActivity().getWindow().getAttributes();
+            lp.alpha = 0.3f;
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            getActivity().getWindow().setAttributes(lp);
+            ((TextView) contentView.findViewById(R.id.tv_publish)).setOnClickListener(this);
+            ((TextView) contentView.findViewById(R.id.tv_shop)).setOnClickListener(this);
+            ((TextView) contentView.findViewById(R.id.pop_cancel)).setOnClickListener(this);
+        }else {
+
+        }
+
+    }
     @Override
     public void onFollowClick(int userid, int follow) {
         HashMap localHashMap = new HashMap();
@@ -363,6 +444,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                         mHomeTypes.addAll(mHomeTypeModel.data);
                         inflateData();
                     }
+                    loadPublish();
                 } else {
                     showMessage(R.string.data_load_failed);
                 }
@@ -384,6 +466,16 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 break;
             case TASK_TYPE_HOME_CLEAR_FOLLOW:
             case TASK_TYPE_HOME_FOLLOW:
+                break;
+            case TASK_TYPE_ISPUBLISH:
+                mPublishIsOkModel=GsonUtil.fromJson(result.toString(),PublishIsOkModel.class);
+                if (mPublishIsOkModel != null) {
+                  /*  if (mPublishIsOkModel.state.equals("1")) {
+                        mHomeTypes.addAll(mHomeTypeModel.data);
+                    }*/
+                } else {
+                    showMessage(R.string.data_load_failed);
+                }
                 break;
         }
     }

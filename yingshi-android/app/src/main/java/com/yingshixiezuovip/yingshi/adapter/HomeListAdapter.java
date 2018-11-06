@@ -109,7 +109,7 @@ public class HomeListAdapter extends MBaseAdapter<HomeListModel.HomeListItem> im
             followCheckBox.setVisibility(mType == 3 ? View.GONE : (mUserInfo.id != listItem.userid ? View.VISIBLE : View.GONE));
             ((TextView) viewHolder.findViewById(R.id.homeitem_tv_zan)).setText(listItem.zan + "");
 
-            ((TextView) viewHolder.findViewById(R.id.homeitem_tv_price)).setText(listItem.usertype == 1 ? "账号未认证" : ("0".equalsIgnoreCase(listItem.price) ? "商家未认证" : ("￥" + listItem.price + "/" + listItem.unit)));
+            ((TextView) viewHolder.findViewById(R.id.homeitem_tv_price)).setText(listItem.usertype == 1 ? "账号未认证" : ("0".equalsIgnoreCase(listItem.price) ? "商家未认证" : (listItem.price.equals("0")?"价格面议":"￥" + listItem.price + "/" + listItem.unit)));
 
             viewHolder.findViewById(R.id.homeitem_iv_auth).setVisibility(View.VISIBLE);
             if (listItem.productionType == 2) {

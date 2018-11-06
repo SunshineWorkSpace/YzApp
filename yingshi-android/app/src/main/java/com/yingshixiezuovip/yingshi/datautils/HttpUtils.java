@@ -511,6 +511,9 @@ public class HttpUtils {
                 case TASK_TYPE_UPDATE_USER_INFO_NEW:
                     methodName = "/v1/user/personalAuthReset.spr";
                     break;
+                case TASK_TYPE_ISPUBLISH:
+                    methodName = "/v2/isuploadindencard.spr";
+                    break;
                 default:
                     break;
             }

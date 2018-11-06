@@ -88,4 +88,8 @@
         <attr name="downsampleFactor" format="integer" />
         <attr name="overlayColor" format="color" />
     </declare-styleable>
+    <style name="animTranslate">
+        <item name="android:windowEnterAnimation">@anim/translate_in</item>
+        <item name="android:windowExitAnimation">@anim/translate_out</item>
+    </style>
 </resources>

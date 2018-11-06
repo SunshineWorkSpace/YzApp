@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yingshixiezuovip.yingshi">
-    >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -197,7 +196,10 @@
             android:name=".MainChatListDetailsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_main_chat_list" />
-
+        <activity
+            android:name=".HomeShopPublishDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_home_shop_detail" />
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -299,6 +301,8 @@
         <activity android:name=".MainSchoolInfoSetActivity" />
         <activity android:name=".MainPublishLableActivity"></activity>
         <activity android:name=".MainDetailsEditActivity"></activity>
+        <activity android:name=".PublishNoteActivity"></activity>
+
     </application>
 
 </manifest>

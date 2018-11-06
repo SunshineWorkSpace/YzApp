@@ -53,6 +53,17 @@
         <item>男</item>
         <item>女</item>
     </array>
+
+    <array name="text_new_old">
+        <item>全新</item>
+        <item>9成新</item>
+        <item>8成新</item>
+        <item>7成新</item>
+        <item>6成新</item>
+        <item>5成新</item>
+        <item>4成新</item>
+        <item>3成新</item>
+    </array>
     <string name="title_activity_main_authentication">个人详细资料</string>
     <string name="title_activity_main_authentication_info">认证资料填写</string>
     <string name="title_activity_main_authentication_money">支付订单</string>
@@ -79,5 +90,7 @@
     <string name="auth_school">学生认证</string>
     <string name="activity_main_publish_lable_title">填写标签</string>
     <string name="title_activity_main_publish_edit">修改编辑作品</string>
+
+    <string name="title_activity_home_shop_detail">发布页(1/3)</string>
 
 </resources>

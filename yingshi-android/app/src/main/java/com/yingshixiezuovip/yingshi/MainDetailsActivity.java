@@ -52,6 +52,7 @@ import com.yingshixiezuovip.yingshi.utils.L;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
 import com.yingshixiezuovip.yingshi.utils.SPUtils;
 import com.yingshixiezuovip.yingshi.utils.TimeUtils;
+import com.yingshixiezuovip.yingshi.utils.ToastUtils;
 import com.yingshixiezuovip.yingshi.utils.WebUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -203,8 +204,13 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
                 }
                 break;
             case R.id.details_btn_book:
-                intent = new Intent(this, MainDetailsBookActivity.class);
-                intent.putExtra("item_id", mListDetailsModel.data.id);
+                if(price.equals("0")){
+                    ToastUtils.showMessage(this,"商户未设置价格，请先电话联系，谢谢");
+                }else {
+                    intent = new Intent(this, MainDetailsBookActivity.class);
+                    intent.putExtra("item_id", mListDetailsModel.data.id);
+                }
+
                 break;
             case R.id.right_btn_submit:
                 if (mListDetailsModel.data.easemob_token.equalsIgnoreCase(mUserInfo.token)) {
@@ -275,7 +281,7 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
             startActivity(intent);
         }
     }
-
+    String price="";
     private void inflateData() {
         final ListDetailsModel.DetailsModel detailsModel = mListDetailsModel.data;
         SPUtils.saveBaseEaseUser(this, new BaseEaseUser(detailsModel.easemob_token, detailsModel.head, detailsModel.nickname));
@@ -373,7 +379,13 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
         } else if (detailsModel.usertype == 1 || detailsModel.usertype == 3 || detailsModel.usertype == 5) {
             ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("酬劳：该用户未认证");
         } else {
-            ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("薪酬：" + detailsModel.price + "元/" + detailsModel.unit);
+            price=detailsModel.price;
+            if(detailsModel.price.equals("0")){
+                ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("薪酬面议");
+            }else {
+                ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("薪酬：" + detailsModel.price + "元/" + detailsModel.unit);
+            }
+
         }
 
         ((TextView) footerView.findViewById(R.id.details_tv_invite)).setText("推荐人：" + detailsModel.invite);

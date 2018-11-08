@@ -126,6 +126,14 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
             return;
         }
         Intent it=new Intent(this,HomeShopPublishDetialNextActivitiy.class);
+        it.putExtra("title",et_title.getText().toString());
+        it.putExtra("singleprice",et_single_price.getText().toString());
+        it.putExtra("num",et_num.getText().toString());
+        it.putExtra("new",tv_new.getText().toString());
+        it.putExtra("phone",et_phone.getText().toString());
+        it.putExtra("area",tv_area.getText().toString());
+        it.putExtra("areadetail",et_area_detail.getText().toString());
+        it.putExtra("type",et_type.getText().toString());
         startActivity(it);
     }
 

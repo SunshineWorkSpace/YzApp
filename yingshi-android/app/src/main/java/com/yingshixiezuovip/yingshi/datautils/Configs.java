@@ -30,5 +30,12 @@ public class Configs {
 
     public static String AUTH_MONEY = "299";
     public static String COMPANY_AUTH_MONEY = "499";
+
+    /*oss*/
+    public static final String bucket = "yingzhe";
+    // 访问的endpoint地址
+    public static final String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+    public static final String accessKeyId = "LTAIvBnI3xQgePfJ";
+    public static final String SecretKey="jt12VotFofJ0BgvecsD0BHO5FBj5Jq";
 }
 

@@ -514,7 +514,15 @@ public class HttpUtils {
                 case TASK_TYPE_ISPUBLISH:
                     methodName = "/v2/isuploadindencard.spr";
                     break;
-
+                case TASK_TYPE_OSS_IMG:
+                    methodName = "/sys/getOssDirByPhoto.spr";
+                    break;
+                case TASK_TYPE_OSS_VIDEO:
+                    methodName = "/sys/getOssDirByVideo.spr";
+                    break;
+                case TASK_TYPE_ASIDE_SEND:
+                    methodName="/v2/asideSend.spr";
+                    break;
                 default:
                     break;
             }

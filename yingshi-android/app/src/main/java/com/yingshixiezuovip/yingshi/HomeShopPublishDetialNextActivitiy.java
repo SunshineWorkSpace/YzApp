@@ -12,17 +12,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.Manifest;
+
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.yingshixiezuovip.yingshi.adapter.SelectImgsAdapter;
 import com.yingshixiezuovip.yingshi.adapter.holder.SelectImgHolder;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
+import com.yingshixiezuovip.yingshi.custom.AlOssImgModel;
 import com.yingshixiezuovip.yingshi.custom.CPDialog;
+import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
+import com.yingshixiezuovip.yingshi.datautils.TaskType;
+import com.yingshixiezuovip.yingshi.model.HomeListModel;
 import com.yingshixiezuovip.yingshi.utils.DefaultItemTouchHelpCallback;
 import com.yingshixiezuovip.yingshi.utils.DefaultItemTouchHelper;
+import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
@@ -45,13 +53,15 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
     private RecyclerView recycleView;
     String add="添加";
 
-    List<String> mImgs;
+    ArrayList<String> mImgs;
 
     SelectImgsAdapter adapter;
 
     DefaultItemTouchHelper helper;
     private EditText et_note;
     private TextView tv_note;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,9 +122,19 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
             return;
         }
         Intent it=new Intent(this,HomeShopPublishDetailEndActivity.class);
+        it.putExtra("title",getIntent().getStringExtra("title"));
+        it.putExtra("singleprice",getIntent().getStringExtra("singleprice"));
+        it.putExtra("num",getIntent().getStringExtra("num"));
+        it.putExtra("new",getIntent().getStringExtra("new"));
+        it.putExtra("phone",getIntent().getStringExtra("phone"));
+        it.putExtra("area",getIntent().getStringExtra("area"));
+        it.putExtra("areadetail",getIntent().getStringExtra("areadetail"));
+        it.putExtra("type",getIntent().getStringExtra("type"));
+        it.putExtra("content",et_note.getText().toString());
+        it.putStringArrayListExtra("infoList", mImgs);
         startActivity(it);
+//        loadData();
     }
-
     private DefaultItemTouchHelpCallback.OnItemTouchCallbackListener onItemTouchCallbackListener = new DefaultItemTouchHelpCallback.OnItemTouchCallbackListener() {
         @Override
         public void onSwiped(int adapterPosition) {
@@ -283,4 +303,5 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
             tvUrl.append(i+"->"+mImgs.get(i)+"\n");
         }*/
     }
+
 }

@@ -5,15 +5,21 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.yingshixiezuovip.yingshi.HomeShopPublishDetailActivity;
 import com.yingshixiezuovip.yingshi.MainAboutActivity;
 import com.yingshixiezuovip.yingshi.MainAuthenticationInfoActivity;
 import com.yingshixiezuovip.yingshi.MainAuthenticationMoneyActivity;
@@ -22,6 +28,7 @@ import com.yingshixiezuovip.yingshi.MainCommentActivity;
 import com.yingshixiezuovip.yingshi.MainCommonActivity;
 import com.yingshixiezuovip.yingshi.MainCompanyInfoSetActivity;
 import com.yingshixiezuovip.yingshi.MainFeedbackActivity;
+import com.yingshixiezuovip.yingshi.MainPublishActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.StartupLoginActivity;
 import com.yingshixiezuovip.yingshi.UserAuthenticationSelectActivity;
@@ -284,9 +291,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 mChoiceWindow.show("", "修改背景图或者头像", "背景图", "头像");
                 break;
             case R.id.profile_btn_work:
-                intent = new Intent(getActivity(), MainCommonActivity.class);
-                intent.putExtra("item_type", MainCommonActivity.TYPE_MINE_WORK);
-                intent.putExtra("item_title", mUserInfo.nickname + "的作品集");
+                intentPic();
                 break;
             case R.id.profile_btn_comment:
                 intent = new Intent(getActivity(), MainCommentActivity.class);
@@ -443,13 +448,68 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 cmb.setPrimaryClip(clipData);
                 showMessage("成功复制" + url + " 电脑端用户发布链接");
                 break;
-
+            case R.id.tv_publish:
+                intent = new Intent(getActivity(), MainCommonActivity.class);
+                intent.putExtra("item_type", MainCommonActivity.TYPE_MINE_WORK);
+                intent.putExtra("item_title", mUserInfo.nickname + "的作品集");
+                window.dismiss();
+                break;
+            case R.id.tv_shop:
+                /*商城入口*/
+                window.dismiss();
+                break;
+            case R.id.pop_cancel:
+                window.dismiss();
+                break;
         }
         if (intent != null) {
             startActivity(intent);
         }
     }
+    PopupWindow window;
+    private void intentPic() {
 
+            // 用于PopupWindow的View
+            View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_home_publish, null, false);
+            // 创建PopupWindow对象，其中：
+            // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
+            // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
+            window = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            // 设置PopupWindow的背景
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // 设置PopupWindow是否能响应外部点击事件
+            window.setOutsideTouchable(true);
+            // 设置PopupWindow是否能响应点击事件
+            window.setTouchable(true);
+            // 显示PopupWindow，其中：
+            // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
+//        window.showAsDropDown(anchor, xoff, yoff);
+            // 或者也可以调用此方法显示PopupWindow，其中：
+            // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
+            // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
+            // window.showAtLocation(parent, gravity, x, y);
+            window.setAnimationStyle(R.style.animTranslate);
+            window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    WindowManager.LayoutParams lp = getActivity(). getWindow().getAttributes();
+                    lp.alpha = 1.0f;
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                    getActivity().getWindow().setAttributes(lp);
+                }
+            });
+
+            window.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+            WindowManager.LayoutParams lp =  getActivity().getWindow().getAttributes();
+            lp.alpha = 0.3f;
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            getActivity().getWindow().setAttributes(lp);
+        ((TextView) contentView.findViewById(R.id.tv_publish)).setText("作品");
+            ((TextView) contentView.findViewById(R.id.tv_publish)).setOnClickListener(this);
+            ((TextView) contentView.findViewById(R.id.tv_shop)).setOnClickListener(this);
+            ((TextView) contentView.findViewById(R.id.pop_cancel)).setOnClickListener(this);
+
+    }
     private void inflatUserData() {
         if (getActivity() == null) {
             return;

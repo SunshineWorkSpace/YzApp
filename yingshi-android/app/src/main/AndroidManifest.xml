@@ -199,6 +199,11 @@
             android:name=".HomeShopPublishDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_home_shop_detail" />
+        <activity
+            android:name=".HomeShopMainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppMyTheme"
+            android:label="@string/title_activity_home_shop" />
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:configChanges="orientation|screenSize|keyboardHidden"

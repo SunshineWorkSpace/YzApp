@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.yingshixiezuovip.yingshi.HomeShopMainActivity;
 import com.yingshixiezuovip.yingshi.HomeShopPublishDetailActivity;
 import com.yingshixiezuovip.yingshi.MainCommentActivity;
 import com.yingshixiezuovip.yingshi.MainCommonActivity;
@@ -308,9 +309,10 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 intent.putExtra("item_type", MainCommonActivity.TYPE_HOME);
                 break;
             case R.id.home_btn_video:
-                intent = new Intent(getActivity(), MainCommonActivity.class);
-                intent.putExtra("item_title", "心视频");
-                intent.putExtra("item_type", MainCommonActivity.TYPE_VIDEO);
+//                intent = new Intent(getActivity(), MainCommonActivity.class);
+//                intent.putExtra("item_title", "心视频");
+//                intent.putExtra("item_type", MainCommonActivity.TYPE_VIDEO);
+                intent = new Intent(getActivity(), HomeShopMainActivity.class);
                 break;
             case R.id.home_btn_train:
                 intent = new Intent(getActivity(), MainCommonActivity.class);

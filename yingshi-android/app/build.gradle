@@ -85,8 +85,6 @@ dependencies {
     implementation files('libs/alipaySingle-20170510.jar')
     implementation project(':easeui')
     implementation files('libs/universal-image-loader-1.9.4.jar')
-    implementation 'com.android.support:appcompat-v7:23.4.0'
-    implementation 'com.android.support:support-v4:23.4.0'
     implementation 'com.android.support:recyclerview-v7:23.4.0'
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.squareup.okhttp3:okhttp:3.7.0'
@@ -100,9 +98,13 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     implementation 'com.squareup.okio:okio:1.9.0'
     //相册
-    implementation 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    compile  'com.github.lovetuzitong:MultiImageSelector:1.2'
     implementation 'io.reactivex:rxjava:1.1.9'
     implementation 'io.reactivex:rxandroid:1.2.1'
     //权限管理
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.0@aar'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-10'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-10'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:design:23.4.0'
 }

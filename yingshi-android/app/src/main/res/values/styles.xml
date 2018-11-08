@@ -7,7 +7,6 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowShowWallpaper">false</item>
         <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="transparent_frame_style" parent="android:style/Theme.Dialog">
@@ -92,4 +91,17 @@
         <item name="android:windowEnterAnimation">@anim/translate_in</item>
         <item name="android:windowExitAnimation">@anim/translate_out</item>
     </style>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppMyTheme" parent="AppBaseTheme">
+        <!-- Customize your theme here. -->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>

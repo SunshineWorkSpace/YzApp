@@ -10,12 +10,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yingshixiezuovip.yingshi.R;
-import com.yingshixiezuovip.yingshi.adapter.ShopAdapter;
+import com.yingshixiezuovip.yingshi.adapter.ShopNewAdapter;
 import com.yingshixiezuovip.yingshi.base.LazyFragment;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
@@ -36,7 +37,7 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
     private String mType;
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
-    private ShopAdapter mAdapter;
+    private ShopNewAdapter mAdapter;
 
     private List<ShopTypeModel.ShopType> mList=new ArrayList<>();
     private ShopTypeModel mShopTypeModel;
@@ -63,6 +64,11 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRecyclerView.setLayoutManager(layoutManager);
 
+
+        mAdapter = new ShopNewAdapter();
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        mAdapter.setPreLoadNumber(2);
+
     }
 
 
@@ -76,7 +82,6 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
         mUserInfo = SPUtils.getUserInfo(getActivity());
 
 
-        mAdapter=new ShopAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(mAdapter);
         //设置item之间的间隔
         SpacesItemDecoration decoration=new SpacesItemDecoration(16);
@@ -88,6 +93,13 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 layoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
+            }
+        });
+
+        mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                return false;
             }
         });
 
@@ -171,16 +183,17 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
                         if(mList.size()>0){
                             mList.clear();
                         }
+                        mList.addAll(mShopTypeModel.data);
+                        mAdapter.setNewData(mShopTypeModel.data);
+                    }else{
+                        mList.addAll(mShopTypeModel.data);
+                        mAdapter.addData(mShopTypeModel.data);
                     }
 
-                    if(mShopTypeModel.data.size()>0){
-                        mList.addAll(mShopTypeModel.data);
-                    }
 
                 } else {
                     showMessage(R.string.data_load_failed);
                 }
-                mAdapter.notifyDataSetChanged();
                 System.out.println("商品page:"+mPage+" type:"+mType+" 数据条数："+mList.size()+" isMore："+isMore);
                 if(isMore) {
                     mRefreshLayout.setNoMoreData(!isMore);

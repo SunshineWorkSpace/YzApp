@@ -254,4 +254,24 @@ public class CommUtils {
         }
         return mapRequest;
     }
+
+    /**
+     * 静态String转int的方法
+     *
+     * @param numStr
+     *            String值
+     * @param defaultInt
+     *            默认返回值
+     * @return 返回组装的结果
+     */
+    public static int parseInt(String numStr, int defaultInt) {
+        int result = defaultInt;
+        try {
+            result = Integer.parseInt(numStr);
+        } catch (Exception e) {
+            return result;
+        }
+        return result;
+    }
+
 }

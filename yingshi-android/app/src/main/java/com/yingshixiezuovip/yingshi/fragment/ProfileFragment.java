@@ -545,7 +545,10 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
             return "普通学生用户";
         } else if (mUserInfo.type == 6) {
             return "学生会员用户";
-        } else {
+        } else if(mUserInfo.type == 7){
+            return "商铺会员用户";
+        }
+            else {
             return "未认证";
         }
     }
@@ -561,7 +564,9 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
             return "普通学生用户";
         } else if (mUserInfo.type == 6) {
             return "认证学生用户";
-        } else {
+        } else if(mUserInfo.type == 7){
+            return "商铺会员用户";
+        }else {
             return "未认证";
         }
     }

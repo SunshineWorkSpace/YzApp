@@ -4,13 +4,19 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +25,35 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.yingshixiezuovip.yingshi.adapter.PublishNewAdapter;
 import com.yingshixiezuovip.yingshi.adapter.PublishTypeAdater;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
 import com.yingshixiezuovip.yingshi.base.EventType;
+import com.yingshixiezuovip.yingshi.custom.AlOssImgModel;
+import com.yingshixiezuovip.yingshi.custom.AlOssVideoModel;
 import com.yingshixiezuovip.yingshi.custom.AlertWindow;
 import com.yingshixiezuovip.yingshi.custom.ChoiceVideoWindow;
 import com.yingshixiezuovip.yingshi.custom.EditWindow;
 import com.yingshixiezuovip.yingshi.custom.FontWindow;
 import com.yingshixiezuovip.yingshi.custom.TextInputWindow;
 import com.yingshixiezuovip.yingshi.custom.VideoLinkWindow;
+import com.yingshixiezuovip.yingshi.datautils.Configs;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskInfo;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
@@ -37,6 +62,7 @@ import com.yingshixiezuovip.yingshi.minterface.ProgressCallback;
 import com.yingshixiezuovip.yingshi.model.DetailsEditModel;
 import com.yingshixiezuovip.yingshi.model.FontModel;
 import com.yingshixiezuovip.yingshi.model.HomeTypeModel;
+import com.yingshixiezuovip.yingshi.model.ImgNewOldModel;
 import com.yingshixiezuovip.yingshi.model.PublishModel;
 import com.yingshixiezuovip.yingshi.model.VideoModel;
 import com.yingshixiezuovip.yingshi.publish.MyItemTouchHelperCallback;
@@ -48,13 +74,17 @@ import com.yingshixiezuovip.yingshi.utils.EventUtils;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.L;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
+import com.yingshixiezuovip.yingshi.utils.SaveImg;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Resmic on 18/1/23.
@@ -91,6 +121,11 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
     private int videoPosition;
     private HashMap<String, VideoModel> mVideoModels;
     private List<String> mVideoPaths;
+    private AlOssVideoModel alOssVideoModel;
+    OSS oss;
+    private AlOssImgModel alOssImgModel;
+    private AlOssImgModel alOssImgModelOne;
+    private AlOssImgModel alOssVideoImgModelOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +134,25 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
 
         initView();
         loadData();
+        initOss();
+    }
+
+    private void initOss() {
+        String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+
+// 在移动端建议使用STS方式初始化OSSClient。
+// 更多信息可查看sample 中 sts 使用方式(https://github.com/aliyun/aliyun-oss-android-sdk/tree/master/app/src/main/java/com/alibaba/sdk/android/oss/app)
+        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(Configs.accessKeyId, Configs.SecretKey);
+
+//该配置类如果不设置，会有默认配置，具体可看该类
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        OSSLog.enableLog();
+
+        oss = new OSSClient(getApplicationContext(), endpoint, credentialProvider);
     }
 
     private void initView() {
@@ -346,13 +400,17 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
             videoPosition = 0;
             doUploadVideo();
         } else {
-            doUploadPhoto();
+//            doUploadPhoto();
+            sendPicDate();
         }
     }
 
     public void doUploadVideo() {
         mLoadWindow.show(R.string.text_is_upload_video);
-        HashMap<String, Object> uploadParams = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("count", 1);
+        HttpUtils.doPost(TaskType.TASK_TYPE_OSS_VIDEO, params, this);
+ /*       HashMap<String, Object> uploadParams = new HashMap<>();
         uploadParams.put("token", mUserInfo.token);
         uploadParams.put("uploadfile", new File(mVideoPaths.get(videoPosition)));
         HttpUtils.doUpload(new TaskInfo(TaskType.TASK_TYPE_VIDEO_UPLOAD, uploadParams, this), new ProgressCallback() {
@@ -370,7 +428,7 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
                 });
                 L.d("status = " + status + " , progress = " + progress + " , message =" + message);
             }
-        });
+        });*/
     }
 
     public void doUploadPhoto() {
@@ -579,6 +637,13 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
                 EventUtils.doPostEvent(EventType.EVENT_TYPE_REFRESH_ARTICLE, ((HomeTypeModel.HomeType) mSpinner.getSelectedItem()).name);
                 super.onBackPressed();
                 break;
+            case TASK_TYPE_UPDATE_DETAILS:
+                mLoadWindow.cancel();
+
+                showMessage("保存成功");
+                EventUtils.doPostEvent(EventType.EVENT_TYPE_REFRESH_ARTICLE, ((HomeTypeModel.HomeType) mSpinner.getSelectedItem()).name);
+                super.onBackPressed();
+                break;
             case TASK_TYPE_VIDEO_UPLOAD:
                 JSONObject uploadObject = (JSONObject) result;
                 if (uploadObject.has("data") && uploadObject.optJSONObject("data").has("filename")) {
@@ -596,13 +661,94 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
                 mLoadWindow.show(R.string.text_request);
                 HttpUtils.doPost(TaskType.TASK_TYPE_HOME_TYPE, params, this);
                 break;
+            case TASK_TYPE_OSS_VIDEO:
+                alOssVideoModel = GsonUtil.fromJson(result.toString(), AlOssVideoModel.class);
+                if (alOssVideoModel != null) {
+//                    for (int i = 0; i < mVideoPaths.size(); i++) {
+                    videoPathNewOne = alOssVideoModel.data.get(0).createDir;
+                    sendVideoOss(alOssVideoModel.data.get(0).createDir, mVideoPaths.get(videoPosition));
+//                    }
+                } else {
+                    showMessage(R.string.data_load_failed);
+                }
+                break;
+            case TASK_TYPE_OSS_IMG:
+                alOssImgModel = GsonUtil.fromJson(result.toString(), AlOssImgModel.class);
+                if (alOssImgModel != null) {
+
+                    for (int i = 0; i < imgPath.size(); i++) {
+                        imgPath.get(i).ossImgPath = alOssImgModel.data.get(i).createDir;
+                        sendPicOssByte(i, alOssImgModel.data.get(i).createDir, imgPath.get(i).locaPath, "img");
+                    }
+                } else {
+                    showMessage(R.string.data_load_failed);
+                }
+
+                break;
+            case TASK_TYPE_OSS_IMG_ONE:
+                alOssImgModelOne = GsonUtil.fromJson(result.toString(), AlOssImgModel.class);
+                if (alOssImgModelOne != null) {
+                    fmImg = alOssImgModelOne.data.get(0).createDir;
+                    sendPicFmOneOssByte(alOssImgModelOne.data.get(0).createDir, mPublishModel.cover);
+                } else {
+                    showMessage(R.string.data_load_failed);
+                }
+                break;
+            case TASK_TYPE_OSS_VIDEO_IMG_ONE:
+                alOssVideoImgModelOne = GsonUtil.fromJson(result.toString(), AlOssImgModel.class);
+                if (alOssVideoImgModelOne != null) {
+                    Matrix matrix = new Matrix();
+                    matrix.setScale(1f, 1f);
+                    final Bitmap bitmap = Bitmap.createBitmap(getVideoThumbnail(new File(mVideoPaths.get(videoPosition)) + ""), 0, 0, 1000, 1000, matrix, false);
+                    videoImgOne = alOssVideoImgModelOne.data.get(0).createDir;
+                  /*  ((ImageView)findViewById(R.id.iv_test)).setImageBitmap(bitmap);
+                    ((ImageView)findViewById(R.id.iv_test)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+//                            sendVideoImgOss(alOssVideoImgModelOne.data.get(0).createDir,PictureManager.getVideoThumbnailBitm(mVideoPaths.get(videoPosition)), "video");
+                        }
+                    });*/
+                    Glide.with(this).load(mVideoPaths.get(videoPosition)).asBitmap().into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                            ((ImageView)findViewById(R.id.iv_test)).setImageBitmap(resource);
+//                            sendVideoImgOss(alOssVideoImgModelOne.data.get(0).createDir,Bitmap2Bytes(resource), "video");
+                            sendVideoImgOssNew(alOssVideoImgModelOne.data.get(0).createDir,SaveImg.saveImg(resource,"test.png",MainDetailsEditActivity.this).toString());
+                        }
+                    });
+//                          ((ImageView)findViewById(R.id.iv_test)).setImageBitmap(bitmap);
+
+
+             /*       new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                Thread.sleep(5000);
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();*/
+
+
+
+                } else {
+                    showMessage(R.string.data_load_failed);
+                }
+                break;
         }
     }
 
+    String videoImgOne = "";
+    String fmImg = "";
 
     @Override
     public void onPictureCallback(Uri uri, Intent data) {
         mPublishModel.cover = uri.getPath();
+        if (TextUtils.isEmpty(fmImg)) {
+            sendPicDateOne();
+        }
         initMediaData();
     }
 
@@ -659,4 +805,472 @@ public class MainDetailsEditActivity extends BaseActivity implements PictureMana
         }
     }
 
+    String videoPathNewOne = "";
+
+    private void sendVideoOss(String serverUrl, String path) {
+// 构造上传请求
+        PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, path);
+
+// 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+
+                Log.d("ETag", result.getETag());
+                Log.d("RequestId", result.getRequestId());
+                sendVideoImgOne();
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                }
+                mLoadWindow.cancel();
+            }
+        });
+
+// task.cancel(); // 可以取消任务
+// task.waitUntilFinished(); // 可以等待任务完成
+    }
+    private void sendVideoImgOssNew(String serverUrl, String path) {
+
+// 构造上传请求
+        PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, path);
+
+// 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+
+                Log.d("ETag", result.getETag());
+                Log.d("RequestId", result.getRequestId());
+                    VideoModel mVideoModel = new VideoModel();
+                    mVideoModel.localPath = mVideoPaths.get(videoPosition);
+                    mVideoModel.videoPath = videoPathNewOne;
+                    mVideoModel.videoLong = CommUtils.getDuration(mVideoModel.localPath);
+                    mVideoModel.videoFm = videoImgOne;
+                    mVideoModels.put(mVideoModel.localPath, mVideoModel);
+
+                    videoPosition++;
+                    if (videoPosition < mVideoPaths.size()) {
+                        doUploadVideo();
+                    } else {
+                        sendPicDate();
+
+                    }
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });
+
+// task.cancel(); // 可以取消任务
+// task.waitUntilFinished(); // 可以等待任务完成
+    }
+
+    private void sendVideoImgOss(String serverUrl, byte[] path, final String type) {
+
+        new Random().nextBytes(path);
+
+        PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, path);
+
+
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+
+                Log.d("ETag", result.getETag());
+                Log.d("RequestId", result.getRequestId());
+                if (type.equals("video")) {
+                    VideoModel mVideoModel = new VideoModel();
+                    mVideoModel.localPath = mVideoPaths.get(videoPosition);
+                    mVideoModel.videoPath = videoPathNewOne;
+                    mVideoModel.videoLong = CommUtils.getDuration(mVideoModel.localPath);
+                    mVideoModel.videoFm = videoImgOne;
+                    mVideoModels.put(mVideoModel.localPath, mVideoModel);
+
+                    videoPosition++;
+                    if (videoPosition < mVideoPaths.size()) {
+                        doUploadVideo();
+                    } else {
+                        sendPicDate();
+
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                    mLoadWindow.cancel();
+                }
+            }
+        });
+
+
+        // 构造上传请求
+
+
+    }
+
+    private List<ImgNewOldModel> imgPath = new ArrayList<>();
+
+    private void sendPicDate() {
+        if (!mLoadWindow.isShowing()) {
+            mLoadWindow.showMessage("正在上传图片...");
+            mLoadWindow.show();
+        }
+
+        imgPath.clear();
+        for (int i = 0; i < mPublishModel.medias.size(); i++) {
+            if (mPublishModel.medias.get(i).type == 1) {
+                if (!mPublishModel.medias.get(i).mediaPath.startsWith("http")) {
+                    ImgNewOldModel imgNewOldModel = new ImgNewOldModel();
+                    imgNewOldModel.locaPath = mPublishModel.medias.get(i).mediaPath;
+                    imgNewOldModel.ossImgPath = "";
+                    imgPath.add(imgNewOldModel);
+//                get.put(mPublishModel.medias.get(i).mediaPath,click+"");
+                }
+            }
+
+
+        }
+        if (imgPath.size() == 0) {
+            doUploadPhotoNew("img");
+            return;
+        }
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("count", imgPath.size());
+
+        HttpUtils.doPost(TaskType.TASK_TYPE_OSS_IMG, params, this);
+    }
+
+    private void sendPicDateOne() {
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("count", 1);
+
+        HttpUtils.doPost(TaskType.TASK_TYPE_OSS_IMG_ONE, params, this);
+    }
+
+    private void sendVideoImgOne() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("count", 1);
+        HttpUtils.doPost(TaskType.TASK_TYPE_OSS_VIDEO_IMG_ONE, params, this);
+    }
+
+    private void sendPicOssByte(final int i, String serverUrl, String path, final String type) {
+        boolean isGif = path.toLowerCase().endsWith(".gif");
+        try {
+            new Random().nextBytes(isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
+
+            PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
+
+
+            put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+                @Override
+                public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                }
+            });
+
+            OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                @Override
+                public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                    Log.d("PutObject", "UploadSuccess");
+
+                    Log.d("ETag", result.getETag());
+                    Log.d("RequestId", result.getRequestId());
+
+                    if (type.equals("img") && i == imgPath.size() - 1) {
+//                        doUploadPhoto();
+                        doUploadPhotoNew(type);
+                    } else if (type.equals("video") && i == imgPath.size() + mVideoPaths.size()) {
+//                        doUploadPhoto();
+//                        doUploadPhotoNew(type);
+                    }
+                }
+
+                @Override
+                public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                    // 请求异常
+                    if (clientExcepion != null) {
+                        // 本地异常如网络异常等
+                        clientExcepion.printStackTrace();
+                    }
+                    if (serviceException != null) {
+                        // 服务异常
+                        Log.e("ErrorCode", serviceException.getErrorCode());
+                        Log.e("RequestId", serviceException.getRequestId());
+                        Log.e("HostId", serviceException.getHostId());
+                        Log.e("RawMessage", serviceException.getRawMessage());
+                    }
+                }
+            });
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 构造上传请求
+
+
+    }
+
+    private void sendPicFmOneOssByte(String serverUrl, String path) {
+        boolean isGif = path.toLowerCase().endsWith(".gif");
+        try {
+            new Random().nextBytes(isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
+
+            PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
+
+
+            put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+                @Override
+                public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                }
+            });
+
+            OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                @Override
+                public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                    Log.d("PutObject", "UploadSuccess");
+
+                    Log.d("ETag", result.getETag());
+                    Log.d("RequestId", result.getRequestId());
+
+                }
+
+                @Override
+                public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                    // 请求异常
+                    if (clientExcepion != null) {
+                        // 本地异常如网络异常等
+                        clientExcepion.printStackTrace();
+                    }
+                    if (serviceException != null) {
+                        // 服务异常
+                        Log.e("ErrorCode", serviceException.getErrorCode());
+                        Log.e("RequestId", serviceException.getRequestId());
+                        Log.e("HostId", serviceException.getHostId());
+                        Log.e("RawMessage", serviceException.getRawMessage());
+                    }
+                }
+            });
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 构造上传请求
+
+
+    }
+
+
+    private void doUploadPhotoNew(String type) {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("id", mWorkId);
+        params.put("token", mUserInfo.token);
+        params.put("tid", mPublishModel.tid);
+        params.put("title", mPublishModel.title + "");
+        if (mPublishModel.cover.startsWith("http")) {
+            params.put("fmphoto_type", 2);
+            params.put("fmphoto", mPublishModel.cover);
+        } else {
+            params.put("fmphoto_type", 1);
+            params.put("fmphoto", fmImg);
+        }
+        params.put("label", lable + "");
+        params.put("position", "");
+
+        List<HashMap<String, Object>> mediaParams = new ArrayList<>();
+        if (mPublishModel.medias != null && mPublishModel.medias.size() > 0) {
+            HashMap<String, Object> mediaParam;
+            VideoModel mVideoModel;
+            for (int i = 0; i < mPublishModel.medias.size(); i++) {
+                mediaParam = new HashMap<>();
+
+                if (mPublishModel.medias.get(i).type == PublishModel.TYPE_PICTYRE) {
+                    if (mPublishModel.medias.get(i).mediaPath.startsWith("http")) {
+                        mediaParam.put("isupdate", 2);
+                        mediaParam.put("photo", mPublishModel.medias.get(i).listBean.getList_photo_filename());
+                        mediaParam.put("width", mPublishModel.medias.get(i).listBean.getList_width());
+                        mediaParam.put("height", mPublishModel.medias.get(i).listBean.getList_height());
+                        mediaParam.put("ispic", mPublishModel.medias.get(i).listBean.getList_ispic());
+                    } else {
+                        boolean isGif = mPublishModel.medias.get(i).mediaPath.toLowerCase().endsWith(".gif");
+                        mediaParam.put("ispic", isGif ? 2 : 1);
+                        for (int j = 0; j < imgPath.size(); j++) {
+                            if (imgPath.get(j).locaPath.equals(mPublishModel.medias.get(i).mediaPath)) {
+                                mediaParam.put("photo", imgPath.get(j).ossImgPath);
+                            }
+                        }
+
+                        mediaParam.put("isupdate", 1);
+                        mediaParam.put("width", 0);
+                        mediaParam.put("height", 0);
+                    }
+
+                    mediaParam.put("type", 1);
+                } else if (mPublishModel.medias.get(i).type == MediaItem.VIDEO) {
+                    mediaParam.put("type", 3);
+                    mVideoModel = mVideoModels.get(mPublishModel.medias.get(i).mediaPath);
+
+                    if (mVideoModel != null) {
+                        mediaParam.put("isupdate", 1);
+                  /*      mediaParam.put("video", "2018/11/09/2018110911020261660.mp4");
+//                        mediaParam.put("videofm", "2018/11/09/2018110911024777760.png");
+                        mediaParam.put("videotimer", 35);*/
+                        mediaParam.put("video", mVideoModel.videoPath);
+                        mediaParam.put("videofm", mVideoModel.videoFm);
+//                        mediaParam.put("videofm", "2018/11/09/2018110911024777760.png");
+//                        mediaParam.put("videofm",  PictureManager.getVideoThumbnail(mVideoModel.localPath));
+
+//                        mediaParam.put("videofm", "2018/11/09/2018110911024777760.png");
+                        mediaParam.put("videotimer", mVideoModel.videoLong);
+                        mediaParam.put("width", 0);
+                        mediaParam.put("height", 0);
+                    } else {
+                        mediaParam.put("isupdate", 2);
+                        mediaParam.put("video", mPublishModel.medias.get(i).listBean.getList_video_filename());
+                        mediaParam.put("videofm", mPublishModel.medias.get(i).listBean.getList_photo_filename());
+                        mediaParam.put("videotimer", mPublishModel.medias.get(i).listBean.getList_videotime());
+                        mediaParam.put("width", mPublishModel.medias.get(i).listBean.getList_width());
+                        mediaParam.put("height", mPublishModel.medias.get(i).listBean.getList_height());
+                    }
+
+                } else if (mPublishModel.medias.get(i).type == MediaItem.LINK) {
+                    mediaParam.put("type", 4);
+                    mediaParam.put("video", mPublishModel.medias.get(i).mediaPath);
+                } else {
+                    if (TextUtils.isEmpty(mPublishModel.medias.get(i).desc)) {
+                        continue;
+                    }
+
+                    mediaParam.put("type", 2);
+                    mediaParam.put("isupdate", 1);
+                    mediaParam.put("content", mPublishModel.medias.get(i).desc);
+                    mediaParam.put("isbold", String.valueOf(mPublishModel.medias.get(i).fontModel.isBlod() ? 1 : 0));
+                    mediaParam.put("color", mPublishModel.medias.get(i).fontModel.getRGBColor());
+                    mediaParam.put("fontsize", String.valueOf(mPublishModel.medias.get(i).fontModel.getFont()));
+                    mediaParam.put("textalign", String.valueOf(mPublishModel.medias.get(i).fontModel.isCenter() ? 1 : 0));
+
+                }
+
+                mediaParams.add(mediaParam);
+            }
+
+        }
+        params.put("list", mediaParams);
+        HttpUtils.doPost(TaskType.TASK_TYPE_UPDATE_DETAILS, params, MainDetailsEditActivity.this, true);
+    }
+
+    /**
+     * 把Bitmap转Byte
+     */
+    public static byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
+    }
+
+    public File getPath(String uris) {
+        Uri uri = Uri.parse(uris);
+
+
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor actualimagecursor = this.managedQuery(uri, proj, null, null, null);
+        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        actualimagecursor.moveToFirst();
+
+
+        String img_path = actualimagecursor.getString(actual_image_column_index);
+        File file = new File(img_path);
+        return file;
+//        Uri fileUri = Uri.fromFile(file);
+//        Uri fileUri = Uri.fromFile(file);
+    }
+
+    // 获取视频缩略图
+    public Bitmap getVideoThumbnail(String filePath) {
+        Bitmap b = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            retriever.setDataSource(filePath);
+            b = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        return b;
+    }
 }

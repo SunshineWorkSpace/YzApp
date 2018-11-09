@@ -530,6 +530,15 @@ public class HttpUtils {
                 case TASK_TYPE_SHOPDETAIL:
                     methodName = "/v2/asideDetail.spr";
                     break;
+                case TASK_TYPE_OSS_IMG_ONE:
+                    methodName = "/sys/getOssDirByPhoto.spr";
+                    break;
+                case TASK_TYPE_OSS_VIDEO_IMG_ONE:
+                    methodName = "/sys/getOssDirByPhoto.spr";
+                    break;
+                case TASK_TYPE_UPDATE_DETAILS:
+                    methodName="/v2/worksUpdate.spr";
+                    break;
                 default:
                     break;
             }

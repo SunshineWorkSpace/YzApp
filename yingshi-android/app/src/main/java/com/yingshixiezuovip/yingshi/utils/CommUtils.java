@@ -2,14 +2,20 @@ package com.yingshixiezuovip.yingshi.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -195,7 +201,45 @@ public class CommUtils {
             return 0;
         }
     }
+    public static Bitmap getVideoImg(String path){
+        File mediaFile = new File(path);
+        if (mediaFile.exists()) {
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            //获取第一帧原尺寸图片
+            mmr.setDataSource(path);
+            return mmr.getFrameAtTime();
+        }else {
+            return null;
+        }
 
+    }
+    public static Bitmap getVideoThumbnail(String videoPath, int width, int height,int kind) {
+        Bitmap bitmap = null;
+        Uri uri = Uri.parse(videoPath);
+        // 获取视频的缩略图
+        bitmap = ThumbnailUtils.createVideoThumbnail(UriUtils.getPath(YingApplication.getInstance(),uri), kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
+        if(bitmap!= null){
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);//調用ThumbnailUtils類的靜態方法extractThumbnail將原圖片（即上方截取的圖片）轉化為指定大小；
+        }
+        return bitmap;
+    }
+    public static String getRealPathFromUri( String contentUri) {
+        Uri uri = Uri.parse(contentUri);
+
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor =YingApplication.getInstance().getContentResolver().query(uri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

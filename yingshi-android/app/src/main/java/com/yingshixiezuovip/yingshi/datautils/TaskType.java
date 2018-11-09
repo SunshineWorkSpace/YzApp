@@ -94,8 +94,11 @@ public enum TaskType {
     TASK_TYPE_UPDATE_USER_INFO_NEW,//user/update.spr
     TASK_TYPE_ISPUBLISH,//v2/isuploadindencard.spr
     TASK_TYPE_OSS_IMG,//sys/getOssDirByPhoto.spr
+    TASK_TYPE_OSS_IMG_ONE,//sys/getOssDirByPhoto.spr
+    TASK_TYPE_OSS_VIDEO_IMG_ONE,//sys/getOssDirByPhoto.spr
     TASK_TYPE_OSS_VIDEO,//sys/getOssDirByVideo.spr
     TASK_TYPE_ASIDE_SEND,//v2/asideSend.spr
     TASK_TYPE_SHOPLIST,//v2/asidelist.spr
-    TASK_TYPE_SHOPDETAIL;//v2/asideDetail.spr
+    TASK_TYPE_UPDATE_DETAILS,//v2/worksUpdate.spr
+    TASK_TYPE_SHOPDETAIL,
 }

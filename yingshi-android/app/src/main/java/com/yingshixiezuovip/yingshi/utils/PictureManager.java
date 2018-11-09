@@ -264,7 +264,21 @@ public class PictureManager {
         // 转换为字符串
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
+    public static byte[] getToBase64(String path) throws IOException {
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        double oldSize = bitmap.getByteCount() * 1.0 / 1024;
+        bitmap = zoomImg(bitmap, bitmap.getWidth() * 0.7, bitmap.getHeight() * 0.7);
+        L.d("PicTAG", "compressImage oldSize = " + oldSize + " , nowSize = " + (bitmap.getByteCount() * 1.0 / 1024));
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        baos.flush();
+        baos.close();
+        bitmap.recycle();
+        byte[] byteArray = baos.toByteArray();
+        // 转换为字符串
+        return byteArray;
+    }
     public static String getFileBase64(String path) throws IOException {
         File file = new File(path);
         FileInputStream fis = new FileInputStream(file);
@@ -280,7 +294,21 @@ public class PictureManager {
         // 转换为字符串
         return Base64.encodeToString(buffer, Base64.DEFAULT);
     }
-
+    public static byte[] getFileToBase64(String path) throws IOException {
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+        byte[] b = new byte[1000];
+        int n;
+        while ((n = fis.read(b)) != -1) {
+            bos.write(b, 0, n);
+        }
+        fis.close();
+        bos.close();
+        byte[] buffer = bos.toByteArray();
+        // 转换为字符串
+        return buffer;
+    }
     public static Bitmap zoomImg(Bitmap bm, double newWidth, double newHeight) {
         // 获得图片的宽高
         int width = bm.getWidth();
@@ -369,5 +397,23 @@ public class PictureManager {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
+    }
+
+    public static byte[] getVideoThumbnailBitm(String filePath) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(filePath);
+        Bitmap bitmap = retriever.getFrameAtTime();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+        return stream.toByteArray();
+    }
+
+    public static Bitmap getVideoThumbnailBitmap(String filePath) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(filePath);
+        Bitmap bitmap = retriever.getFrameAtTime();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+        return bitmap;
     }
 }

@@ -12,4 +12,5 @@ public class VideoModel {
     public String localPath;
     public String videoPath;
     public int videoLong;
+    public String videoFm="";
 }

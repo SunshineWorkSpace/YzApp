@@ -526,6 +526,10 @@ public class HttpUtils {
                 case TASK_TYPE_SHOPLIST:
                     methodName = "/v2/asidelist.spr";
                     break;
+
+                case TASK_TYPE_SHOPDETAIL:
+                    methodName = "/v2/asideDetail.spr";
+                    break;
                 default:
                     break;
             }

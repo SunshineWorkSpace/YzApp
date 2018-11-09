@@ -1,5 +1,6 @@
 package com.yingshixiezuovip.yingshi.fragment;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yingshixiezuovip.yingshi.HomeShopDetailActvity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.adapter.ShopNewAdapter;
 import com.yingshixiezuovip.yingshi.base.LazyFragment;
@@ -96,10 +98,13 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
             }
         });
 
-        mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                return false;
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ShopTypeModel.ShopType shopType=mList.get(position);
+                Intent detail=new Intent(getActivity(), HomeShopDetailActvity.class);
+                detail.putExtra("id",shopType.id);
+                startActivity(detail);
             }
         });
 

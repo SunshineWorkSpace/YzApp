@@ -97,4 +97,5 @@ public enum TaskType {
     TASK_TYPE_OSS_VIDEO,//sys/getOssDirByVideo.spr
     TASK_TYPE_ASIDE_SEND,//v2/asideSend.spr
     TASK_TYPE_SHOPLIST,//v2/asidelist.spr
+    TASK_TYPE_SHOPDETAIL;//v2/asideDetail.spr
 }

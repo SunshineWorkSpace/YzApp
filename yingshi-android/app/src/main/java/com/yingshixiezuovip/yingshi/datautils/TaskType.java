@@ -101,4 +101,6 @@ public enum TaskType {
     TASK_TYPE_SHOPLIST,//v2/asidelist.spr
     TASK_TYPE_UPDATE_DETAILS,//v2/worksUpdate.spr
     TASK_TYPE_SHOPDETAIL,
+    TASK_TYPE_VIPS,//v2/user/vips.spr
+    TASK_TYPE_VIPS_SUBMIT,//v2/user/rechargeVip.spr
 }

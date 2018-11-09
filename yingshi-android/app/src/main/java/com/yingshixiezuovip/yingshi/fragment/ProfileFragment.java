@@ -29,6 +29,7 @@ import com.yingshixiezuovip.yingshi.MainCommonActivity;
 import com.yingshixiezuovip.yingshi.MainCompanyInfoSetActivity;
 import com.yingshixiezuovip.yingshi.MainFeedbackActivity;
 import com.yingshixiezuovip.yingshi.MainPublishActivity;
+import com.yingshixiezuovip.yingshi.ProfileConsumerPriceActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.StartupLoginActivity;
 import com.yingshixiezuovip.yingshi.UserAuthenticationSelectActivity;
@@ -123,7 +124,10 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
         findViewById(R.id.profile_btn_reaccount).setOnClickListener(this);
         findViewById(R.id.profile_btn_desc).setOnClickListener(this);
         findViewById(R.id.profile_btn_pubaddress).setOnClickListener(this);
-
+        findViewById(R.id.lin_xbj).setOnClickListener(this);
+        findViewById(R.id.lin_shop_order).setOnClickListener(this);
+        findViewById(R.id.lin_account_price).setOnClickListener(this);
+        findViewById(R.id.lin_shipping_address).setOnClickListener(this);
         initAlertWindow();
     }
 
@@ -460,6 +464,16 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 break;
             case R.id.pop_cancel:
                 window.dismiss();
+                break;
+            case R.id.lin_shop_order:
+                break;
+            case R.id.lin_account_price:
+                break;
+                /*收货地址入口*/
+            case R.id.lin_shipping_address:
+                break;
+            case R.id.lin_xbj:
+                intent=new Intent(getActivity(),ProfileConsumerPriceActivity.class);
                 break;
         }
         if (intent != null) {

@@ -318,6 +318,12 @@
         <activity android:name=".HomeShopPublishDetailEndActivity"
             android:launchMode="singleTask"
             ></activity>
+        <activity android:name=".ProfileConsumerPriceActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".ConsumerPriceSubmitActivity"
+            android:launchMode="singleTask"
+            ></activity>
 
     </application>
 

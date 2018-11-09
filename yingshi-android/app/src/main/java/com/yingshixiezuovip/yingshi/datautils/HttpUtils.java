@@ -521,7 +521,7 @@ public class HttpUtils {
                     methodName = "/sys/getOssDirByVideo.spr";
                     break;
                 case TASK_TYPE_ASIDE_SEND:
-                    methodName="/v2/asideSend.spr";
+                    methodName = "/v2/asideSend.spr";
                     break;
                 case TASK_TYPE_SHOPLIST:
                     methodName = "/v2/asidelist.spr";
@@ -537,7 +537,13 @@ public class HttpUtils {
                     methodName = "/sys/getOssDirByPhoto.spr";
                     break;
                 case TASK_TYPE_UPDATE_DETAILS:
-                    methodName="/v2/worksUpdate.spr";
+                    methodName = "/v2/worksUpdate.spr";
+                    break;
+                case TASK_TYPE_VIPS:
+                    methodName="/v2/user/vips.spr";
+                    break;
+                case TASK_TYPE_VIPS_SUBMIT:
+                    methodName="/v2/user/rechargeVip.spr";
                     break;
                 default:
                     break;

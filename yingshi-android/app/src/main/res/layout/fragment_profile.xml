@@ -822,6 +822,143 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
+                android:background="@color/line_color" />
+
+
+            <LinearLayout
+                android:id="@+id/lin_shop_order"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/mine_icon_action" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="商城交易订单"
+                    android:textColor="@color/colorGray"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="13sp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/data_btn_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:id="@+id/lin_account_price"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/mine_icon_action" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="账户余额"
+                    android:textColor="@color/colorGray"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="13sp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/data_btn_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:id="@+id/lin_shipping_address"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/mine_icon_action" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="收货地址"
+                    android:textColor="@color/colorGray"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="13sp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/data_btn_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:id="@+id/lin_xbj"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/mine_icon_action" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="店铺升级消保金"
+                    android:textColor="@color/colorGray"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="13sp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/data_btn_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:layout_marginBottom="39.5dp"
                 android:background="@color/line_color" />
         </LinearLayout>

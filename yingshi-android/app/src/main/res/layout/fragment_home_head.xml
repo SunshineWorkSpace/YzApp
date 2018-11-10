@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="项目"
+                    android:text="商城"
                     android:textColor="@color/main_font_black_color"
                     android:textSize="11dp" />
             </LinearLayout>
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="IP交易"
+                    android:text="项目"
                     android:textColor="@color/main_font_black_color"
                     android:textSize="11dp" />
             </LinearLayout>
@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="商城"
+                    android:text="IP交易"
                     android:textColor="@color/main_font_black_color"
                     android:textSize="11dp" />
             </LinearLayout>

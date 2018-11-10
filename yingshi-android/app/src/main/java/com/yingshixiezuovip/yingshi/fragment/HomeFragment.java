@@ -297,22 +297,21 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 intent.putExtra("item_type", MainCommonActivity.TYPE_HOME);
                 break;
             case R.id.home_btn_project:
+                intent = new Intent(getActivity(), HomeShopMainActivity.class);
+                intent.putExtra("item_title", "商城");
+                intent.putExtra("item_type", MainCommonActivity.TYPE_VIDEO);
+                break;
+            case R.id.home_btn_iptrade:
                 intent = new Intent(getActivity(), MainCommonActivity.class);
                 intent.putExtra("item_title", "电影项目");
                 intent.putExtra("item_tid", 18);
                 intent.putExtra("item_type", MainCommonActivity.TYPE_HOME);
                 break;
-            case R.id.home_btn_iptrade:
+            case R.id.home_btn_video:
                 intent = new Intent(getActivity(), MainCommonActivity.class);
                 intent.putExtra("item_title", "IP交易");
                 intent.putExtra("item_tid", 19);
                 intent.putExtra("item_type", MainCommonActivity.TYPE_HOME);
-                break;
-            case R.id.home_btn_video:
-//                intent = new Intent(getActivity(), MainCommonActivity.class);
-//                intent.putExtra("item_title", "心视频");
-//                intent.putExtra("item_type", MainCommonActivity.TYPE_VIDEO);
-                intent = new Intent(getActivity(), HomeShopMainActivity.class);
                 break;
             case R.id.home_btn_train:
                 intent = new Intent(getActivity(), MainCommonActivity.class);

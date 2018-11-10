@@ -1,20 +1,24 @@
 package com.yingshixiezuovip.yingshi;
 
+import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ShopDetailImageAdapter;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
+import com.yingshixiezuovip.yingshi.custom.PhoneWindow;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
-import com.yingshixiezuovip.yingshi.fragment.ShopTabFragment;
 import com.yingshixiezuovip.yingshi.model.ShopDetailTypeModel;
 import com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView;
+import com.yingshixiezuovip.yingshi.quote.video.JCVideoPlayerStandard;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.ImageLoaderNew;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
@@ -37,9 +41,11 @@ public class HomeShopDetailActvity extends BaseActivity {
             tv_title,tv_content;
     private RecyclerView mRecyclerView;
     private ScaleImageView mScaleImageView;
+    private JCVideoPlayerStandard video_videoplayer;
     private String mPhone;
     private  GridLayoutManager layoutManager;
     private ShopDetailImageAdapter shopDetailImageAdapter;
+    private PhoneWindow mPhoneWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,10 @@ public class HomeShopDetailActvity extends BaseActivity {
         tv_content=(TextView) findViewById(R.id.tv_content);
         mRecyclerView=(RecyclerView) findViewById(R.id.rv);
         mScaleImageView=(ScaleImageView) findViewById(R.id.iv_one);
+        video_videoplayer=(JCVideoPlayerStandard)findViewById(R.id.video_videoplayer);
+
+        findViewById(R.id.details_btn_contact).setOnClickListener(this);
+        findViewById(R.id.btn_buy).setOnClickListener(this);
         id=getIntent().getStringExtra("id");
         loadData();
 
@@ -72,6 +82,36 @@ public class HomeShopDetailActvity extends BaseActivity {
         shopDetailImageAdapter=new ShopDetailImageAdapter();
         shopDetailImageAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         shopDetailImageAdapter.setPreLoadNumber(2);
+    }
+
+    @Override
+    protected void onSingleClick(View v) {
+        super.onSingleClick(v);
+        switch (v.getId()){
+            case R.id.details_btn_contact:
+                mPhoneWindow.show("用户联系电话 " + mPhone);
+                break;
+            case R.id.btn_buy://订单详情页
+                Intent orderDetail=new Intent(HomeShopDetailActvity.this,
+                        HomeShopOderDetailActivity.class);
+                orderDetail.putExtra("orderDetail",mShopDetail);
+                startActivity(orderDetail);
+                break;
+        }
+    }
+
+    private void initCallWindow() {
+        mPhoneWindow = new PhoneWindow(this, 1);
+        mPhoneWindow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.dialog_item2) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mPhone));
+                    startActivity(intent);
+                }
+                mPhoneWindow.cancel();
+            }
+        });
     }
 
     private void loadData() {
@@ -103,6 +143,7 @@ public class HomeShopDetailActvity extends BaseActivity {
                         mShopDetail=shopDetailType.data;
                         mPhone=mShopDetail.phone;
                         inflateView();
+                        initCallWindow();
                     }
                 } else {
                     showMessage(R.string.data_load_failed);
@@ -128,6 +169,7 @@ public class HomeShopDetailActvity extends BaseActivity {
             tv_address.setText(mShopDetail.city);
             ImageLoaderNew.load(this,
                     mShopDetail.head, iv_user_head);
+
             if(null!=mShopDetail.photoList){
                 if(mShopDetail.photoList.size()==1){
                     mScaleImageView.setVisibility(View.VISIBLE);
@@ -151,6 +193,16 @@ public class HomeShopDetailActvity extends BaseActivity {
                 }
             }
 
+
+            if(TextUtils.isEmpty(mShopDetail.video)){
+                video_videoplayer.setVisibility(View.GONE);
+            }else{
+                video_videoplayer.setVisibility(View.VISIBLE);
+                video_videoplayer.setUp(mShopDetail.video, JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,
+                        "");
+                PictureManager.displayImage(mShopDetail.videofm, video_videoplayer.thumbImageView);
+
+            }
         }
     }
 

@@ -103,4 +103,5 @@ public enum TaskType {
     TASK_TYPE_SHOPDETAIL,
     TASK_TYPE_VIPS,//v2/user/vips.spr
     TASK_TYPE_VIPS_SUBMIT,//v2/user/rechargeVip.spr
+    TASK_TYPE_ADDADDRESS,///v2/user/addReceivAddress.spr
 }

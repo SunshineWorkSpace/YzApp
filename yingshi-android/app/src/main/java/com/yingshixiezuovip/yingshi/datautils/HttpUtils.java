@@ -545,6 +545,9 @@ public class HttpUtils {
                 case TASK_TYPE_VIPS_SUBMIT:
                     methodName="/v2/user/rechargeVip.spr";
                     break;
+                case TASK_TYPE_ADDADDRESS:
+                    methodName="/v2/user/addReceivAddress.spr";
+                    break;
                 default:
                     break;
             }

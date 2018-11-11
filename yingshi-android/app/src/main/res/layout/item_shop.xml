@@ -5,6 +5,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/icons">
+    <View
+        android:id="@+id/details_webview"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:visibility="gone"/>
+    <RelativeLayout
+        android:layout_below="@+id/details_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <com.yingshixiezuovip.yingshi.widget.ScaleImageView
         android:id="@+id/iv_shop"
@@ -45,5 +55,5 @@
         app:riv_oval="true" />
 </FrameLayout>
 
-
+    </RelativeLayout>
 </RelativeLayout>

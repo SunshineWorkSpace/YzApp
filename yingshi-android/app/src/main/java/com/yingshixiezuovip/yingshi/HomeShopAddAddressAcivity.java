@@ -40,7 +40,7 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_shop_addaddress,
-                R.string.title_activity_home_shop_detail_buy);
+                R.string.title_activity_home_shop_addaddress);
         initView();
     }
 

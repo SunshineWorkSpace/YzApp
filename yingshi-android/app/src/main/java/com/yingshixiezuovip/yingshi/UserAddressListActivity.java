@@ -52,7 +52,7 @@ public class UserAddressListActivity extends BaseActivity implements OnRefreshLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_address);
+        setContentView(R.layout.activity_user_address,  R.string.title_activity_user_address);
         initView();
     }
     private void initView() {

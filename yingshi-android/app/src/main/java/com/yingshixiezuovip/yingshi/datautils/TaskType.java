@@ -100,8 +100,11 @@ public enum TaskType {
     TASK_TYPE_ASIDE_SEND,//v2/asideSend.spr
     TASK_TYPE_SHOPLIST,//v2/asidelist.spr
     TASK_TYPE_UPDATE_DETAILS,//v2/worksUpdate.spr
-    TASK_TYPE_SHOPDETAIL,
+    TASK_TYPE_SHOPDETAIL,///v2/asideDetail.spr
     TASK_TYPE_VIPS,//v2/user/vips.spr
     TASK_TYPE_VIPS_SUBMIT,//v2/user/rechargeVip.spr
     TASK_TYPE_ADDADDRESS,///v2/user/addReceivAddress.spr
+    TASK_TYPE_MY_ADDRESS,///v2/user/receivAddress.spr
+    TASK_TYPE_DELETE_ADDRESS,///v2/user/delReceivAddress.spr
+    TASK_TYPE_EIDT_ADDRESS,///v2/user/updateReceivAddress.spr
 }

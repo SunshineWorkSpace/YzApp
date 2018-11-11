@@ -220,6 +220,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppMyTheme"
             android:label="@string/title_activity_home_shop_addaddress" />
+
+        <activity
+            android:name=".UserAddressListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppMyTheme"
+            android:label="@string/title_activity_user_address" />
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:configChanges="orientation|screenSize|keyboardHidden"

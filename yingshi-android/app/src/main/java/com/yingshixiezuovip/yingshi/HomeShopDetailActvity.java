@@ -76,9 +76,6 @@ public class HomeShopDetailActvity extends BaseActivity {
         id=getIntent().getStringExtra("id");
         loadData();
 
-        //设置item之间的间隔
-        SpacesItemDecoration decoration=new SpacesItemDecoration(16);
-        mRecyclerView.addItemDecoration(decoration);
         shopDetailImageAdapter=new ShopDetailImageAdapter();
         shopDetailImageAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         shopDetailImageAdapter.setPreLoadNumber(2);
@@ -178,15 +175,21 @@ public class HomeShopDetailActvity extends BaseActivity {
                 }else {
 
                     mScaleImageView.setVisibility(View.GONE);
+                    int type=0;
                     // 如果我们想要一个GridView形式的RecyclerView，那么在LayoutManager上我们就要使用GridLayoutManager
                     // 实例化一个GridLayoutManager，列数为3
                     if (mShopDetail.photoList.size() < 5 && mShopDetail.photoList.size() > 1) {
                         layoutManager = new GridLayoutManager(this,
                                 2);
+                        type=2;
                     }else{
                         layoutManager = new GridLayoutManager(this,
                                 3);
+                        type=3;
                     }
+                    //设置item之间的间隔
+                    SpacesItemDecoration decoration=new SpacesItemDecoration(16,type);
+                    mRecyclerView.addItemDecoration(decoration);
                     mRecyclerView.setLayoutManager(layoutManager);
                     mRecyclerView.setAdapter(shopDetailImageAdapter);
                     shopDetailImageAdapter.setNewData(mShopDetail.photoList);
@@ -209,9 +212,11 @@ public class HomeShopDetailActvity extends BaseActivity {
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
         private int space;
+        private int type;
 
-        public SpacesItemDecoration(int space) {
+        public SpacesItemDecoration(int space,int type) {
             this.space=space;
+            this.type=type;
         }
 
         @Override
@@ -220,8 +225,14 @@ public class HomeShopDetailActvity extends BaseActivity {
             outRect.left=space;
             outRect.right=space;
             outRect.bottom=space;
-            if(parent.getChildAdapterPosition(view)==0){
+            if(parent.getChildAdapterPosition(view)==0||parent.getChildAdapterPosition(view)==1){
                 outRect.top=space;
+            }
+
+            if(type==3){
+                if(parent.getChildAdapterPosition(view)==2){
+                    outRect.top=space;
+                }
             }
         }
     }

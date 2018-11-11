@@ -32,6 +32,7 @@ import com.yingshixiezuovip.yingshi.MainPublishActivity;
 import com.yingshixiezuovip.yingshi.ProfileConsumerPriceActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.StartupLoginActivity;
+import com.yingshixiezuovip.yingshi.UserAddressListActivity;
 import com.yingshixiezuovip.yingshi.UserAuthenticationSelectActivity;
 import com.yingshixiezuovip.yingshi.UserInfo2Activity;
 import com.yingshixiezuovip.yingshi.UserInfoSettingsActivity;
@@ -471,6 +472,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 break;
                 /*收货地址入口*/
             case R.id.lin_shipping_address:
+                intent=new Intent(getActivity(), UserAddressListActivity.class);
                 break;
             case R.id.lin_xbj:
                 intent=new Intent(getActivity(),ProfileConsumerPriceActivity.class);

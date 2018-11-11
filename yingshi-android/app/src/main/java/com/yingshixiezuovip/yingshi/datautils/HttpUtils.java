@@ -548,6 +548,15 @@ public class HttpUtils {
                 case TASK_TYPE_ADDADDRESS:
                     methodName="/v2/user/addReceivAddress.spr";
                     break;
+                case TASK_TYPE_MY_ADDRESS:
+                    methodName="/v2/user/receivAddress.spr";
+                    break;
+                case TASK_TYPE_DELETE_ADDRESS:
+                    methodName="/v2/user/delReceivAddress.spr";
+                    break;
+                case TASK_TYPE_EIDT_ADDRESS:
+                    methodName="/v2/user/updateReceivAddress.spr";
+                    break;
                 default:
                     break;
             }

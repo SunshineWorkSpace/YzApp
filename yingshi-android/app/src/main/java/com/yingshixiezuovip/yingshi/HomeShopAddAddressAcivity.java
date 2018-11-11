@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
 import com.yingshixiezuovip.yingshi.base.BaseResp;
 import com.yingshixiezuovip.yingshi.custom.SelectWindow;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
+import com.yingshixiezuovip.yingshi.model.AddressListModel;
 import com.yingshixiezuovip.yingshi.model.PlaceModel;
 import com.yingshixiezuovip.yingshi.model.UserInfo;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
@@ -33,6 +33,8 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
     private SelectWindow mCitySelectWindow;
     private PlaceModel mPlaceModel;
     protected UserInfo mUserInfo;
+    private AddressListModel.AddressModel addressModel;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +68,28 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
         });
         mUserInfo = SPUtils.getUserInfo(this);
         loadData();
+        initAddressView();
     }
 
     private void loadData(){
         mLoadWindow.show(R.string.text_request);
         HttpUtils.doPost(TaskType.TASK_TYPE_QRY_CITY_INFO, new HashMap<String, Object>(), this);
 
+    }
+
+    private void initAddressView(){
+        addressModel=(AddressListModel.AddressModel)
+                getIntent().getSerializableExtra("address");
+        if(null!=addressModel){
+            id=addressModel.id;
+            if(!TextUtils.isEmpty(addressModel.city)){
+                tv_city.setText(addressModel.city);
+                tv_city_choice.setVisibility(View.GONE);
+            }
+            edt_receiver.setText(addressModel.revcname);
+            edt_phone.setText(addressModel.telphone);
+            edt_address.setText(addressModel.address);
+        }
     }
 
     private void addAddress(){
@@ -93,6 +111,7 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
             showMessage("请输入详细地址");
             return;
         }
+        mLoadWindow.show(R.string.text_request);
         mUserInfo = SPUtils.getUserInfo(this);
         HashMap<String, Object> params = new HashMap<>();
         params.put("token", mUserInfo.token);
@@ -108,7 +127,7 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
         super.onSingleClick(v);
         switch (v.getId()){
             case R.id.right_btn_submit:
-                addAddress();
+                submmiteAddress();
                 break;
             case R.id.ll_city:
                 if (mPlaceModel == null || mPlaceModel.data == null || mPlaceModel.data.size() == 0) {
@@ -118,6 +137,44 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
                 mCitySelectWindow.show(mPlaceModel, "请选择地区");
                 break;
         }
+    }
+    private void submmiteAddress(){
+        if(TextUtils.isEmpty(id)){
+            addAddress();
+        }else {
+            editAddress();
+        }
+    }
+
+    public void editAddress(){
+        if(TextUtils.isEmpty(edt_receiver.getText().toString().trim())){
+            showMessage("请输入签收人姓名");
+            return;
+        }
+        if(TextUtils.isEmpty(edt_phone.getText().toString().trim())){
+            showMessage("请输入签收人联系电话");
+            return;
+        }
+
+        if(TextUtils.isEmpty(tv_city.getText().toString().trim())){
+            showMessage("请选择地区");
+            return;
+        }
+
+        if(TextUtils.isEmpty(edt_address.getText().toString().trim())){
+            showMessage("请输入详细地址");
+            return;
+        }
+        mLoadWindow.show(R.string.text_request);
+        mUserInfo = SPUtils.getUserInfo(this);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", mUserInfo.token);
+        params.put("id",id);
+        params.put("revcname", edt_receiver.getText().toString().trim());
+        params.put("telphone", edt_phone.getText().toString().trim());
+        params.put("city", tv_city.getText().toString().trim());
+        params.put("address", edt_address.getText().toString().trim());
+        HttpUtils.doPost(TaskType.TASK_TYPE_EIDT_ADDRESS, params, this);
     }
 
     @Override
@@ -153,6 +210,26 @@ public class HomeShopAddAddressAcivity extends BaseActivity {
                 } catch (Exception e) {
                     mLoadWindow.cancel();
                     showMessage("添加失败");
+                }
+                break;
+            case TASK_TYPE_EIDT_ADDRESS:
+                try {
+                    BaseResp baseResp= GsonUtil.fromJson(result.toString(), PlaceModel.class);
+                    Intent intent=new Intent();
+                    intent.putExtra("address",edt_address.getText().toString().trim());
+                    intent.putExtra("city",tv_city.getText().toString().trim());
+                    intent.putExtra("name",edt_receiver.getText().toString().trim());
+                    intent.putExtra("phone",edt_phone.getText().toString().trim());
+                    intent.putExtra("id",id);
+                    setResult(RESULT_OK,intent);
+                    finish();
+                    System.out.println("修改收货地址："+result.toString());
+                    if(200==baseResp.result.code){
+                        showMessage("修改成功");
+                    }
+                } catch (Exception e) {
+                    mLoadWindow.cancel();
+                    showMessage("修改失败");
                 }
                 break;
         }

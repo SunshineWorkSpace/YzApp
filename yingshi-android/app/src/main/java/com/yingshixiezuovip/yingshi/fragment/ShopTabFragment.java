@@ -71,6 +71,7 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setPreLoadNumber(2);
 
+
     }
 
 
@@ -142,7 +143,7 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
             outRect.left=space;
             outRect.right=space;
             outRect.bottom=space;
-            if(parent.getChildAdapterPosition(view)==0){
+            if(parent.getChildAdapterPosition(view)==0||parent.getChildAdapterPosition(view)==1){
                 outRect.top=space;
             }
         }

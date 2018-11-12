@@ -115,4 +115,7 @@ public enum TaskType {
     /*---*/
     TASK_TYPE_BUY_ORDER,//aside/order/buyerOrder.spr
     TASK_TYPE_BUY_ORDER_CLEAN,//aside/order/cancleOrder.spr
+    TASK_TYPE_MALL_BUY_PAY,//aside/order/asideSPay.spr
+    TASK_TYPE_MALL_BUY_OK,//aside/order/confirOrder.spr
+    TASK_TYPE_MALL_WL_DETAIL,//aside/order/lookinvoiceInfo.spr
 }

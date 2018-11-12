@@ -67,6 +67,8 @@ public class BuyerOrderAdapter extends BaseQuickAdapter<BuyerOrderModel.BuyerOde
                 tv_order_type.setText("等待付款");
                 tv_order_pay.setVisibility(View.VISIBLE);
                 tv_order_clean.setVisibility(View.VISIBLE);
+                tv_order_pay.setText("付款");
+                tv_order_clean.setText("取消订单");
                 break;
             case "2":
                 tv_order_type.setText("等待商家发货");
@@ -75,8 +77,10 @@ public class BuyerOrderAdapter extends BaseQuickAdapter<BuyerOrderModel.BuyerOde
                 break;
             case "3":
                 tv_order_type.setText("等待收货");
-                tv_order_pay.setVisibility(View.GONE);
-                tv_order_clean.setVisibility(View.GONE);
+                tv_order_pay.setVisibility(View.VISIBLE);
+                tv_order_clean.setVisibility(View.VISIBLE);
+                tv_order_pay.setText("查看物流");
+                tv_order_clean.setText("确定收款?");
                 break;
             case "4":
                 tv_order_type.setText("已完成");

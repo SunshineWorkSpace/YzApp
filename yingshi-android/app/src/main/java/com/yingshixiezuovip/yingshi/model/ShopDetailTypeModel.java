@@ -13,7 +13,7 @@ public class ShopDetailTypeModel extends BaseResp {
     public ShopDetailType data;
     public static class ShopDetailType extends ListDetailsModel.DetailsBaseItem {
     	public String id;
-        public String uid;
+        public int uid;
         public String title;
         public String price;
         public String isnew;

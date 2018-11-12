@@ -166,6 +166,8 @@ public class HomeShopOderDetailActivity extends BaseActivity {
                     break;
                 case REQUEST_TYPE_ODER_PAY://付款回调
                     tv_submmit.setText("已付款");
+                    ll_add_address.setEnabled(false);
+                    ll_choice_number.setEnabled(false);
                     break;
             }
         }

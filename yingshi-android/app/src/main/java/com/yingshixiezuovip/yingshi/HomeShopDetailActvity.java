@@ -1,19 +1,24 @@
 package com.yingshixiezuovip.yingshi;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ShopDetailImageAdapter;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
+import com.yingshixiezuovip.yingshi.base.BaseResp;
 import com.yingshixiezuovip.yingshi.custom.PhoneWindow;
 import com.yingshixiezuovip.yingshi.custom.ShareWindow;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
@@ -26,9 +31,13 @@ import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.ImageLoaderNew;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
 import com.yingshixiezuovip.yingshi.utils.SPUtils;
+import com.yingshixiezuovip.yingshi.widget.ScaleImageNewView;
 import com.yingshixiezuovip.yingshi.widget.ScaleImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yuhua.gou on 2018/11/9.
@@ -52,6 +61,10 @@ public class HomeShopDetailActvity extends BaseActivity {
     private PhoneWindow mPhoneWindow;
     private ShareWindow mShareWindow;
     private ShareModel.ShareItem mShareItem;
+    private int mIsfllow;
+    final ArrayList<String> pictureList = new ArrayList<>();
+    private Bundle mReenterState;
+    ViewGroup parent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +90,7 @@ public class HomeShopDetailActvity extends BaseActivity {
         mScaleImageView=(ScaleImageView) findViewById(R.id.iv_one);
         video_videoplayer=(JCVideoPlayerStandard)findViewById(R.id.video_videoplayer);
         details_btn_shops= (LinearLayout) findViewById(R.id.details_btn_shops);
+        parent = (ViewGroup) findViewById(R.id.rv);
 
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
         findViewById(R.id.right_btn_name).setVisibility(View.GONE);
@@ -92,6 +106,21 @@ public class HomeShopDetailActvity extends BaseActivity {
         shopDetailImageAdapter.setPreLoadNumber(2);
         initShareWindow();
         details_btn_shops.setOnClickListener(this);
+        shopDetailImageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ScaleImageNewView imageView=(ScaleImageNewView)view.findViewById(R.id.iv_imge);
+                PhotoBrowseActivity.startWithElement(HomeShopDetailActvity.this, pictureList, position, imageView);
+
+            }
+        });
+        mScaleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhotoBrowseActivity.startWithElement(HomeShopDetailActvity.this, pictureList, 0, mScaleImageView);
+
+            }
+        });
     }
 
     private void initShareWindow(){
@@ -117,11 +146,22 @@ public class HomeShopDetailActvity extends BaseActivity {
                 break;
             case R.id.details_btn_shops://商铺
                 Intent shops=new Intent(HomeShopDetailActvity.this,HomeShopUserActivity.class);
-                shops.putExtra("uid",mShopDetail.uid);
+                shops.putExtra("uid",mShopDetail.uid+"");
                 startActivity(shops);
+                break;
+            case R.id.tv_fllow:
+                onFollowClick(mShopDetail.uid,mIsfllow);
                 break;
         }
     }
+
+    public void onFollowClick(int userid, int follow) {
+        HashMap localHashMap = new HashMap();
+        localHashMap.put("followid", userid);
+        localHashMap.put("token", mUserInfo.token);
+        HttpUtils.doPost(follow == 1 ? TaskType.TASK_TYPE_HOME_CLEAR_FOLLOW:TaskType.TASK_TYPE_HOME_FOLLOW , localHashMap, this);
+    }
+
 
     private void initCallWindow() {
         mPhoneWindow = new PhoneWindow(this, 1);
@@ -172,6 +212,29 @@ public class HomeShopDetailActvity extends BaseActivity {
                     showMessage(R.string.data_load_failed);
                 }
                 break;
+            case TASK_TYPE_HOME_FOLLOW ://关注
+                BaseResp baseResp=GsonUtil.fromJson(result.toString(), BaseResp.class);
+            if(200==baseResp.result.code) {
+                mIsfllow = 1;
+                tv_fllow.setText(mIsfllow == 0 ? "+关注" : "已关注");
+                tv_fllow.setTextColor(getResources().getColor(mIsfllow == 1
+                        ? R.color.colorWhite : R.color.colorLanse));
+                tv_fllow.setBackgroundResource(mIsfllow == 1 ?
+                        R.drawable.concern_alread_shape : R.drawable.concern_shape);
+            }
+                break;
+
+            case TASK_TYPE_HOME_CLEAR_FOLLOW://取消关注
+                BaseResp clearfollow=GsonUtil.fromJson(result.toString(), BaseResp.class);
+                if(200==clearfollow.result.code) {
+                    mIsfllow = 0;
+                    tv_fllow.setText(mIsfllow == 0 ? "+关注" : "已关注");
+                    tv_fllow.setTextColor(getResources().getColor(mIsfllow == 1
+                            ? R.color.colorWhite : R.color.colorLanse));
+                    tv_fllow.setBackgroundResource(mIsfllow == 1 ?
+                            R.drawable.concern_alread_shape : R.drawable.concern_shape);
+                }
+                break;
         }
     }
 
@@ -184,11 +247,13 @@ public class HomeShopDetailActvity extends BaseActivity {
             tv_user_name.setText(mShopDetail.nickname);
             tv_num.setText(mShopDetail.num);
             tv_degree.setText(mShopDetail.isnew);
-            tv_fllow.setText(mShopDetail.isfollow == 0 ? "+关注" : "已关注");
-            tv_fllow.setTextColor(getResources().getColor(mShopDetail.isfollow == 1
+            mIsfllow=mShopDetail.isfollow;
+            tv_fllow.setText(mIsfllow== 0 ? "+关注" : "已关注");
+            tv_fllow.setTextColor(getResources().getColor(mIsfllow == 1
                     ? R.color.colorWhite : R.color.colorLanse));
-            tv_fllow.setBackgroundResource(mShopDetail.isfollow == 1 ?
+            tv_fllow.setBackgroundResource(mIsfllow == 1 ?
                     R.drawable.concern_alread_shape : R.drawable.concern_shape);
+            tv_fllow.setOnClickListener(this);
             tv_price.setText("¥"+mShopDetail.price);
             tv_premium_money.setText("¥"+mShopDetail.vipMoney);
             tv_title.setText(mShopDetail.title);
@@ -197,7 +262,9 @@ public class HomeShopDetailActvity extends BaseActivity {
             ImageLoaderNew.load(this,
                     mShopDetail.head, iv_user_head);
 
+
             if(null!=mShopDetail.photoList){
+                setImageList();
                 if(mShopDetail.photoList.size()==1){
                     mScaleImageView.setVisibility(View.VISIBLE);
                     PictureManager.displayHead(mShopDetail.photoList.get(0).photo,
@@ -223,6 +290,7 @@ public class HomeShopDetailActvity extends BaseActivity {
                     mRecyclerView.setLayoutManager(layoutManager);
                     mRecyclerView.setAdapter(shopDetailImageAdapter);
                     shopDetailImageAdapter.setNewData(mShopDetail.photoList);
+                    setSharedElementCallback(this);
                 }
             }
 
@@ -236,6 +304,29 @@ public class HomeShopDetailActvity extends BaseActivity {
                 PictureManager.displayImage(mShopDetail.videofm, video_videoplayer.thumbImageView);
 
             }
+        }
+    }
+    /**
+     * 接管Activity的setExitSharedElementCallback
+     * @param activity
+     */
+    public void setSharedElementCallback(Activity activity){
+        ActivityCompat.setExitSharedElementCallback(activity, new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                if (mReenterState!=null){
+                    int index = mReenterState.getInt("index",0);
+                    sharedElements.clear();
+                    sharedElements.put("tansition_view",parent.getChildAt(index));
+                    mReenterState = null;
+                }
+            }
+        });
+
+    }
+    private void setImageList(){
+        for(int i=0;i<mShopDetail.photoList.size();i++){
+            pictureList.add(mShopDetail.photoList.get(i).photo);
         }
     }
 
@@ -265,6 +356,12 @@ public class HomeShopDetailActvity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+        mReenterState = new Bundle(data.getExtras());
     }
     @Override
     public void taskIsCanceled(TaskType type) {

@@ -1,18 +1,14 @@
 package com.yingshixiezuovip.yingshi;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
 import com.yingshixiezuovip.yingshi.base.BaseResp;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
-import com.yingshixiezuovip.yingshi.fragment.ShopFragment;
 import com.yingshixiezuovip.yingshi.fragment.ShopUserFragment;
 import com.yingshixiezuovip.yingshi.model.ShopUserModel;
 import com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView;
@@ -28,7 +24,7 @@ import java.util.HashMap;
 public class HomeShopUserActivity extends BaseActivity implements View.OnClickListener{
     private String mUid;
     private ShopUserModel.ShopUser mShopUser;
-    private TextView tv_user_name,tv_money,tv_address,tv_shop_type,tvFollow;
+    private TextView tv_user_name,tv_address,tv_shop_type,tvFollow;
     private RoundedImageView iv_user_head;
     private int isFllow;
     @Override
@@ -41,7 +37,6 @@ public class HomeShopUserActivity extends BaseActivity implements View.OnClickLi
 
     private void initView(Bundle savedInstanceState){
         tv_user_name= (TextView) findViewById(R.id.tv_user_name);
-        tv_money= (TextView) findViewById(R.id.tv_money);
         tv_address= (TextView) findViewById(R.id.tv_address);
         tv_shop_type= (TextView) findViewById(R.id.tv_shop_type);
         tvFollow= (TextView) findViewById(R.id.tv_follow_new);
@@ -110,8 +105,7 @@ public class HomeShopUserActivity extends BaseActivity implements View.OnClickLi
     private void initShopInfoView(){
         ImageLoaderNew.load(this,
                 mShopUser.head, iv_user_head);
-        tv_user_name.setText(mShopUser.shopName);
-        tv_money.setText("消保金: "+mShopUser.vipMoney+"元");
+        tv_user_name.setText(mShopUser.shopName+"  "+"消保金: "+mShopUser.vipMoney+"元");
         tv_address.setText(mShopUser.city);
         tv_shop_type.setText(mShopUser.shoptype);
         tvFollow.setText(mShopUser.isguanzhu == 0 ? "+关注" : "已关注");

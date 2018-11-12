@@ -581,6 +581,11 @@ public class HttpUtils {
                 case TASK_TYPE_MALL_WL_DETAIL:
                     methodName="/aside/order/lookinvoiceInfo.spr";
                     break;
+                case TASK_TYPE_SHOP_SUBMMITE_ORDER:
+                    methodName="/v2/asideSoonBuy.spr";
+                    break;
+                case TASK_TYPE_SHOP_ORDER_PAY:
+                    methodName="/v2/asideSPay.spr";
                 default:
                     break;
             }

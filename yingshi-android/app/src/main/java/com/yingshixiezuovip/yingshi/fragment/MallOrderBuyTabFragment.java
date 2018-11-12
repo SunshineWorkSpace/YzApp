@@ -16,6 +16,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yingshixiezuovip.yingshi.HomeShopDetailActvity;
+import com.yingshixiezuovip.yingshi.LookLogisticsActivity;
+import com.yingshixiezuovip.yingshi.MallOrderBuyPayActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.adapter.BuyerOrderAdapter;
 import com.yingshixiezuovip.yingshi.base.LazyFragment;
@@ -219,6 +221,9 @@ public class MallOrderBuyTabFragment extends LazyFragment implements OnRefreshLi
             case TASK_TYPE_BUY_ORDER_CLEAN:
                 loadData();
                 break;
+            case TASK_TYPE_MALL_BUY_OK:
+                loadData();
+                break;
         }
     }
 
@@ -250,13 +255,32 @@ public class MallOrderBuyTabFragment extends LazyFragment implements OnRefreshLi
 
     @Override
     public void OnItemCleanClick(View view, int position) {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("token", mUserInfo.token);
-        params.put("id", mList.get(position).id);
-        HttpUtils.doPost(TaskType.TASK_TYPE_BUY_ORDER_CLEAN, params, this);
+        if(mList.get(position).state.equals("1")){
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("token", mUserInfo.token);
+            params.put("id", mList.get(position).id);
+            HttpUtils.doPost(TaskType.TASK_TYPE_BUY_ORDER_CLEAN, params, this);
+        }else if(mList.get(position).state.equals("3")){
+
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("token", mUserInfo.token);
+            params.put("id", mList.get(position).id);
+            HttpUtils.doPost(TaskType.TASK_TYPE_MALL_BUY_OK, params, this);
+        }
+
     }
     @Override
     public void OnItemBuyClick(View view, int position) {
+        if(mList.get(position).state.equals("1")){
+            Intent it =new Intent(getActivity(),MallOrderBuyPayActivity.class);
+            it.putExtra("id",mList.get(position).id);
+            it.putExtra("price",mList.get(position).total);
+            startActivity(it);
+        }else if(mList.get(position).state.equals("3")){
+            Intent it=new Intent(getActivity(),LookLogisticsActivity.class);
+            it.putExtra("id",mList.get(position).id);
+            startActivity(it);
+        }
 
     }
 }

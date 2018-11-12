@@ -361,7 +361,12 @@
             android:theme="@style/AppMyTheme"
             android:launchMode="singleTask"
             ></activity>
-
+        <activity android:name=".MallOrderBuyPayActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".LookLogisticsActivity"
+            android:launchMode="singleTask"
+            ></activity>
     </application>
 
 </manifest>

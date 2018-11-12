@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -85,6 +86,20 @@ public class UserAddressListActivity extends BaseActivity implements OnRefreshLi
                     @Override
                     public void onClick(View v) {
                         deleteAddressDialog(position);
+                    }
+                });
+                view.findViewById(R.id.ll_user_address).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AddressListModel.AddressModel addressMode=mList.get(position);
+                        Intent choiceAddress=new Intent();
+                        choiceAddress.putExtra("city",addressMode.city);
+                        choiceAddress.putExtra("address",addressMode.address);
+                        choiceAddress.putExtra("id",addressMode.id);
+                        choiceAddress.putExtra("telphone",addressMode.telphone);
+                        choiceAddress.putExtra("revcname",addressMode.revcname);
+                        UserAddressListActivity.this.setResult(RESULT_OK,choiceAddress);
+                        finish();
                     }
                 });
 

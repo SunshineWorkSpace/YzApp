@@ -8,14 +8,17 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ShopDetailImageAdapter;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
 import com.yingshixiezuovip.yingshi.custom.PhoneWindow;
+import com.yingshixiezuovip.yingshi.custom.ShareWindow;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
+import com.yingshixiezuovip.yingshi.model.ShareModel;
 import com.yingshixiezuovip.yingshi.model.ShopDetailTypeModel;
 import com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView;
 import com.yingshixiezuovip.yingshi.quote.video.JCVideoPlayerStandard;
@@ -42,10 +45,13 @@ public class HomeShopDetailActvity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private ScaleImageView mScaleImageView;
     private JCVideoPlayerStandard video_videoplayer;
+    private LinearLayout details_btn_shops;
     private String mPhone;
     private  GridLayoutManager layoutManager;
     private ShopDetailImageAdapter shopDetailImageAdapter;
     private PhoneWindow mPhoneWindow;
+    private ShareWindow mShareWindow;
+    private ShareModel.ShareItem mShareItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,11 @@ public class HomeShopDetailActvity extends BaseActivity {
         mRecyclerView=(RecyclerView) findViewById(R.id.rv);
         mScaleImageView=(ScaleImageView) findViewById(R.id.iv_one);
         video_videoplayer=(JCVideoPlayerStandard)findViewById(R.id.video_videoplayer);
+        details_btn_shops= (LinearLayout) findViewById(R.id.details_btn_shops);
+
+        findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
+        findViewById(R.id.right_btn_name).setVisibility(View.GONE);
+        findViewById(R.id.right_iv_more).setVisibility(View.VISIBLE);
 
         findViewById(R.id.details_btn_contact).setOnClickListener(this);
         findViewById(R.id.btn_buy).setOnClickListener(this);
@@ -79,6 +90,13 @@ public class HomeShopDetailActvity extends BaseActivity {
         shopDetailImageAdapter=new ShopDetailImageAdapter();
         shopDetailImageAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         shopDetailImageAdapter.setPreLoadNumber(2);
+        initShareWindow();
+        details_btn_shops.setOnClickListener(this);
+    }
+
+    private void initShareWindow(){
+        mShareItem=new ShareModel.ShareItem();
+        mShareWindow = new ShareWindow(this);
     }
 
     @Override
@@ -93,6 +111,14 @@ public class HomeShopDetailActvity extends BaseActivity {
                         HomeShopOderDetailActivity.class);
                 orderDetail.putExtra("orderDetail",mShopDetail);
                 startActivity(orderDetail);
+                break;
+            case R.id.right_btn_submit:
+                mShareWindow.show(mShareItem, this);
+                break;
+            case R.id.details_btn_shops://商铺
+                Intent shops=new Intent(HomeShopDetailActvity.this,HomeShopUserActivity.class);
+                shops.putExtra("uid",mShopDetail.uid);
+                startActivity(shops);
                 break;
         }
     }
@@ -151,6 +177,10 @@ public class HomeShopDetailActvity extends BaseActivity {
 
     public void inflateView(){
         if(null!=mShopDetail) {
+            mShareItem.content=mShopDetail.sharecontent;
+            mShareItem.photo=mShopDetail.sharephoto;
+            mShareItem.title=mShopDetail.sharetitle;
+            mShareItem.url=mShopDetail.shareurl;
             tv_user_name.setText(mShopDetail.nickname);
             tv_num.setText(mShopDetail.num);
             tv_degree.setText(mShopDetail.isnew);

@@ -32,6 +32,10 @@ public class ShopDetailTypeModel extends BaseResp {
         public String isbuy;
         public int isfollow;
         public List<PhotoImageItem> photoList;
+        public String sharetitle;
+        public String sharecontent;
+        public String sharephoto;
+        public String shareurl;
 
     }
 

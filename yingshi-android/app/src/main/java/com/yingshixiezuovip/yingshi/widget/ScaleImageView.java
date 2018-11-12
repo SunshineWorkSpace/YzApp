@@ -34,6 +34,9 @@ public class ScaleImageView extends ImageView {
             float scale = (float) initHeight / (float) initWidth;
             if (width > 0){
                 height = (int) ((float)width * scale);
+//                if(height<200){
+//                    height=200;
+//                }
             }
             setMeasuredDimension(width, height);
         } else {

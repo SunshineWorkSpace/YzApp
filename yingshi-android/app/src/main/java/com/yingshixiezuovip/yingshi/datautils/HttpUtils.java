@@ -557,6 +557,15 @@ public class HttpUtils {
                 case TASK_TYPE_EIDT_ADDRESS:
                     methodName="/v2/user/updateReceivAddress.spr";
                     break;
+                case TASK_TYPE_SHOP_INFO:
+                    methodName="/v2/asideShopInfo.spr";
+                    break;
+                case TASK_TYPE_SHOP_ALL:
+                    methodName="/v2/asideShopPall.spr";
+                    break;
+                case TASK_TYPE_SHOP_NEW:
+                    methodName="/v2/asideShopPnew.spr";
+                    break;
                 default:
                     break;
             }

@@ -97,5 +97,6 @@
     <string name="title_activity_home_shop_orderdetail">订单详情</string>
     <string name="title_activity_home_shop_addaddress">添加新地址</string>
     <string name="title_activity_user_address">我的地址</string>
+    <string name="title_activity_shop_user">商城</string>
 
 </resources>

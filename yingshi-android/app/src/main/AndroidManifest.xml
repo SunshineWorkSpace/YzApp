@@ -211,6 +211,12 @@
             android:label="@string/title_activity_home_shop_detail_buy" />
 
         <activity
+            android:name=".HomeShopUserActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppMyTheme"
+            android:label="@string/title_activity_shop_user" />
+
+        <activity
             android:name=".HomeShopOderDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppMyTheme"

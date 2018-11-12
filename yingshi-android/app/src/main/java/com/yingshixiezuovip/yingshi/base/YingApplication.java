@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.multidex.MultiDexApplication;
 
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -48,7 +49,7 @@ import cn.jpush.android.api.JPushInterface;
  * describe：
  */
 
-public class YingApplication extends Application implements Application.ActivityLifecycleCallbacks {
+public class YingApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks {
     private static YingApplication instance;
     public DisplayImageOptions mHeadOption, mImageOption;
     private VersionModel versionModel;

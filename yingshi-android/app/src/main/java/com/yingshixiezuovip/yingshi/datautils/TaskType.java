@@ -107,4 +107,7 @@ public enum TaskType {
     TASK_TYPE_MY_ADDRESS,///v2/user/receivAddress.spr
     TASK_TYPE_DELETE_ADDRESS,///v2/user/delReceivAddress.spr
     TASK_TYPE_EIDT_ADDRESS,///v2/user/updateReceivAddress.spr
+    TASK_TYPE_SHOP_INFO,///yingzhe/v2/asideShopInfo.spr
+    TASK_TYPE_SHOP_ALL,///v2/asideShopPall.spr
+    TASK_TYPE_SHOP_NEW,///v2/asideShopPnew.spr
 }

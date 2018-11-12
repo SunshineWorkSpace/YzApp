@@ -3,6 +3,7 @@ package com.yingshixiezuovip.yingshi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
@@ -18,9 +19,10 @@ public class HomeShopOderDetailActivity extends BaseActivity {
             tv_name_newsdegree,tv_buy_num,tv_freight_info,
             tv_freight,tv_total_fee,tv_total_info;
     private TextView tv_add,tv_add_address;
+    private LinearLayout ll_add_address;
     private ShopDetailTypeModel.ShopDetailType mShopDetail;
     private final static int REQUEST_ADD_ADDRESS=110;
-    private String cityName,addressName;
+    private String cityName,addressName,id,telphone,revcname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class HomeShopOderDetailActivity extends BaseActivity {
         tv_add= (TextView) findViewById(R.id.tv_add);
         tv_add.setOnClickListener(this);
         tv_add_address= (TextView) findViewById(R.id.tv_add_address);
+        ll_add_address=(LinearLayout) findViewById(R.id.ll_add_address);
+        ll_add_address.setOnClickListener(this);
         initDataView();
     }
 
@@ -61,10 +65,10 @@ public class HomeShopOderDetailActivity extends BaseActivity {
     protected void onSingleClick(View v) {
         super.onSingleClick(v);
         switch (v.getId()){
-            case R.id.tv_add://添加新的地址
+            case R.id.ll_add_address:
                 Intent addAddress=new Intent(HomeShopOderDetailActivity.this,
-                        HomeShopAddAddressAcivity.class);
-            startActivityForResult(addAddress,REQUEST_ADD_ADDRESS);
+                        UserAddressListActivity.class);
+                startActivityForResult(addAddress,REQUEST_ADD_ADDRESS);
                 break;
         }
     }
@@ -77,6 +81,9 @@ public class HomeShopOderDetailActivity extends BaseActivity {
                 case REQUEST_ADD_ADDRESS:
                     cityName=data.getStringExtra("city");
                     addressName=data.getStringExtra("address");
+                    id=data.getStringExtra("id");
+                    telphone=data.getStringExtra("telphone");
+                    revcname=data.getStringExtra("revcname");
                     tv_add_address.setText(cityName+" "+addressName);
                     break;
             }

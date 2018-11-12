@@ -368,6 +368,20 @@
         <activity android:name=".LookLogisticsActivity"
             android:launchMode="singleTask"
             ></activity>
+        <activity android:name=".MallOrderSellDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppMyTheme"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".BuyPlayerProfileActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".SearchWLMessageActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".AccountPriceActivity"
+            android:launchMode="singleTask"
+            ></activity>
     </application>
 
 </manifest>

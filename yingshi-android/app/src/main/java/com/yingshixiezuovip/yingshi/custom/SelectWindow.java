@@ -13,15 +13,19 @@ import com.yingshixiezuovip.yingshi.adapter.NewNumberAdapter;
 import com.yingshixiezuovip.yingshi.adapter.NewOldAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ProvinceAdapter;
 import com.yingshixiezuovip.yingshi.adapter.SexStatusAdapter;
+import com.yingshixiezuovip.yingshi.adapter.WlAdapter;
 import com.yingshixiezuovip.yingshi.base.BasePopupWindow;
 import com.yingshixiezuovip.yingshi.model.PlaceModel;
+import com.yingshixiezuovip.yingshi.model.WLOrderModel;
 import com.yingshixiezuovip.yingshi.quote.dropview.OnItemSelectedListener;
 import com.yingshixiezuovip.yingshi.quote.dropview.WheelView;
 import com.yingshixiezuovip.yingshi.utils.CommUtils;
 import com.yingshixiezuovip.yingshi.utils.L;
 import com.yingshixiezuovip.yingshi.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Resmic on 2017/5/17.
@@ -42,6 +46,7 @@ public class SelectWindow extends BasePopupWindow {
     private int mType;
     private String [] mNewOldStatus;
     private int [] mNumberList;
+    private List<WLOrderModel.WLOrderBeanModel>mList=new ArrayList<>();
     public SelectWindow(Context mContext, int type) {
         super(mContext);
         initView(type);
@@ -56,7 +61,13 @@ public class SelectWindow extends BasePopupWindow {
         mSexStatus = mContext.getResources().getStringArray(R.array.text_feel_status);
         mNewOldStatus= mContext.getResources().getStringArray(R.array.text_new_old);
     }
-
+    public SelectWindow(Context mContext, int type, List<WLOrderModel.WLOrderBeanModel> list) {
+        super(mContext);
+        mList=list;
+        initView(type);
+        mSexStatus = mContext.getResources().getStringArray(R.array.text_feel_status);
+        mNewOldStatus= mContext.getResources().getStringArray(R.array.text_new_old);
+    }
     private int [] initNumberList(int maxNumber){
         if(maxNumber<10){
             maxNumber=10;
@@ -92,6 +103,8 @@ public class SelectWindow extends BasePopupWindow {
             initNewOld();
         }else if (type==6){
           initNumberShop();
+        }else if(type==10){
+            initWLDetail();
         }
     }
 
@@ -229,6 +242,25 @@ public class SelectWindow extends BasePopupWindow {
             }
         });
     }
+
+    private void initWLDetail() {
+        mWheelViewYear.setAdapter(new WlAdapter(mContext,mList));
+        mWheelViewYear.setGravity(Gravity.CENTER);
+        mWheelViewYear.setTextSize(24F, 14F);
+        mWheelViewYear.setLineSpacingMultiplier(1.5F);
+        mWheelViewYear.setCyclic(false);
+        mWheelViewYear.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                ((TextView) findViewById(R.id.select_tv_title)).setText(mList.get(index).invoice_name);
+            }
+        });
+    }
+    public void showWL(int newold) {
+        ((TextView) findViewById(R.id.select_tv_title)).setText("物流信息");
+        mWheelViewYear.setCurrentItem(newold - 1);
+        super.show();
+    }
     public void show(int newold,String type) {
         ((TextView) findViewById(R.id.select_tv_title)).setText("新旧程度");
         mWheelViewYear.setCurrentItem(newold - 1);
@@ -322,6 +354,8 @@ public class SelectWindow extends BasePopupWindow {
                 }else if(mType==6){
                     onItemSelectedListener.onItemSelected(mNumberList[mWheelViewYear.getCurrentItem()]+"");
 
+                }else if(mType==10){
+                    onItemSelectedListener.onItemSelected(mList.get(mWheelViewYear.getCurrentItem()).invoice_name+"");
                 }
                 break;
         }

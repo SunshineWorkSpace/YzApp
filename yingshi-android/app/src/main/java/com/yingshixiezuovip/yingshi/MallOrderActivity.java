@@ -35,6 +35,7 @@ public class MallOrderActivity extends BaseActivity {
                 intent=new Intent(this,MallOrderBuyDetailActiviity.class);
                 break;
             case R.id.lin_sell:
+                intent=new Intent(this,MallOrderSellDetailActivity.class);
                 break;
         }
         if(null!=intent){

@@ -120,4 +120,9 @@ public enum TaskType {
     TASK_TYPE_MALL_BUY_PAY,//aside/order/asideSPay.spr
     TASK_TYPE_MALL_BUY_OK,//aside/order/confirOrder.spr
     TASK_TYPE_MALL_WL_DETAIL,//aside/order/lookinvoiceInfo.spr
+    TASK_TYPE_MALL_SELL_LIST,//aside/order/sellerOrder.spr
+    TASK_TYPE_MALL_SELL_CLEAN,//aside/order/cancleOrder_seller.spr
+    TASK_TYPE_MALL_BUYER_MESSAGE,///aside/order/receiptInfo.spr
+    TASK_TYPE_WL_LIST,//aside/order/getinvoice.spr
+    TASK_TYPE_SEND_ORDER,//aside/order/invoiceOrder.spr
 }

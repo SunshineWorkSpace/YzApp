@@ -8,39 +8,36 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.model.BuyerOrderModel;
-import com.yingshixiezuovip.yingshi.model.ShopTypeModel;
 import com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView;
-import com.yingshixiezuovip.yingshi.utils.CommUtils;
 import com.yingshixiezuovip.yingshi.utils.ImageLoaderNew;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
-import com.yingshixiezuovip.yingshi.widget.ScaleImageView;
 
 /**
- * 类名称:BuyerOrderAdapter
+ * 类名称:SellerOrderAdapter
  * 类描述:
- * 创建时间: 2018-11-12-00:29
+ * 创建时间: 2018-11-12-23:33
  * 创建人: sht
  * 修改人: sht
  * 修改备注:
  */
-public class BuyerOrderAdapter extends BaseQuickAdapter<BuyerOrderModel.BuyerOderDetailModel, BaseViewHolder> {
+public class SellerOrderAdapter extends BaseQuickAdapter<BuyerOrderModel.BuyerOderDetailModel, BaseViewHolder> {
 
-    public BuyerOrderAdapter(){
+    public SellerOrderAdapter(){
         super(R.layout.item_buyer_order);
     }
     public interface OnItemCleanClickListener {
         void OnItemCleanClick(View view, int position);
     }
-    private OnItemCleanClickListener onItemCleanClickListener;
-    public void setOnItemCleanClickListener(OnItemCleanClickListener mOnItemLongClickListener) {
+    private BuyerOrderAdapter.OnItemCleanClickListener onItemCleanClickListener;
+    public void setOnItemCleanClickListener(BuyerOrderAdapter.OnItemCleanClickListener mOnItemLongClickListener) {
         this.onItemCleanClickListener = mOnItemLongClickListener;
     }
 
     public interface OnItemBuyClickListener {
         void OnItemBuyClick(View view, int position);
     }
-    private OnItemBuyClickListener onItemBuyClickListener;
-    public void setOItemBuyClickListener(OnItemBuyClickListener mOnItemLongClickListener) {
+    private BuyerOrderAdapter.OnItemBuyClickListener onItemBuyClickListener;
+    public void setOItemBuyClickListener(BuyerOrderAdapter.OnItemBuyClickListener mOnItemLongClickListener) {
         this.onItemBuyClickListener = mOnItemLongClickListener;
     }
     @Override
@@ -64,33 +61,38 @@ public class BuyerOrderAdapter extends BaseQuickAdapter<BuyerOrderModel.BuyerOde
                 tv_order_clean.setVisibility(View.GONE);
                 break;
             case "1":
-                tv_order_type.setText("等待付款");
+                tv_order_type.setText("等待卖家付款");
                 tv_order_pay.setVisibility(View.VISIBLE);
                 tv_order_clean.setVisibility(View.VISIBLE);
-                tv_order_pay.setText("付款");
+                tv_order_pay.setText("查看买家信息");
                 tv_order_clean.setText("取消订单");
                 break;
             case "2":
-                tv_order_type.setText("等待商家发货");
-                tv_order_pay.setVisibility(View.GONE);
-                tv_order_clean.setVisibility(View.GONE);
+                tv_order_type.setText("已付款，设置物流信息");
+                tv_order_pay.setVisibility(View.VISIBLE);
+                tv_order_clean.setVisibility(View.VISIBLE);
+                tv_order_pay.setText("填写物流信息");
+                tv_order_clean.setText("买家收货信息");
                 break;
             case "3":
-                tv_order_type.setText("等待收货");
+                tv_order_type.setText("已经发货");
                 tv_order_pay.setVisibility(View.VISIBLE);
                 tv_order_clean.setVisibility(View.VISIBLE);
                 tv_order_pay.setText("查看物流");
-                tv_order_clean.setText("确定收款?");
+                tv_order_clean.setText("买家收货信息");
                 break;
             case "4":
-                tv_order_type.setText("已完成");
-                tv_order_pay.setVisibility(View.GONE);
-                tv_order_clean.setVisibility(View.GONE);
+                tv_order_type.setText("已经完成");
+                tv_order_pay.setVisibility(View.VISIBLE);
+                tv_order_clean.setVisibility(View.VISIBLE);
+                tv_order_pay.setText("查看物流");
+                tv_order_clean.setText("联系买家");
                 break;
             case "5":
                 tv_order_type.setText("已取消");
                 tv_order_pay.setVisibility(View.GONE);
-                tv_order_clean.setVisibility(View.GONE);
+                tv_order_clean.setVisibility(View.VISIBLE);
+                tv_order_clean.setText("买家信息");
                 break;
         }
         ImageLoaderNew.load(mContext,
@@ -101,10 +103,10 @@ public class BuyerOrderAdapter extends BaseQuickAdapter<BuyerOrderModel.BuyerOde
         tv_order_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(onItemBuyClickListener!=null){
-                int position = helper.getLayoutPosition();
-                onItemBuyClickListener.OnItemBuyClick(helper.itemView, position);
-            }
+                if(onItemBuyClickListener!=null){
+                    int position = helper.getLayoutPosition();
+                    onItemBuyClickListener.OnItemBuyClick(helper.itemView, position);
+                }
             }
         });
         tv_order_clean.setOnClickListener(new View.OnClickListener() {

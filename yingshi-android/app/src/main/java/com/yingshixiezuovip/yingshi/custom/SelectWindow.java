@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.adapter.BirthdayAdapter;
 import com.yingshixiezuovip.yingshi.adapter.CityAdapter;
+import com.yingshixiezuovip.yingshi.adapter.NewNumberAdapter;
 import com.yingshixiezuovip.yingshi.adapter.NewOldAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ProvinceAdapter;
 import com.yingshixiezuovip.yingshi.adapter.SexStatusAdapter;
@@ -40,11 +41,33 @@ public class SelectWindow extends BasePopupWindow {
     private PlaceModel mPlaceModel;
     private int mType;
     private String [] mNewOldStatus;
+    private int [] mNumberList;
     public SelectWindow(Context mContext, int type) {
         super(mContext);
         initView(type);
         mSexStatus = mContext.getResources().getStringArray(R.array.text_feel_status);
         mNewOldStatus= mContext.getResources().getStringArray(R.array.text_new_old);
+    }
+
+    public SelectWindow(Context mContext, int type,int maxNumber) {
+        super(mContext);
+        mNumberList=initNumberList(maxNumber);
+        initView(type);
+        mSexStatus = mContext.getResources().getStringArray(R.array.text_feel_status);
+        mNewOldStatus= mContext.getResources().getStringArray(R.array.text_new_old);
+    }
+
+    private int [] initNumberList(int maxNumber){
+        if(maxNumber<10){
+            maxNumber=10;
+        }
+        mNumberList=new int[maxNumber];
+        if(maxNumber>0){
+            for (int i=0;i<maxNumber;i++){
+                mNumberList[i]=i+1;
+            }
+        }
+        return mNumberList;
     }
 
     @Override
@@ -67,6 +90,8 @@ public class SelectWindow extends BasePopupWindow {
         }
         if(type==5){
             initNewOld();
+        }else if (type==6){
+          initNumberShop();
         }
     }
 
@@ -189,10 +214,31 @@ public class SelectWindow extends BasePopupWindow {
             }
         });
     }
+
+
+    private void initNumberShop() {
+        mWheelViewYear.setAdapter(new NewNumberAdapter(mContext,mNumberList));
+        mWheelViewYear.setGravity(Gravity.CENTER);
+        mWheelViewYear.setTextSize(24F, 14F);
+        mWheelViewYear.setLineSpacingMultiplier(1.5F);
+        mWheelViewYear.setCyclic(false);
+        mWheelViewYear.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                ((TextView) findViewById(R.id.select_tv_title)).setText(mNumberList[index]+"");
+            }
+        });
+    }
     public void show(int newold,String type) {
         ((TextView) findViewById(R.id.select_tv_title)).setText("新旧程度");
         mWheelViewYear.setCurrentItem(newold - 1);
         ((TextView) findViewById(R.id.select_tv_title)).setText(mNewOldStatus[newold - 1]);
+        super.show();
+    }
+
+    public void showNumber(int newold,String type) {
+        ((TextView) findViewById(R.id.select_tv_title)).setText("选择数量");
+        mWheelViewYear.setCurrentItem(newold - 1);
         super.show();
     }
 
@@ -273,6 +319,9 @@ public class SelectWindow extends BasePopupWindow {
                     onItemSelectedListener.onItemSelected(result);
                 }else if(mType==5){
                     onItemSelectedListener.onItemSelected(mNewOldStatus[mWheelViewYear.getCurrentItem()]);
+                }else if(mType==6){
+                    onItemSelectedListener.onItemSelected(mNumberList[mWheelViewYear.getCurrentItem()]+"");
+
                 }
                 break;
         }

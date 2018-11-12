@@ -110,6 +110,8 @@ public enum TaskType {
     TASK_TYPE_SHOP_INFO,///yingzhe/v2/asideShopInfo.spr
     TASK_TYPE_SHOP_ALL,///v2/asideShopPall.spr
     TASK_TYPE_SHOP_NEW,///v2/asideShopPnew.spr
+    TASK_TYPE_SHOP_SUBMMITE_ORDER,///v2/asideSoonBuy.spr
+    TASK_TYPE_SHOP_ORDER_PAY,///v2/asideSPay.spr
 
 
     /*---*/

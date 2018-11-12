@@ -572,6 +572,12 @@ public class HttpUtils {
                 case TASK_TYPE_BUY_ORDER_CLEAN:
                     methodName="/aside/order/cancleOrder.spr";
                     break;
+                case TASK_TYPE_SHOP_SUBMMITE_ORDER:
+                    methodName="/v2/asideSoonBuy.spr";
+                    break;
+                case TASK_TYPE_SHOP_ORDER_PAY:
+                    methodName="/v2/asideSPay.spr";
+                    break;
                 default:
                     break;
             }

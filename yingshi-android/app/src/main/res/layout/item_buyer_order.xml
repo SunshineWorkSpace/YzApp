@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_order_au"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:riv_oval="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:singleLine="true"
+            android:id="@+id/tv_order_title"
+            android:layout_toLeftOf="@+id/tv_order_type"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_order_au"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="10dp"
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/orange"
+            android:textSize="14dp"
+            android:id="@+id/tv_order_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="#e5e5e5"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_order"
+            android:scaleType="fitCenter"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:singleLine="true"
+            android:id="@+id/tv_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_order_price"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_order"
+            android:textColor="@color/colorBlack"
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_order_price"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="14dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_total_price"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:background="#e9e9e9"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <RelativeLayout
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_order_pay"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_order_clean"
+            android:gravity="center"
+            android:text="付款"
+            android:textSize="14dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/btn_blue_normal"
+            android:layout_width="100dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_order_clean"
+            android:gravity="center"
+            android:text="取消订单"
+            android:textSize="14dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/btn_blue_normal"
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:layout_height="30dp" />
+    </RelativeLayout>
+    <View
+        android:background="#e9e9e9"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+</LinearLayout>

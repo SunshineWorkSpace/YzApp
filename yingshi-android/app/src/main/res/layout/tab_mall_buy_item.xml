@@ -6,15 +6,15 @@
     android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/tv_tab_mall"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:text="关注"
-            android:textColor="@drawable/selector_tab_mall"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/tv_tab_mall"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="关注"
+        android:textColor="@drawable/selector_tab_mall"
+        android:textSize="12sp" />
 
     <View
         android:layout_width="wrap_content"

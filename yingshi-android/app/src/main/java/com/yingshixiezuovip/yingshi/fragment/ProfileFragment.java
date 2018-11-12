@@ -29,6 +29,7 @@ import com.yingshixiezuovip.yingshi.MainCommonActivity;
 import com.yingshixiezuovip.yingshi.MainCompanyInfoSetActivity;
 import com.yingshixiezuovip.yingshi.MainFeedbackActivity;
 import com.yingshixiezuovip.yingshi.MainPublishActivity;
+import com.yingshixiezuovip.yingshi.MallOrderActivity;
 import com.yingshixiezuovip.yingshi.ProfileConsumerPriceActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.StartupLoginActivity;
@@ -467,6 +468,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 window.dismiss();
                 break;
             case R.id.lin_shop_order:
+                intent=new Intent(getActivity(),MallOrderActivity.class);
                 break;
             case R.id.lin_account_price:
                 break;

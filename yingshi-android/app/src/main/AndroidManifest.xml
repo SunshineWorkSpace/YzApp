@@ -347,6 +347,14 @@
         <activity android:name=".ConsumerPriceSubmitActivity"
             android:launchMode="singleTask"
             ></activity>
+        <activity android:name=".MallOrderActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".MallOrderBuyDetailActiviity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppMyTheme"
+            android:launchMode="singleTask"
+            ></activity>
 
     </application>
 

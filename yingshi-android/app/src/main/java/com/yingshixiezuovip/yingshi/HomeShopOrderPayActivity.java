@@ -89,7 +89,7 @@ public class HomeShopOrderPayActivity extends BaseActivity {
         HashMap<String, Object> orderParams = new HashMap<>();
         orderParams.put("token", mUserInfo.token);
         orderParams.put("flow_trade_no", flow_trade_no);
-        orderParams.put("type", isWecahtPay?2:1);
+        orderParams.put("pay_type", isWecahtPay?2:1);
         mLoadWindow.show(R.string.waiting);
         HttpUtils.doPost(TaskType.TASK_TYPE_SHOP_ORDER_PAY, orderParams, this);
     }

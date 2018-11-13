@@ -586,6 +586,7 @@ public class HttpUtils {
                     break;
                 case TASK_TYPE_SHOP_ORDER_PAY:
                     methodName="/v2/asideSPay.spr";
+                    break;
                 case TASK_TYPE_MALL_SELL_LIST:
                     methodName="/aside/order/sellerOrder.spr";
                     break;

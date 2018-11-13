@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
@@ -30,7 +31,7 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
     private CompanyStatusModel mCompanyStatusModel;
     private AlertWindow mResumeWindow;
     private UrlWindow mUrlWindow;
-
+    private LinearLayout lin_vip;
     private String[] mSchoolCardStatus = {
             "未上传", "审核中", "已认证", "未通过",
     };
@@ -50,6 +51,11 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
         findViewById(R.id.company_btn_resume).setOnClickListener(this);
         findViewById(R.id.company_btn_schoolcard).setOnClickListener(this);
         findViewById(R.id.company_btn_shareurl).setOnClickListener(this);
+        lin_vip=(LinearLayout)findViewById(R.id.lin_vip);
+        lin_vip.setOnClickListener(this);
+        if(mUserInfo.usertype==1||mUserInfo.usertype==2||mUserInfo.usertype==3||mUserInfo.usertype==4){
+            lin_vip.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initWindow() {
@@ -139,6 +145,10 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
                 } else {
                     mUrlWindow.show("作品集地址为：" + mCompanyStatusModel.qianzhui + mCompanyStatusModel.samplereels_url + "\n你的作品分享集地址复制链接吗？");
                 }
+                break;
+            case R.id.lin_vip:
+                intent=new Intent(this,VipChoosePayTypeActivity.class);
+                startActivity(intent);
                 break;
 
         }

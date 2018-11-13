@@ -584,7 +584,7 @@ public class HttpUtils {
                 case TASK_TYPE_SHOP_SUBMMITE_ORDER:
                     methodName="/v2/asideSoonBuy.spr";
                     break;
-                case TASK_TYPE_SHOP_ORDER_PAY:
+                case TASK_TYPE_SHOP_ORDER_PAY_NEW:
                     methodName="/v2/asideSPay.spr";
                 case TASK_TYPE_MALL_SELL_LIST:
                     methodName="/aside/order/sellerOrder.spr";
@@ -609,6 +609,12 @@ public class HttpUtils {
                     break;
                 case TASK_TYPE_TX_GET:
                     methodName="/v2/user/tixian.spr";
+                    break;
+                case TASK_TYPE_VIP_LIST:
+                    methodName="/v2/user/yearReached.spr";
+                    break;
+                case TASK_TYPE_VIP_PAY:
+                    methodName="/v2/user/cerpayment.spr";
                     break;
                 default:
                     break;

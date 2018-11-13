@@ -128,4 +128,6 @@ public enum TaskType {
     TASK_TYPE_MY_BALANCE,//v2/user/mybalance.spr
     TASK_TYPE_XBJ_GET,//v2/user/xbj_tixian.spr
     TASK_TYPE_TX_GET,//v2/user/tixian.spr
+    TASK_TYPE_VIP_LIST,//v2/user/yearReached.spr
+    TASK_TYPE_VIP_PAY,//v2/user/cerpayment.spr
 }

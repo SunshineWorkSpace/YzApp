@@ -382,6 +382,13 @@
         <activity android:name=".AccountPriceActivity"
             android:launchMode="singleTask"
             ></activity>
+        <activity android:name=".VipChoosePayTypeActivity"
+            android:launchMode="singleTask"
+            ></activity>
+        <activity android:name=".VipChoosePayActivity"
+            android:launchMode="singleTask"
+            ></activity>
+
     </application>
 
 </manifest>

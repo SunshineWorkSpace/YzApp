@@ -125,4 +125,7 @@ public enum TaskType {
     TASK_TYPE_MALL_BUYER_MESSAGE,///aside/order/receiptInfo.spr
     TASK_TYPE_WL_LIST,//aside/order/getinvoice.spr
     TASK_TYPE_SEND_ORDER,//aside/order/invoiceOrder.spr
+    TASK_TYPE_MY_BALANCE,//v2/user/mybalance.spr
+    TASK_TYPE_XBJ_GET,//v2/user/xbj_tixian.spr
+    TASK_TYPE_TX_GET,//v2/user/tixian.spr
 }

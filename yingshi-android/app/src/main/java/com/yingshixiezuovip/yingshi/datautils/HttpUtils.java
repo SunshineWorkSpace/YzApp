@@ -601,6 +601,15 @@ public class HttpUtils {
                 case TASK_TYPE_SEND_ORDER:
                     methodName="/aside/order/invoiceOrder.spr";
                     break;
+                case TASK_TYPE_MY_BALANCE:
+                    methodName="/v2/user/mybalance.spr";
+                    break;
+                case TASK_TYPE_XBJ_GET:
+                    methodName="/v2/user/xbj_tixian.spr";
+                    break;
+                case TASK_TYPE_TX_GET:
+                    methodName="/v2/user/tixian.spr";
+                    break;
                 default:
                     break;
             }

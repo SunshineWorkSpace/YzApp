@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.yingshixiezuovip.yingshi.AccountPriceActivity;
 import com.yingshixiezuovip.yingshi.HomeShopPublishDetailActivity;
 import com.yingshixiezuovip.yingshi.MainAboutActivity;
 import com.yingshixiezuovip.yingshi.MainAuthenticationInfoActivity;
@@ -471,6 +472,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 intent=new Intent(getActivity(),MallOrderActivity.class);
                 break;
             case R.id.lin_account_price:
+                intent=new Intent(getActivity(),AccountPriceActivity.class);
                 break;
                 /*收货地址入口*/
             case R.id.lin_shipping_address:

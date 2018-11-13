@@ -4,5 +4,84 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:text="账户余额"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_ac_price"
+        android:text="¥0.0"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="提现中余额"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_ac_other"
+        android:text="¥0.0"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="商户消保金"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_shop_price"
+        android:text="¥0.0"
+        android:textSize="14dp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/tv_ac_get"
+        android:textSize="14dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:text="消保金提现"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/blue_CCE1FB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_price_get"
+        android:textSize="14dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:text="提现"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/blue_CCE1FB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

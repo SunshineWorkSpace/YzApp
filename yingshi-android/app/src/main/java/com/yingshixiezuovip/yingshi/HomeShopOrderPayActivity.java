@@ -91,7 +91,7 @@ public class HomeShopOrderPayActivity extends BaseActivity {
         orderParams.put("flow_trade_no", flow_trade_no);
         orderParams.put("pay_type", isWecahtPay?2:1);
         mLoadWindow.show(R.string.waiting);
-        HttpUtils.doPost(TaskType.TASK_TYPE_SHOP_ORDER_PAY_NEW, orderParams, this);
+        HttpUtils.doPost(TaskType.TASK_TYPE_SHOP_ORDER_PAY, orderParams, this);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class HomeShopOrderPayActivity extends BaseActivity {
             return;
         }
         switch (type) {
-            case TASK_TYPE_SHOP_ORDER_PAY_NEW:
+            case TASK_TYPE_SHOP_ORDER_PAY:
                 System.out.println("支付参数:"+result.toString());
                 if (((JSONObject) result).has("data")) {
                     mLoadWindow.cancel();

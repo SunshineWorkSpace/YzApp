@@ -20,7 +20,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yingshixiezuovip.yingshi.AccountPriceActivity;
+import com.yingshixiezuovip.yingshi.HomeShopDetailActvity;
 import com.yingshixiezuovip.yingshi.HomeShopPublishDetailActivity;
+import com.yingshixiezuovip.yingshi.HomeShopUserActivity;
 import com.yingshixiezuovip.yingshi.MainAboutActivity;
 import com.yingshixiezuovip.yingshi.MainAuthenticationInfoActivity;
 import com.yingshixiezuovip.yingshi.MainAuthenticationMoneyActivity;
@@ -463,6 +465,9 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 break;
             case R.id.tv_shop:
                 /*商城入口*/
+                Intent userShop=new Intent(getActivity(),HomeShopUserActivity.class);
+                userShop.putExtra("uid",mUserInfo.id+"");
+                startActivity(userShop);
                 window.dismiss();
                 break;
             case R.id.pop_cancel:

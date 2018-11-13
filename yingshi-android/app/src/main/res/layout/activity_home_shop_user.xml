@@ -28,13 +28,18 @@
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:id="@+id/linearLayout">
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left">
-
-            </LinearLayout>
-
+                android:layout_alignLeft="@+id/linearLayout"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/linearLayout"
+                android:gravity="left"
+                android:text="无锡市市政府测试的呃呃去去去
+            消保金: 0.07元"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,18 +98,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/tv_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/linearLayout"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/linearLayout"
-            android:gravity="left"
-            android:text="无锡市市政府测试的呃呃去去去
-            消保金: 0.07元"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp" />
     </RelativeLayout>
    <FrameLayout
        android:id="@+id/fragment_shop_new"

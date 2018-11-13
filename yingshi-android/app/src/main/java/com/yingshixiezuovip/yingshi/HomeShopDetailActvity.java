@@ -98,6 +98,7 @@ public class HomeShopDetailActvity extends BaseActivity {
 
         findViewById(R.id.details_btn_contact).setOnClickListener(this);
         findViewById(R.id.btn_buy).setOnClickListener(this);
+        findViewById(R.id.ll_shop_more).setOnClickListener(this);
         id=getIntent().getStringExtra("id");
         loadData();
 
@@ -151,6 +152,10 @@ public class HomeShopDetailActvity extends BaseActivity {
                 break;
             case R.id.tv_fllow:
                 onFollowClick(mShopDetail.uid,mIsfllow);
+                break;
+            case R.id.ll_shop_more:
+                Intent more=new Intent(HomeShopDetailActvity.this,HomeShopDetailMoreActivity.class);
+                startActivity(more);
                 break;
         }
     }

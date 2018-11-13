@@ -235,6 +235,12 @@
             android:label="@string/title_activity_home_shop_addaddress" />
 
         <activity
+            android:name=".HomeShopDetailMoreActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppMyTheme"
+            android:label="@string/title_activity_shop_detail_more" />
+
+        <activity
             android:name=".UserAddressListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppMyTheme"

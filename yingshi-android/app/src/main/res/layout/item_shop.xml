@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
     android:background="@color/icons">
     <View
         android:id="@+id/details_webview"
@@ -21,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:layout_marginBottom="50dp"
         android:scaleType="centerCrop"/>
 
 <FrameLayout

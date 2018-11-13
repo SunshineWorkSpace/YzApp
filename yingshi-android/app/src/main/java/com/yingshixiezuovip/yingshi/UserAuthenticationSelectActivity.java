@@ -19,6 +19,7 @@ public class UserAuthenticationSelectActivity extends BaseActivity {
         findViewById(R.id.authselect_btn_personal).setOnClickListener(this);
         findViewById(R.id.authselect_btn_company).setOnClickListener(this);
         findViewById(R.id.authselect_btn_school).setOnClickListener(this);
+        findViewById(R.id.tv_shop_rz).setOnClickListener(this);
     }
 
     @Override
@@ -40,6 +41,9 @@ public class UserAuthenticationSelectActivity extends BaseActivity {
                 break;
             case R.id.authselect_btn_school:
                 startActivity(new Intent(UserAuthenticationSelectActivity.this, MainAuthenticationSchoolActivity.class));
+                break;
+            case R.id.tv_shop_rz:
+                startActivity(new Intent(UserAuthenticationSelectActivity.this, MainAuthenticationShopActivity.class));
                 break;
             default:
                 break;

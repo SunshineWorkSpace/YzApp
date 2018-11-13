@@ -617,6 +617,12 @@ public class HttpUtils {
                 case TASK_TYPE_VIP_PAY:
                     methodName="/v2/user/cerpayment.spr";
                     break;
+                case TASK_TYPE_SHOP_VIP:
+                    methodName="/v2/user/shopvips.spr";
+                    break;
+                case TASK_TYPE_SHOP_UPDATA:
+                    methodName="/v2/user/uploadShopsInfo.spr";
+                    break;
                 default:
                     break;
             }

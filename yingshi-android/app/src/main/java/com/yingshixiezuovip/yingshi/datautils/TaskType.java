@@ -130,4 +130,6 @@ public enum TaskType {
     TASK_TYPE_TX_GET,//v2/user/tixian.spr
     TASK_TYPE_VIP_LIST,//v2/user/yearReached.spr
     TASK_TYPE_VIP_PAY,//v2/user/cerpayment.spr
+    TASK_TYPE_SHOP_VIP,//v2/user/shopvips.spr
+    TASK_TYPE_SHOP_UPDATA,//v2/user/uploadShopsInfo.spr
 }

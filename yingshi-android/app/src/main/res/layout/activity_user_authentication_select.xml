@@ -158,5 +158,54 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="14dp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商铺会员认证"
+                android:textColor="@color/colorLanse"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/mine_profile_shape"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:text="认证无需推荐码"
+                android:textColor="@color/colorBlack"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:lineSpacingMultiplier="1.1"
+                android:text="需要填写基本资料（包括手机号，身份证，企业营业执照（可选）成为商家之后享受终身会员和消保金认证，担保金）。"
+                android:textColor="@color/colorGray"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/tv_shop_rz"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/comm_red_btn_shape"
+                android:gravity="center"
+                android:text="立即认证"
+                android:textColor="@color/colorWhite"
+                android:textSize="14dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -394,7 +394,12 @@
         <activity android:name=".VipChoosePayActivity"
             android:launchMode="singleTask"
             ></activity>
-
+        <activity android:name=".MainAuthenticationShopActivity"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".ShopAuthorPayActivity"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

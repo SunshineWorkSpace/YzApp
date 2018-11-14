@@ -118,7 +118,9 @@ public class HomeListAdapter extends MBaseAdapter<HomeListModel.HomeListItem> im
                 ((ImageView) viewHolder.findViewById(R.id.homeitem_iv_auth)).setImageResource(R.mipmap.auth_company);
             } else if (listItem.productionType == 6) {
                 ((ImageView) viewHolder.findViewById(R.id.homeitem_iv_auth)).setImageResource(R.mipmap.auth_student);
-            } else {
+            } else if(listItem.productionType == 7){
+                ((ImageView) viewHolder.findViewById(R.id.homeitem_iv_auth)).setImageResource(R.mipmap.ic_shop_user);
+            }else {
                 viewHolder.findViewById(R.id.homeitem_iv_auth).setVisibility(View.GONE);
             }
         }

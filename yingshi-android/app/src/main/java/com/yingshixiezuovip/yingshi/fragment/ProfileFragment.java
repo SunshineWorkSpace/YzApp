@@ -441,6 +441,10 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 }
                 break;
             case R.id.profile_btn_reaccount:
+                if(mUserInfo.usertype==7){
+                    showMessage("商户会员用户无法修改成其他用户状态");
+                    return;
+                }
                 mStatusWindow.show("", "是否要修改成其他用户状态?", "取消", "确认");
                 break;
             case R.id.profile_btn_desc:

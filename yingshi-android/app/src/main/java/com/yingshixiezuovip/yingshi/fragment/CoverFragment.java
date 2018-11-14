@@ -144,8 +144,12 @@ public class CoverFragment extends BaseFragment {
         PictureManager.displayHead(mUserWorks.head, (ImageView) findViewById(R.id.cover_iv_head));
         ((TextView) findViewById(R.id.cover_tv_name)).setText(mUserWorks.nickname);
         ((TextView) findViewById(R.id.cover_tv_position)).setText(mUserWorks.position + " / " + mUserWorks.city);
+        if(mUserInfo.usertype==7){
+            ((TextView) findViewById(R.id.cover_tv_invite)).setText("商铺会员已认证");
+        }else {
+            ((TextView) findViewById(R.id.cover_tv_invite)).setText("推荐人：" + mUserWorks.invite);
+        }
 
-        ((TextView) findViewById(R.id.cover_tv_invite)).setText("推荐人：" + mUserWorks.invite);
         findViewById(R.id.cover_tv_invite).setVisibility(TextUtils.isEmpty(mUserWorks.invite) ? View.GONE : View.VISIBLE);
 
         findViewById(R.id.cover_btn_call).setVisibility(mUserid == mUserInfo.id ? View.GONE : View.VISIBLE);

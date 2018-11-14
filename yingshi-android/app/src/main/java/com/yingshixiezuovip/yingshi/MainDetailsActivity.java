@@ -370,7 +370,10 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
             ((ImageView) footerView.findViewById(R.id.details_is_vip)).setImageResource(R.mipmap.auth_company);
         } else if (detailsModel.productionType == 6) {
             ((ImageView) footerView.findViewById(R.id.details_is_vip)).setImageResource(R.mipmap.auth_student);
-        } else {
+        } else if(detailsModel.productionType == 7){
+            ((ImageView) footerView.findViewById(R.id.details_is_vip)).setImageResource(R.mipmap.ic_shop_user);
+        }
+            else {
             footerView.findViewById(R.id.details_is_vip).setVisibility(View.GONE);
         }
 

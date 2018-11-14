@@ -629,6 +629,9 @@ public class HttpUtils {
                 case TASK_TYPE_UDDATA_BUSINESS_SUBMIT:
                     methodName="/v2/user/updateBusinessInfo.spr";
                     break;
+                case TASK_TYPE_SHOP_REPORT:
+                    methodName="/v2/asideReport.spr";
+                    break;
                 default:
                     break;
             }

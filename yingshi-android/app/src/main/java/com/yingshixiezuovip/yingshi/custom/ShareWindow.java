@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.yingshixiezuovip.yingshi.HomeShopDetailReportActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.base.BasePopupWindow;
 import com.yingshixiezuovip.yingshi.model.ShareModel;
@@ -27,19 +30,33 @@ import com.yingshixiezuovip.yingshi.model.ShareModel;
 public class ShareWindow extends BasePopupWindow {
     private ShareModel.ShareItem mShareItem;
     private ShareAction mShareAction;
+    private TextView tv_copay;
+    private int mType;
+    private String mId;
 
     public ShareWindow(Context mContext) {
         super(mContext);
         mShareAction = new ShareAction((Activity) mContext);
         initView();
     }
+    public ShareWindow(Context mContext,int mType,String id) {
+        super(mContext);
+        this.mType=mType;
+        this.mId=id;
+        mShareAction = new ShareAction((Activity) mContext);
+        initView();
+    }
 
     private void initView() {
+        tv_copay=(TextView) findViewById(R.id.tv_copay);
         findViewById(R.id.share_btn_wechat).setOnClickListener(this);
         findViewById(R.id.share_btn_moments).setOnClickListener(this);
         findViewById(R.id.share_btn_weibo).setOnClickListener(this);
         findViewById(R.id.share_btn_copy).setOnClickListener(this);
         findViewById(R.id.share_btn_cancel).setOnClickListener(this);
+        if(mType==1){
+            tv_copay.setText("举报");
+        }
     }
 
     @Override
@@ -56,10 +73,16 @@ public class ShareWindow extends BasePopupWindow {
                 mShareAction.setPlatform(SHARE_MEDIA.SINA).share();
                 break;
             case R.id.share_btn_copy:
-                ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("shareUrl", mShareItem.url);
-                cmb.setPrimaryClip(clipData);
-                showMessage("复制成功");
+                if(mType==1){
+                    Intent report=new Intent(mContext, HomeShopDetailReportActivity.class);
+                    report.putExtra("id",mId);
+                    mContext.startActivity(report);
+                }else {
+                    ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clipData = ClipData.newPlainText("shareUrl", mShareItem.url);
+                    cmb.setPrimaryClip(clipData);
+                    showMessage("复制成功");
+                }
                 break;
             case R.id.share_btn_cancel:
                 break;

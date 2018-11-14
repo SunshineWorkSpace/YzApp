@@ -1,6 +1,7 @@
 package com.yingshixiezuovip.yingshi.base;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentActivity;
@@ -186,6 +187,11 @@ public abstract class BaseActivity extends FragmentActivity implements TaskListe
 
     protected void setActivityTitle(String title) {
         ((TextView) findViewById(R.id.base_tv_title)).setText(title);
+    }
+
+    protected void setActivityTitle(String title,String color) {
+        ((TextView) findViewById(R.id.base_tv_title)).setText(title);
+        ((TextView) findViewById(R.id.base_tv_title)).setTextColor(Color.parseColor(color));
     }
 
     protected void setActivityTitle(int strId) {

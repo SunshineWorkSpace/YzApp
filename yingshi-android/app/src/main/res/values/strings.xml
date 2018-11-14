@@ -100,5 +100,6 @@
     <string name="title_activity_shop_user">商城</string>
     <string name="title_actvity_shop_order_pay">订单付款</string>
     <string name="title_activity_shop_detail_more">常见问题</string>
+    <string name="title_activity_shop_detail_report">举报内容</string>
 
 </resources>

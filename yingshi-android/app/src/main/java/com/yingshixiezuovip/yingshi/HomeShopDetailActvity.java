@@ -126,7 +126,7 @@ public class HomeShopDetailActvity extends BaseActivity {
 
     private void initShareWindow(){
         mShareItem=new ShareModel.ShareItem();
-        mShareWindow = new ShareWindow(this);
+        mShareWindow = new ShareWindow(this,1,id);
     }
 
     @Override

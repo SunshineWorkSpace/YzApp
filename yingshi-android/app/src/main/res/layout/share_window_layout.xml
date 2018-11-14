@@ -104,6 +104,7 @@
                 android:src="@mipmap/icon_share_copy" />
 
             <TextView
+                android:id="@+id/tv_copay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

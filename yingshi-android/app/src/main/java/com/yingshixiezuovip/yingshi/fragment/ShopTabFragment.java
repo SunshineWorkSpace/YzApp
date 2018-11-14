@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -47,6 +48,7 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
     private boolean isMore = false;
     private int mPage = 0;
     private StaggeredGridLayoutManager  layoutManager;
+    private View emptyView;
 
     @Override
     public int getLayoutId() {
@@ -71,7 +73,12 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setPreLoadNumber(2);
 
+     initEmptyView();
+    }
 
+    private void initEmptyView(){
+        LayoutInflater inflater=getActivity().getLayoutInflater();
+        emptyView=inflater.inflate(R.layout.layout_empty,null);
     }
 
 
@@ -200,12 +207,17 @@ public class ShopTabFragment extends LazyFragment implements OnRefreshListener,O
                 } else {
                     showMessage(R.string.data_load_failed);
                 }
+
                 System.out.println("商品page:"+mPage+" type:"+mType+" 数据条数："+mList.size()+" isMore："+isMore);
                 if(isMore) {
                     mRefreshLayout.setNoMoreData(!isMore);
                 }else{
                     mRefreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                 }
+                if(mList.size()==0){
+                    mAdapter.setEmptyView(emptyView);
+                }
+
                 break;
         }
     }

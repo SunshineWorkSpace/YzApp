@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -45,6 +46,7 @@ public class ShopUserTabFragment extends LazyFragment implements OnRefreshListen
     private boolean isMore = false;
     private int mPage = 0;
     private StaggeredGridLayoutManager layoutManager;
+    private View emptyView;
 
     @Override
     public int getLayoutId() {
@@ -68,12 +70,16 @@ public class ShopUserTabFragment extends LazyFragment implements OnRefreshListen
         mAdapter = new ShopNewAdapter();
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setPreLoadNumber(2);
+        initEmptyView();
 
 
     }
 
 
-
+    private void initEmptyView(){
+        LayoutInflater inflater=getActivity().getLayoutInflater();
+        emptyView=inflater.inflate(R.layout.layout_empty,null);
+    }
     @Override
     protected void initData(Bundle savedInstanceState) {
         if (getArguments() != null) {
@@ -204,6 +210,10 @@ public class ShopUserTabFragment extends LazyFragment implements OnRefreshListen
                 }else{
                     mRefreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
                 }
+                if(mList.size()==0){
+                    mAdapter.setEmptyView(emptyView);
+                }
+
                 break;
         }
     }

@@ -400,6 +400,10 @@
         <activity android:name=".ShopAuthorPayActivity"
             android:launchMode="singleTask"
             />
+        <activity android:name=".MainShopInfoSetActivity"
+            android:launchMode="singleTask"
+            />
+
     </application>
 
 </manifest>

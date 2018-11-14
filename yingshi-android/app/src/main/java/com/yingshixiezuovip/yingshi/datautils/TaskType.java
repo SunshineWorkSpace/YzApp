@@ -132,4 +132,6 @@ public enum TaskType {
     TASK_TYPE_VIP_PAY,//v2/user/cerpayment.spr
     TASK_TYPE_SHOP_VIP,//v2/user/shopvips.spr
     TASK_TYPE_SHOP_UPDATA,//v2/user/uploadShopsInfo.spr
+    TASK_TYPE_UPDATA_BUSINESS,//v2/user/businessInfo.spr
+    TASK_TYPE_UDDATA_BUSINESS_SUBMIT,//v2/user/updateBusinessInfo.spr
 }

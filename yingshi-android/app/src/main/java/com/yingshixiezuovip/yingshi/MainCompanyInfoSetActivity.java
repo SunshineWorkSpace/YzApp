@@ -108,7 +108,10 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
                 } else if (mUserInfo.type == 5 || mUserInfo.type == 6) {
                     Intent intent = new Intent(this, MainSchoolInfoSetActivity.class);
                     startActivity(intent);
-                } else {
+                } else if(mUserInfo.type==7){
+                    Intent intent = new Intent(this, MainShopInfoSetActivity.class);
+                    startActivity(intent);
+                } else{
                     startActivity(new Intent(this, MainCompanyBaseInfoActivity.class));
                 }
                 break;

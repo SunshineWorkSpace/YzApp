@@ -623,6 +623,12 @@ public class HttpUtils {
                 case TASK_TYPE_SHOP_UPDATA:
                     methodName="/v2/user/uploadShopsInfo.spr";
                     break;
+                case TASK_TYPE_UPDATA_BUSINESS:
+                    methodName="/v2/user/businessInfo.spr";
+                    break;
+                case TASK_TYPE_UDDATA_BUSINESS_SUBMIT:
+                    methodName="/v2/user/updateBusinessInfo.spr";
+                    break;
                 default:
                     break;
             }

@@ -408,6 +408,11 @@
         <activity android:name=".MainShopInfoSetActivity"
             android:launchMode="singleTask"
             />
+        <activity
+            android:name=".ShopDetailShareActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
     </application>
 

@@ -133,7 +133,10 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
         if (isFirstShow && (mUserInfo.iswanshan == 0 || mUserInfo.isrenzhen == 0 || mUserInfo.isbzj == 0)) {
             isFirstShow = false;
             if (mUserInfo.iswanshan == 0) {
-                mAuthInfoWindow.show("完善基本资料才可以使用发布哦", "算了", "完善资料", 1);
+                if(mUserInfo.type!=7){
+                    mAuthInfoWindow.show("完善基本资料才可以使用发布哦", "算了", "完善资料", 1);
+                }
+
             } else if (!TextUtils.isEmpty(mUserInfo.invite)) {
             }
         }

@@ -31,9 +31,9 @@
     android:layout_alignParentBottom="true">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:background="@color/common_botton_bar_blue"
+        android:background="@color/colorLanse"
         >
         <TextView
             android:id="@+id/tv_price"

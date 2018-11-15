@@ -116,5 +116,5 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.nineoldandroids:library:2.4.0'
-
+    compile 'com.google.zxing:core:3.3.0'
 }

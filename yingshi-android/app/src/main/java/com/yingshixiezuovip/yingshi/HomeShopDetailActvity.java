@@ -143,7 +143,19 @@ public class HomeShopDetailActvity extends BaseActivity {
                 startActivity(orderDetail);
                 break;
             case R.id.right_btn_submit:
-                mShareWindow.show(mShareItem, this);
+                if(null!=shopDetailType){
+                    Intent it=new Intent(this,ShopDetailShareActivity.class);
+                    it.putExtra("title",shopDetailType.data.title);
+                    it.putExtra("content",shopDetailType.data.content);
+                    it.putExtra("img",shopDetailType.data.photoList.get(0).photo);
+                    it.putExtra("au",shopDetailType.data.head);
+                    it.putExtra("autv",shopDetailType.data.nickname);
+                    it.putExtra("price",shopDetailType.data.price);
+                    it.putExtra("shareurl",shopDetailType.data.shareurl);
+                    startActivity(it);
+                }
+
+//                mShareWindow.show(mShareItem, this);
                 break;
             case R.id.details_btn_shops://商铺
                 Intent shops=new Intent(HomeShopDetailActvity.this,HomeShopUserActivity.class);
@@ -194,7 +206,7 @@ public class HomeShopDetailActvity extends BaseActivity {
     public void taskStarted(TaskType type) {
         super.taskStarted(type);
     }
-
+    ShopDetailTypeModel  shopDetailType;
     @Override
     public void taskFinished(TaskType type, Object result, boolean isHistory) {
         super.taskFinished(type, result, isHistory);
@@ -205,7 +217,7 @@ public class HomeShopDetailActvity extends BaseActivity {
         switch (type) {
             case TASK_TYPE_SHOPDETAIL:
                 System.out.println("商品详情:" + result.toString());
-                ShopDetailTypeModel  shopDetailType = GsonUtil.fromJson(result.toString(), ShopDetailTypeModel.class);
+                shopDetailType = GsonUtil.fromJson(result.toString(), ShopDetailTypeModel.class);
                 if (shopDetailType != null) {
                     if (shopDetailType.data != null) {
                         mShopDetail=shopDetailType.data;

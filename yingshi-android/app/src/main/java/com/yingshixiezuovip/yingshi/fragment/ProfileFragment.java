@@ -325,7 +325,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 }
                 break;
             case R.id.profile_btn_account:
-                if (mUserInfo.type == 2 || mUserInfo.type == 4 || mUserInfo.type == 6) {
+                if (mUserInfo.type == 2 || mUserInfo.type == 4 || mUserInfo.type == 6||mUserInfo.type==7) {
                     showMessage("已认证");
                 } else {
                     if (mUserInfo.iswanshan == 0) {
@@ -374,7 +374,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 intent.putExtra("item_title", "订单");
                 break;
             case R.id.profile_btn_seller:
-                if (mUserInfo.type == 2 || mUserInfo.type == 4 || mUserInfo.type == 6) {
+                if (mUserInfo.type == 2 || mUserInfo.type == 4 || mUserInfo.type == 6||mUserInfo.type==7) {
                     intent = new Intent(getActivity(), MainCommonActivity.class);
                     intent.putExtra("item_type", MainCommonActivity.TYPE_SELLER_ORDER);
                     intent.putExtra("item_title", "卖家信息");
@@ -383,7 +383,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 }
                 break;
             case R.id.profile_btn_salary:
-                if (mUserInfo.type == 2 || mUserInfo.type == 4 || mUserInfo.type == 5 || mUserInfo.type == 6) {
+                if (mUserInfo.type == 2 || mUserInfo.type == 4 || mUserInfo.type == 5 || mUserInfo.type == 6||mUserInfo.type==7) {
                     intent = new Intent(getActivity(), UserInfoSettingsActivity.class);
                     intent.putExtra("user_type", UserInfoSettingsActivity.TYPE_PRICE);
                 } else {
@@ -391,7 +391,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 }
                 break;
             case R.id.profile_btn_invateShare:
-                if (mUserInfo.usertype == 2 || mUserInfo.usertype == 4 || mUserInfo.usertype == 6) {
+                if (mUserInfo.usertype == 2 || mUserInfo.usertype == 4 || mUserInfo.usertype == 6|mUserInfo.usertype==7) {
                     ShareModel.ShareItem shareItem = new ShareModel.ShareItem();
                     shareItem.title = mUserInfo.share_title;
                     shareItem.photo = mUserInfo.share_photo;

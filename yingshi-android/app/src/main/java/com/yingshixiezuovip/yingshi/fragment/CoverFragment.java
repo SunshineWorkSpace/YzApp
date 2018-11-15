@@ -144,11 +144,7 @@ public class CoverFragment extends BaseFragment {
         PictureManager.displayHead(mUserWorks.head, (ImageView) findViewById(R.id.cover_iv_head));
         ((TextView) findViewById(R.id.cover_tv_name)).setText(mUserWorks.nickname);
         ((TextView) findViewById(R.id.cover_tv_position)).setText(mUserWorks.position + " / " + mUserWorks.city);
-        if(mUserInfo.usertype==7){
-            ((TextView) findViewById(R.id.cover_tv_invite)).setText("商铺会员已认证");
-        }else {
-            ((TextView) findViewById(R.id.cover_tv_invite)).setText("推荐人：" + mUserWorks.invite);
-        }
+        ((TextView) findViewById(R.id.cover_tv_invite)).setText("推荐人：" + mUserWorks.invite);
 
         findViewById(R.id.cover_tv_invite).setVisibility(TextUtils.isEmpty(mUserWorks.invite) ? View.GONE : View.VISIBLE);
 
@@ -159,8 +155,10 @@ public class CoverFragment extends BaseFragment {
             idcardStr = "身份证已认证";
         } else if (mUserWorks.productionType == 4) {
             idcardStr = "营业执照已认证";
-        } else if(mUserWorks.productionType == 6){
+        } else if (mUserWorks.productionType == 6) {
             idcardStr = "学生证已认证";
+        } else if (mUserWorks.productionType == 7) {
+            idcardStr = "商铺会员已认证";
         } else {
             idcardStr = null;
         }
@@ -168,5 +166,5 @@ public class CoverFragment extends BaseFragment {
         findViewById(R.id.cover_tv_idcard).setVisibility(TextUtils.isEmpty(idcardStr) ? View.GONE : View.VISIBLE);
     }
 
-    
+
 }

@@ -115,6 +115,9 @@ public class MainActivity extends BaseActivity {
                     if (mainType == 2) {
                         intent = new Intent(this, UserInfo2Activity.class);
                         intent.putExtra("user_id", mainUserid);
+                    } else if(mainType==10){
+                        intent = new Intent(this, HomeShopDetailActvity.class);
+                        intent.putExtra("id", ""+mainId);
                     } else {
                         intent = new Intent(this, MainDetailsActivity.class);
                         intent.putExtra("item_id", mainId);

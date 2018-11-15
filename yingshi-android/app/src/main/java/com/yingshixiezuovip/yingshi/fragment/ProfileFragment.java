@@ -98,6 +98,11 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         inflatUserData();
         loadData();
         initCache();

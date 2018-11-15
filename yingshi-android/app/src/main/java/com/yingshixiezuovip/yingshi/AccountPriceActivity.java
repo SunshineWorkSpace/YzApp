@@ -60,7 +60,7 @@ public class AccountPriceActivity extends BaseActivity {
 
 
     private void AcGet() {
-        if(tv_ac_price.getText().toString().equals("0.0")){
+        if(tv_shop_price.getText().toString().equals("0.0")){
             showMessage("消保金要大于0元，谢谢");
             return;
         }
@@ -70,7 +70,7 @@ public class AccountPriceActivity extends BaseActivity {
 
     }
     private void PricieGet() {
-        if(tv_shop_price.getText().toString().equals("0.0")){
+        if(tv_ac_price.getText().toString().equals("0.0")){
             showMessage("提现金额要大于0元，谢谢");
             return;
         }

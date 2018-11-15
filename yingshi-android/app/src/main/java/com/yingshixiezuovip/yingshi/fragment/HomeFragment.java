@@ -323,10 +323,10 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 intent.putExtra("item_type", MainCommonActivity.TYPE_HOME);
                 break;
             case R.id.auth_btn_cancel:
-                if (mAuthWindow.getType() != 1) {
+//                if (mAuthWindow.getType() != 1) {
                     intentPic();
 //                    intent = new Intent(getContext(), MainPublishActivity.class);
-                }
+//                }
                 break;
             case R.id.tv_publish:
                 intent = new Intent(getActivity(), MainPublishActivity.class);
@@ -351,7 +351,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
             loadPublish();
             return;
         }
-        if(mPublishIsOkModel.data.state.equals("1")){
+//        if(mPublishIsOkModel.data.state.equals("1")){
             // 用于PopupWindow的View
             View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_home_publish, null, false);
             // 创建PopupWindow对象，其中：
@@ -390,9 +390,9 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
             ((TextView) contentView.findViewById(R.id.tv_publish)).setOnClickListener(this);
             ((TextView) contentView.findViewById(R.id.tv_shop)).setOnClickListener(this);
             ((TextView) contentView.findViewById(R.id.pop_cancel)).setOnClickListener(this);
-        }else {
+    /*    }else {
 
-        }
+        }*/
 
     }
     @Override

@@ -33,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingMultiplier="1.2"
                 android:text="RESMIC"
-                android:textColor="@color/colorGray"
+
+                android:textColor="@color/colorOrange"
                 android:textSize="15dp" />
 
             <TextView
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingMultiplier="1.2"
                 android:text="RESMIC"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorGray"
                 android:textSize="13dp" />
         </LinearLayout>
 
@@ -69,7 +70,7 @@
                 android:layout_height="33dp"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/home_item_top_shape"
+                android:background="@drawable/bg_orange_k"
                 android:button="@null"
                 android:checked="false"
                 android:gravity="center"

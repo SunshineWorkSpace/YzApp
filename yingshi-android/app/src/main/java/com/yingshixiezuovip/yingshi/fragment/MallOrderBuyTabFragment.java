@@ -97,7 +97,7 @@ public class MallOrderBuyTabFragment extends LazyFragment implements OnRefreshLi
       SpacesItemDecoration decoration=new SpacesItemDecoration(16);
         mRecyclerView.addItemDecoration(decoration);
         //触发自动刷新
-        mRefreshLayout.autoRefresh();
+   ;
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -117,6 +117,12 @@ public class MallOrderBuyTabFragment extends LazyFragment implements OnRefreshLi
         });
         mAdapter.setOnItemCleanClickListener(this);
         mAdapter.setOItemBuyClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRefreshLayout.autoRefresh();
     }
 
     private int dpToPx(int dp) {

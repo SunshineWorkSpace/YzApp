@@ -107,7 +107,31 @@ public class HomeShopUserActivity extends BaseActivity implements View.OnClickLi
                 mShopUser.head, iv_user_head);
         tv_user_name.setText(mShopUser.shopName+"  "+"消保金: "+mShopUser.vipMoney+"元");
         tv_address.setText(mShopUser.city);
-        tv_shop_type.setText(mShopUser.shoptype);
+        String typeName="";
+        switch (mShopUser.type) {
+            case 1 + "":
+                typeName = "普通个人用户";
+                break;
+            case 2 + "":
+                typeName = "会员用户";
+                break;
+            case 3 + "":
+                typeName = "普通企业用户";
+                break;
+            case 4 + "":
+                typeName = "企业会员用户";
+                break;
+            case 5 + "":
+                typeName = "普通学生用户";
+                break;
+            case 6 + "":
+                typeName = "学生会员用户";
+                break;
+
+            default:
+                break;
+        }
+            tv_shop_type.setText(typeName);
         tvFollow.setText(mShopUser.isguanzhu == 0 ? "+关注" : "已关注");
     }
 

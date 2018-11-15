@@ -19,6 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ShopDetailImageAdapter;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
 import com.yingshixiezuovip.yingshi.base.BaseResp;
+import com.yingshixiezuovip.yingshi.custom.PhonePayWindow;
 import com.yingshixiezuovip.yingshi.custom.PhoneWindow;
 import com.yingshixiezuovip.yingshi.custom.ShareWindow;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
@@ -65,7 +66,7 @@ public class HomeShopDetailActvity extends BaseActivity {
     final ArrayList<String> pictureList = new ArrayList<>();
     private Bundle mReenterState;
     ViewGroup parent;
-
+    private PhonePayWindow mPhonePayWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +123,8 @@ public class HomeShopDetailActvity extends BaseActivity {
 
             }
         });
+        mPhonePayWindow = new PhonePayWindow(this);
+        mPhonePayWindow.findViewById(R.id.phonepay_btn_vip).setOnClickListener(this);
     }
 
     private void initShareWindow(){
@@ -134,7 +137,16 @@ public class HomeShopDetailActvity extends BaseActivity {
         super.onSingleClick(v);
         switch (v.getId()){
             case R.id.details_btn_contact:
-                mPhoneWindow.show("用户联系电话 " + mPhone);
+                int userType = mUserInfo.type;
+                if(null!=shopDetailType){
+                    if ((userType == 1 || userType == 3 || userType == 5 || userType == 6) && shopDetailType.data.ispay .equals("0") ) {
+                        mPhonePayWindow.show(userType, shopDetailType.data.lookphonemoney, shopDetailType.data.phone, shopDetailType.data.uid);
+                    } else {
+                        mPhoneWindow.show("用户联系电话 " + shopDetailType.data.phone);
+                    }
+                }
+
+//                mPhoneWindow.show("用户联系电话 " + mPhone);
                 break;
             case R.id.btn_buy://订单详情页
                 Intent orderDetail=new Intent(HomeShopDetailActvity.this,
@@ -152,6 +164,7 @@ public class HomeShopDetailActvity extends BaseActivity {
                     it.putExtra("autv",shopDetailType.data.nickname);
                     it.putExtra("price",shopDetailType.data.price);
                     it.putExtra("shareurl",shopDetailType.data.shareurl);
+                    it.putExtra("id",id);
                     startActivity(it);
                 }
 
@@ -169,6 +182,8 @@ public class HomeShopDetailActvity extends BaseActivity {
                 Intent more=new Intent(HomeShopDetailActvity.this,HomeShopDetailMoreActivity.class);
                 startActivity(more);
                 break;
+            case R.id.phonepay_btn_vip:
+                mPhonePayWindow.cancel();
         }
     }
 

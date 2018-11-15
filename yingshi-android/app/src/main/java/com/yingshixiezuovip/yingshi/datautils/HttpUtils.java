@@ -632,6 +632,9 @@ public class HttpUtils {
                 case TASK_TYPE_SHOP_REPORT:
                     methodName="/v2/asideReport.spr";
                     break;
+                case TASK_TYPE_PUBLISH_DETAIL:
+                    methodName="/v2/uploadworks.spr";
+                    break;
                 default:
                     break;
             }

@@ -99,7 +99,7 @@ public class MallOrderSellTabFragment extends LazyFragment implements OnRefreshL
        SpacesItemDecoration decoration=new SpacesItemDecoration(16);
         mRecyclerView.addItemDecoration(decoration);
         //触发自动刷新
-        mRefreshLayout.autoRefresh();
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -125,6 +125,12 @@ public class MallOrderSellTabFragment extends LazyFragment implements OnRefreshL
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()
         );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRefreshLayout.autoRefresh();
     }
 
     private void loadData(){

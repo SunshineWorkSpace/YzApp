@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -126,6 +127,9 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
                 new ShareAction(this).setShareContent(shareContent).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).withMedia(image).setCallback(shareListener).share();
                 break;
             case R.id.lin_copy:
+                Intent report=new Intent(this, HomeShopDetailReportActivity.class);
+                report.putExtra("id",getIntent().getStringExtra("id"));
+                startActivity(report);
                 //举报
         /*        Toast.makeText(this,"保存成功",Toast.LENGTH_LONG).show();
                 //获取剪贴板管理器：

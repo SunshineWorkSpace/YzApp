@@ -215,6 +215,7 @@
             android:textSize="14dp" />
 
         <EditText
+            android:phoneNumber="true"
             android:id="@+id/sinfo_tv_startime"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

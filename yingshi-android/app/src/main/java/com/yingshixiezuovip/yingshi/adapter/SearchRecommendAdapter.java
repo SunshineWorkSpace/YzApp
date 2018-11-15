@@ -47,16 +47,16 @@ public class SearchRecommendAdapter extends MBaseAdapter<RecommendModel.Recommen
         final CheckBox followCheckBox = (CheckBox) viewHolder.findViewById(R.id.search_cb_follow);
         followCheckBox.setChecked(recommendItem.isfollow == 0);
         followCheckBox.setText(recommendItem.isfollow == 0 ? "+关注" : "已关注");
-        followCheckBox.setBackgroundResource(recommendItem.isfollow == 1 ? R.drawable.home_follow_shape
-                : R.drawable.home_unfollow_shape);
+        followCheckBox.setBackgroundResource(recommendItem.isfollow == 1 ? R.drawable.bg_white_k
+                : R.drawable.bg_orange_k);
 
         followCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 recommendItem.isfollow = recommendItem.isfollow == 0 ? 1 : 0;
                 followCheckBox.setText(isChecked ? "+关注" : "已关注");
-                followCheckBox.setBackgroundResource(recommendItem.isfollow == 1 ? R.drawable.home_follow_shape
-                        : R.drawable.home_unfollow_shape);
+                followCheckBox.setBackgroundResource(recommendItem.isfollow == 1 ? R.drawable.bg_white_k
+                        : R.drawable.bg_orange_k);
 
                 if (onAdapterClickListener != null) {
                     onAdapterClickListener.onFollowClick(recommendItem.userid, recommendItem.isfollow);

@@ -51,10 +51,11 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
         findViewById(R.id.company_btn_resume).setOnClickListener(this);
         findViewById(R.id.company_btn_schoolcard).setOnClickListener(this);
         findViewById(R.id.company_btn_shareurl).setOnClickListener(this);
-        lin_vip=(LinearLayout)findViewById(R.id.lin_vip);
+        lin_vip = (LinearLayout) findViewById(R.id.lin_vip);
         lin_vip.setOnClickListener(this);
-        if(mUserInfo.usertype==1||mUserInfo.usertype==2||mUserInfo.usertype==3||mUserInfo.usertype==4){
-            lin_vip.setVisibility(View.VISIBLE);
+        if (mUserInfo.type == 1 || mUserInfo.type == 2 || mUserInfo.type == 3 || mUserInfo.type == 4) {
+            if (mUserInfo.iswanshan == 1 && mUserInfo.isrenzhen == 1)
+                lin_vip.setVisibility(View.VISIBLE);
         }
     }
 
@@ -108,10 +109,10 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
                 } else if (mUserInfo.type == 5 || mUserInfo.type == 6) {
                     Intent intent = new Intent(this, MainSchoolInfoSetActivity.class);
                     startActivity(intent);
-                } else if(mUserInfo.type==7){
+                } else if (mUserInfo.type == 7) {
                     Intent intent = new Intent(this, MainShopInfoSetActivity.class);
                     startActivity(intent);
-                } else{
+                } else {
                     startActivity(new Intent(this, MainCompanyBaseInfoActivity.class));
                 }
                 break;
@@ -150,7 +151,7 @@ public class MainCompanyInfoSetActivity extends BaseActivity {
                 }
                 break;
             case R.id.lin_vip:
-                intent=new Intent(this,VipChoosePayTypeActivity.class);
+                intent = new Intent(this, VipChoosePayTypeActivity.class);
                 startActivity(intent);
                 break;
 

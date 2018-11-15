@@ -293,9 +293,15 @@ public class HomeShopDetailActvity extends BaseActivity {
                     // 如果我们想要一个GridView形式的RecyclerView，那么在LayoutManager上我们就要使用GridLayoutManager
                     // 实例化一个GridLayoutManager，列数为3
                     if (mShopDetail.photoList.size() < 5 && mShopDetail.photoList.size() > 1) {
-                        layoutManager = new GridLayoutManager(this,
-                                2);
-                        type=2;
+                        if(mShopDetail.photoList.size()==3){
+                            layoutManager = new GridLayoutManager(this,
+                                    3);
+                            type=3;
+                        }else{
+                            layoutManager = new GridLayoutManager(this,
+                                    2);
+                            type=2;
+                        }
                     }else{
                         layoutManager = new GridLayoutManager(this,
                                 3);

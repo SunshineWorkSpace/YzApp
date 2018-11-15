@@ -49,6 +49,7 @@ public class UserAddressListActivity extends BaseActivity implements OnRefreshLi
     private TextView tv_add_new_address;
     private final int REQUEST_ADD_ADDRESS=11;
     private final int REQUEST_EDIT_ADDRESS=12;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class UserAddressListActivity extends BaseActivity implements OnRefreshLi
         //触发自动刷新
         mRefreshLayout.autoRefresh();
         tv_add_new_address.setOnClickListener(this);
-
+        mType=getIntent().getIntExtra("type",0);
 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -88,20 +89,22 @@ public class UserAddressListActivity extends BaseActivity implements OnRefreshLi
                         deleteAddressDialog(position);
                     }
                 });
-                view.findViewById(R.id.ll_user_address).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AddressListModel.AddressModel addressMode=mList.get(position);
-                        Intent choiceAddress=new Intent();
-                        choiceAddress.putExtra("city",addressMode.city);
-                        choiceAddress.putExtra("address",addressMode.address);
-                        choiceAddress.putExtra("id",addressMode.id);
-                        choiceAddress.putExtra("telphone",addressMode.telphone);
-                        choiceAddress.putExtra("revcname",addressMode.revcname);
-                        UserAddressListActivity.this.setResult(RESULT_OK,choiceAddress);
-                        finish();
-                    }
-                });
+                if(mType==1) {
+                    view.findViewById(R.id.ll_user_address).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AddressListModel.AddressModel addressMode = mList.get(position);
+                            Intent choiceAddress = new Intent();
+                            choiceAddress.putExtra("city", addressMode.city);
+                            choiceAddress.putExtra("address", addressMode.address);
+                            choiceAddress.putExtra("id", addressMode.id);
+                            choiceAddress.putExtra("telphone", addressMode.telphone);
+                            choiceAddress.putExtra("revcname", addressMode.revcname);
+                            UserAddressListActivity.this.setResult(RESULT_OK, choiceAddress);
+                            finish();
+                        }
+                    });
+                }
 
                 view.findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
                     @Override

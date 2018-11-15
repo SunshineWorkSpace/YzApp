@@ -115,6 +115,7 @@ public class HomeShopOderDetailActivity extends BaseActivity {
             case R.id.ll_add_address:
                 Intent addAddress=new Intent(HomeShopOderDetailActivity.this,
                         UserAddressListActivity.class);
+                addAddress.putExtra("type",1);
                 startActivityForResult(addAddress,REQUEST_ADD_ADDRESS);
                 break;
             case R.id.ll_choice_number:

@@ -193,7 +193,17 @@ public class SelectWindow extends BasePopupWindow {
         mWheelViewMouth.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                ((TextView) findViewById(R.id.select_tv_title)).setText(mPlaceModel.data.get(mWheelViewYear.getCurrentItem()).provinceName + " " + mPlaceModel.data.get(mWheelViewYear.getCurrentItem()).list.get(mWheelViewMouth.getCurrentItem()).cityName);
+                try {
+                    int yearIndex=mWheelViewYear.getCurrentItem();
+                    List<PlaceModel.CityItem> cityItemList= mPlaceModel.data.get(yearIndex).list;
+                    int cityIndex=mWheelViewMouth.getCurrentItem();
+                    if(cityIndex<cityItemList.size()) {
+                        ((TextView) findViewById(R.id.select_tv_title)).setText(
+                                mPlaceModel.data.get(yearIndex).provinceName +
+                                        " " +cityItemList.get(cityIndex).cityName);
+                    }
+                } catch (Exception e) {
+                }
             }
         });
 

@@ -59,6 +59,7 @@ public class ShopFragment extends BaseFragment implements TabLayout.OnTabSelecte
     }
 
     private void initTab(){
+        currentPosition=1;
         fragmentList=getChildFragmentList();
         viewPager.setOffscreenPageLimit(1);
         pageAdapter = new ShopFragmentPagerAdapter(this.getChildFragmentManager(),

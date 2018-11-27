@@ -635,6 +635,9 @@ public class HttpUtils {
                 case TASK_TYPE_PUBLISH_DETAIL:
                     methodName="/v2/uploadworks.spr";
                     break;
+                case TASK_TYPE_SHOP_DELETE:
+                    methodName="/v2/asideShopPallMeDel.spr";
+                    break;
                 default:
                     break;
             }

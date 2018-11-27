@@ -141,9 +141,29 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
     private void sendPicDate() {
         HashMap<String, Object> params = new HashMap<>();
         if (videoTime != 0) {
-            params.put("count", mImgs.size());
+            if(mImgs.size()==9){
+                if(!mImgs.get(mImgs.size()-1).equals("添加")){
+                    params.put("count", mImgs.size()+1);
+                }else {
+                    params.put("count", mImgs.size());
+                }
+
+            }else {
+                params.put("count", mImgs.size());
+            }
+
         }else {
-            params.put("count", mImgs.size()-1);
+            if(mImgs.size()==9){
+                if(!mImgs.get(mImgs.size()-1).equals("添加")){
+                    params.put("count", mImgs.size());
+                }else {
+                    params.put("count", mImgs.size()-1);
+                }
+
+            }else {
+                params.put("count", mImgs.size()-1);
+            }
+
         }
         mLoadWindow.show(R.string.text_request);
         HttpUtils.doPost(TaskType.TASK_TYPE_OSS_IMG, params, this);
@@ -289,8 +309,20 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
 
     private void sendPicOssByte() {
         new Random().nextBytes(videoImgFile);
+        int i=0;
         // 构造上传请求
-        PutObjectRequest put = new PutObjectRequest(Configs.bucket, alOssImgModel.data.get(mImgs.size()-1).toString(), videoImgFile);
+        if(mImgs.size()==9){
+            if(!mImgs.get(mImgs.size()-1).equals("添加")){
+          i= mImgs.size();
+            }else {
+             i =mImgs.size()-1;
+            }
+
+        }else {
+            i =mImgs.size()-1;
+        }
+
+        PutObjectRequest put = new PutObjectRequest(Configs.bucket, alOssImgModel.data.get(i).toString(), videoImgFile);
 
 // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
@@ -349,9 +381,23 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                 if (videoTime != 0&&i==100) {
                     sendPublish();
                 }
-                if (i == mImgs.size()-1||videoTime==0) {
-                    sendPublish();
+                if(mImgs.size()==9){
+                    if(mImgs.get(mImgs.size()-1).equals("添加")){
+                        if (i == mImgs.size()-2&&videoTime==0) {
+                            sendPublish();
+                        }
+                    }else {
+                        if (i == mImgs.size()-1&&videoTime==0) {
+                            sendPublish();
+                        }
+                    }
+
+                }else {
+                    if (i == mImgs.size()-2&&videoTime==0) {
+                        sendPublish();
+                    }
                 }
+
             }
 
             @Override
@@ -392,9 +438,30 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                 params.put("content", getIntent().getStringExtra("content"));
                 if(videoTime!=0){
                     params.put("video", alOssVideoModel.data.get(0).createDir);
-                    params.put("videofm", alOssImgModel.data.get(mImgs.size()-1).createDir);
+                    if(mImgs.size()==9){
+                        if(!mImgs.get(mImgs.size()-1).equals("添加")){
+                            params.put("videofm", alOssImgModel.data.get(mImgs.size()).createDir);
+                        }else {
+                            params.put("videofm", alOssImgModel.data.get(mImgs.size()-1).createDir);
+                        }
+
+                    }else {
+                        params.put("videofm", alOssImgModel.data.get(mImgs.size()-1).createDir);
+                    }
+//                    params.put("videofm", alOssImgModel.data.get(mImgs.size()-1).createDir);
                     params.put("videotimer", videoTime+"");
-                    alOssImgModel.data.remove(mImgs.size()-1);
+
+                    if(mImgs.size()==9){
+                        if(!mImgs.get(mImgs.size()-1).equals("添加")){
+                            alOssImgModel.data.remove(mImgs.size());
+                        }else {
+                            alOssImgModel.data.remove(mImgs.size()-1);
+                        }
+
+                    }else {
+                        alOssImgModel.data.remove(mImgs.size()-1);
+                    }
+//                    alOssImgModel.data.remove(mImgs.size()-1);
                 }else {
                     params.put("video", "");
                     params.put("videofm", "");

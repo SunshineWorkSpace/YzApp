@@ -53,7 +53,7 @@ public class YingApplication extends MultiDexApplication implements Application.
     private static YingApplication instance;
     public DisplayImageOptions mHeadOption, mImageOption;
     private VersionModel versionModel;
-
+    public static boolean isShowDelete=false;
     @Override
     public void onCreate() {
         super.onCreate();

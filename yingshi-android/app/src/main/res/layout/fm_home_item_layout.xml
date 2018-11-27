@@ -66,12 +66,13 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp" />
 
-            <RelativeLayout
+            <LinearLayout
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="3dp"
-                android:gravity="center_vertical">
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/homeitem_tv_city"
@@ -85,7 +86,6 @@
                     android:gravity="center"
                     android:lineSpacingMultiplier="1.2"
                     android:singleLine="true"
-                    android:text="福建省福建省福建省福建省福建省福建省福建省福建省福建省"
                     android:textColor="#676767"
                     android:textSize="13dp" />
 
@@ -110,7 +110,6 @@
                     android:maxWidth="80dp"
                     android:singleLine="true"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="这里是标题"
                     android:textColor="#676767"
                     android:textSize="13dp" />
 
@@ -136,10 +135,9 @@
                     android:gravity="center"
                     android:singleLine="true"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="这里是标题这里是标题这里是标题这里是标题这里是标题"
                     android:textColor="#676767"
                     android:textSize="13dp" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:id="@+id/homeitem_type_1_line"

@@ -236,7 +236,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
                         // whether show camera
                         intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, granted);
                         // max select image amount
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, (9-(mImgs.size()-1)));
                         // select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
                         intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
                         startActivityForResult(intent, REQUEST_IMAGE);
@@ -250,7 +250,10 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
         if(requestCode == REQUEST_IMAGE){
             if(resultCode == RESULT_OK){
                 List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                addImgs(path.get(0));
+                for (int i=0;i<path.size();i++){
+                    addImgs(path.get(i));
+                }
+
             }
         }
     }

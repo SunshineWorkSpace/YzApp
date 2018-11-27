@@ -113,6 +113,7 @@ public class MallOrderSellTabFragment extends LazyFragment implements OnRefreshL
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 BuyerOrderModel.BuyerOderDetailModel shopType=mList.get(position);
                 Intent detail=new Intent(getActivity(), HomeShopDetailActvity.class);
+                detail.putExtra("type", "1");
                 detail.putExtra("id",shopType.id);
                 startActivity(detail);
             }

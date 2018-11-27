@@ -154,13 +154,13 @@ public class MainSearchHistoryActivity extends BaseActivity {
                 }
                 break;
             case R.id.cate_btn_area:
-                startSearch(new HotModel(4, keyword));
-                break;
-            case R.id.cate_btn_works:
                 startSearch(new HotModel(3, keyword));
                 break;
-            case R.id.cate_btn_position:
+            case R.id.cate_btn_works:
                 startSearch(new HotModel(1, keyword));
+                break;
+            case R.id.cate_btn_position:
+                startSearch(new HotModel(4, keyword));
                 break;
             case R.id.cate_btn_user:
                 startSearch(new HotModel(2, keyword));

@@ -136,4 +136,5 @@ public enum TaskType {
     TASK_TYPE_UPDATA_BUSINESS,//v2/user/businessInfo.spr
     TASK_TYPE_UDDATA_BUSINESS_SUBMIT,//v2/user/updateBusinessInfo.spr
     TASK_TYPE_PUBLISH_DETAIL,//v2/uploadworks.spr
+    TASK_TYPE_SHOP_DELETE,//v2/asideShopPallMeDel.spr
 }

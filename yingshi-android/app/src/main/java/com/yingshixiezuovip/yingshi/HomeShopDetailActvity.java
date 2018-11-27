@@ -1,6 +1,7 @@
 package com.yingshixiezuovip.yingshi;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -32,6 +33,7 @@ import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.ImageLoaderNew;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
 import com.yingshixiezuovip.yingshi.utils.SPUtils;
+import com.yingshixiezuovip.yingshi.widget.DialogDelete;
 import com.yingshixiezuovip.yingshi.widget.ScaleImageNewView;
 import com.yingshixiezuovip.yingshi.widget.ScaleImageView;
 
@@ -156,16 +158,20 @@ public class HomeShopDetailActvity extends BaseActivity {
                 break;
             case R.id.right_btn_submit:
                 if(null!=shopDetailType){
-                    Intent it=new Intent(this,ShopDetailShareActivity.class);
-                    it.putExtra("title",shopDetailType.data.title);
-                    it.putExtra("content",shopDetailType.data.content);
-                    it.putExtra("img",shopDetailType.data.photoList.get(0).photo);
-                    it.putExtra("au",shopDetailType.data.head);
-                    it.putExtra("autv",shopDetailType.data.nickname);
-                    it.putExtra("price",shopDetailType.data.price);
-                    it.putExtra("shareurl",shopDetailType.data.shareurl);
-                    it.putExtra("id",id);
-                    startActivity(it);
+                    if(getIntent().getStringExtra("type").equals("delete")){
+                        createDialog();
+                    }else {
+                        Intent it=new Intent(this,ShopDetailShareActivity.class);
+                        it.putExtra("title",shopDetailType.data.title);
+                        it.putExtra("content",shopDetailType.data.content);
+                        it.putExtra("img",shopDetailType.data.photoList.get(0).photo);
+                        it.putExtra("au",shopDetailType.data.head);
+                        it.putExtra("autv",shopDetailType.data.nickname);
+                        it.putExtra("price",shopDetailType.data.price);
+                        it.putExtra("shareurl",shopDetailType.data.shareurl);
+                        it.putExtra("id",id);
+                        startActivity(it);
+                    }
                 }
 
 //                mShareWindow.show(mShareItem, this);
@@ -185,6 +191,42 @@ public class HomeShopDetailActvity extends BaseActivity {
             case R.id.phonepay_btn_vip:
                 mPhonePayWindow.cancel();
         }
+    }
+    private void createDialog() {
+        try {
+            DialogDelete.Builder builder = new DialogDelete.Builder(this);
+            builder.setPositiveButton(new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+//                AppUtils.showToast(getActivity(), which + "");
+                    if (which == 0) {
+                        sendDelete();
+                    } else {
+                        Intent it=new Intent(HomeShopDetailActvity.this,ShopDetailShareActivity.class);
+                        it.putExtra("title",shopDetailType.data.title);
+                        it.putExtra("content",shopDetailType.data.content);
+                        it.putExtra("img",shopDetailType.data.photoList.get(0).photo);
+                        it.putExtra("au",shopDetailType.data.head);
+                        it.putExtra("autv",shopDetailType.data.nickname);
+                        it.putExtra("price",shopDetailType.data.price);
+                        it.putExtra("shareurl",shopDetailType.data.shareurl);
+                        it.putExtra("id",id);
+                        startActivity(it);
+                    }
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendDelete() {
+        HashMap localHashMap = new HashMap();
+        localHashMap.put("id", id);
+        localHashMap.put("token", mUserInfo.token);
+        HttpUtils.doPost(TaskType.TASK_TYPE_SHOP_DELETE , localHashMap, this);
     }
 
     public void onFollowClick(int userid, int follow) {
@@ -266,6 +308,10 @@ public class HomeShopDetailActvity extends BaseActivity {
                     tv_fllow.setBackgroundResource(mIsfllow == 1 ?
                             R.drawable.concern_alread_shape : R.drawable.concern_shape);
                 }
+                break;
+            case TASK_TYPE_SHOP_DELETE:
+                showMessage("删除成功");
+                finish();
                 break;
         }
     }

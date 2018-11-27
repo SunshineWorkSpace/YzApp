@@ -120,6 +120,9 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
         mListView.getRefreshableView().addHeaderView(headView);
 
         mListView.setAdapter(mHomeListAdapter);
+        if(mListView.isRefreshing()){
+            mListView.onRefreshComplete();
+        }
         initSecondTab();
     }
 

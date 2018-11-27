@@ -19,6 +19,7 @@ import com.yingshixiezuovip.yingshi.HomeShopDetailActvity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.adapter.ShopNewAdapter;
 import com.yingshixiezuovip.yingshi.base.LazyFragment;
+import com.yingshixiezuovip.yingshi.base.YingApplication;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
 import com.yingshixiezuovip.yingshi.model.ShopTypeModel;
@@ -95,7 +96,7 @@ public class ShopUserTabFragment extends LazyFragment implements OnRefreshListen
         SpacesItemDecoration decoration=new SpacesItemDecoration(16);
         mRecyclerView.addItemDecoration(decoration);
         //触发自动刷新
-        mRefreshLayout.autoRefresh();
+//        mRefreshLayout.autoRefresh();
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -110,10 +111,18 @@ public class ShopUserTabFragment extends LazyFragment implements OnRefreshListen
                 ShopTypeModel.ShopType shopType=mList.get(position);
                 Intent detail=new Intent(getActivity(), HomeShopDetailActvity.class);
                 detail.putExtra("id",shopType.id);
+                detail.putExtra("type", "delete");
                 startActivity(detail);
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //触发自动刷新
+        mRefreshLayout.autoRefresh();
     }
 
     private void loadData(){

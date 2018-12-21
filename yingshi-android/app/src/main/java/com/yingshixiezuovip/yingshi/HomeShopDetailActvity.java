@@ -1,6 +1,8 @@
 package com.yingshixiezuovip.yingshi;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -28,6 +30,7 @@ import com.yingshixiezuovip.yingshi.datautils.TaskType;
 import com.yingshixiezuovip.yingshi.model.ShareModel;
 import com.yingshixiezuovip.yingshi.model.ShopDetailTypeModel;
 import com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView;
+import com.yingshixiezuovip.yingshi.quote.video.JCVideoPlayer;
 import com.yingshixiezuovip.yingshi.quote.video.JCVideoPlayerStandard;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.ImageLoaderNew;
@@ -78,7 +81,6 @@ public class HomeShopDetailActvity extends BaseActivity {
     }
 
     private void initView(){
-
         iv_user_head=(RoundedImageView) findViewById(R.id.iv_user_head);
         tv_user_name=(TextView) findViewById(R.id.tv_user_name);
         tv_num=(TextView) findViewById(R.id.tv_num);
@@ -450,5 +452,11 @@ public class HomeShopDetailActvity extends BaseActivity {
     @Override
     public void taskIsCanceled(TaskType type) {
         super.taskIsCanceled(type);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        JCVideoPlayer.releaseAllVideos();
     }
 }

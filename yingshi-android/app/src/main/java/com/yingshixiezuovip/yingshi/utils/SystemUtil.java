@@ -9,6 +9,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
@@ -94,4 +95,40 @@ public class SystemUtil {
         return options.build();
     }
 
+    public static int getImageWidth(Context context,String path){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+        /**
+         * 最关键在此，把options.inJustDecodeBounds = true;
+         * 这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
+         */
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options); // 此时返回的bitmap为null
+        /**
+         *options.outHeight为原始图片的高
+         */
+        return px2dip(context,options.outWidth==0?400:options.outWidth);
+    }
+    public static int getImageHeight(Context context,String path){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+        /**
+         * 最关键在此，把options.inJustDecodeBounds = true;
+         * 这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
+         */
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options); // 此时返回的bitmap为null
+        /**
+         *options.outHeight为原始图片的高
+         */
+        return px2dip(context,options.outHeight==0?300:options.outHeight);
+    }
+    public static int dip2px(Context context, float dipValue){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dipValue * scale + 0.5f);
+    }
+    public static int px2dip(Context context, float pxValue){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(pxValue / scale + 0.5f);
+    }
 }

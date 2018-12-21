@@ -1,5 +1,6 @@
 package com.yingshixiezuovip.yingshi.base;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import com.yingshixiezuovip.yingshi.utils.SPUtils;
 import com.yingshixiezuovip.yingshi.utils.ToastUtils;
 
 import java.util.List;
+import java.util.Stack;
 
 import de.greenrobot.event.EventBus;
 
@@ -52,7 +54,7 @@ public abstract class BaseActivity extends FragmentActivity implements TaskListe
     protected AlertWindow mInfoWindow;
     protected RotateAnimation mLoadAnim;
     protected boolean needAuth = false;
-
+    private static Stack<Activity> activityStack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -401,5 +403,51 @@ public abstract class BaseActivity extends FragmentActivity implements TaskListe
     public void onCancel(SHARE_MEDIA share_media) {
         mLoadWindow.cancel();
         showMessage("取消分享");
+    }
+
+//    /退出栈顶Activity
+    public void popActivity(Activity activity){
+        if(activity!=null){
+            activity.finish();
+            activityStack.remove(activity);
+            activity=null;
+        }
+    }
+
+    //获得当前栈顶Activity
+    public Activity currentActivity(){
+        Activity activity=activityStack.lastElement();
+        return activity;
+    }
+
+    //将当前Activity推入栈中
+    public void pushActivity(Activity activity){
+        if(activityStack==null){
+            activityStack=new Stack<Activity>();
+        }
+        activityStack.add(activity);
+    }
+    //退出栈中所有Activity
+    public void popAllActivityExceptOne(Class cls){
+        while(true){
+            Activity activity=currentActivity();
+            if(activity==null){
+                break;
+            }
+            if(activity.getClass().equals(cls) ){
+                break;
+            }
+            popActivity(activity);
+        }
+    }
+    public void exitAllActivity(){
+        if(activityStack==null){
+            activityStack=new Stack<Activity>();
+        }
+        if(activityStack.size()!=0){
+            for (int i=0;i<activityStack.size();i++){
+                activityStack.get(i).finish();
+            }
+        }
     }
 }

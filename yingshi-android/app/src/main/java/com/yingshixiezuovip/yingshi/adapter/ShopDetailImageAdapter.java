@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yingshixiezuovip.yingshi.R;
@@ -28,10 +30,12 @@ public class ShopDetailImageAdapter extends BaseQuickAdapter<ShopDetailTypeModel
     protected void convert(BaseViewHolder helper,ShopDetailTypeModel.PhotoImageItem item) {
         ScaleImageNewView imageView=helper.getView(R.id.iv_imge);
         TextView tv_price=helper.getView(R.id.tv_price);
-        imageView.setInitSize(CommUtils.parseInt(item.width,0),
-                CommUtils.parseInt(item.height,0));
-        ImageLoaderNew.load(mContext,
-                item.photo, imageView);
+     /*   imageView.setInitSize(CommUtils.parseInt(item.width,0),
+                CommUtils.parseInt(item.height,0));*/
+        Glide.with(mContext).load(item.photo).placeholder(android.R.color.transparent)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageView);
 
     }
 }

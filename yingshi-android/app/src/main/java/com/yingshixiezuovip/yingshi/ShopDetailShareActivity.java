@@ -38,7 +38,7 @@ import com.yingshixiezuovip.yingshi.utils.Qrutils;
 public class ShopDetailShareActivity extends Activity implements View.OnClickListener {
     private TextView tv_title,tv_content,tv_price,tv_au;
     private ImageView iv_detail,iv_app;
-    private LinearLayout lin_save, lin_weixin, lin_friend, lin_copy;
+    private LinearLayout lin_save, lin_weixin, lin_friend, lin_copy,lin_clean;
     private LinearLayout rel_share;
     Bitmap bitmap;
     private FrameLayout fl_no_data;
@@ -49,6 +49,8 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_shop_share);
         fl_no_data=(FrameLayout)findViewById(R.id.fl_no_data);
+        lin_clean=(LinearLayout)findViewById(R.id.lin_clean);
+        lin_clean.setOnClickListener(this);
         fl_no_data.setOnClickListener(this);
         rel_share=(LinearLayout) findViewById(R.id.rel_share);
         lin_save = (LinearLayout) findViewById(R.id.lin_save);
@@ -104,9 +106,6 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
             case R.id.fl_no_data:
                 finish();
                 break;
-            case R.id.tv_clean:
-                finish();
-                break;
             case R.id.lin_save:
                 Toast.makeText(this,"保存成功",Toast.LENGTH_LONG).show();
                 MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "YzApp", "YzApp");
@@ -139,6 +138,9 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
 // 将ClipData内容放到系统剪贴板里。
                 cm.setPrimaryClip(mClipData);
                 finish();*/
+                break;
+            case R.id.lin_clean:
+                finish();
                 break;
         }
     }

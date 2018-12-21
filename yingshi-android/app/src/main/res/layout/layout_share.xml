@@ -106,6 +106,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/lin_clean"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             android:background="@color/colorWhite"
@@ -119,7 +120,7 @@
                />
             <TextView
                 android:id="@+id/tv_clean"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="15dp"

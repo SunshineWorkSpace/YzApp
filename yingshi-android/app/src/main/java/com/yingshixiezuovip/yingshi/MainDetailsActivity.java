@@ -3,6 +3,7 @@ package com.yingshixiezuovip.yingshi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -321,11 +322,13 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
                 showCustomView(view, callback);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//播放时横屏幕，如果需要改变横竖屏，只需该参数就行了
             }
 
             @Override
             public void onHideCustomView() {
                 hideCustomView();
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//不播放时竖屏
             }
         });
 

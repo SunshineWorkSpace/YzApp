@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.utils.SystemUtil;
@@ -61,7 +63,13 @@ public class SelectImgHolder extends RecyclerView.ViewHolder {
 
     void refreTxt(String url){
         ivImg.setImageResource(android.R.color.transparent);
-        ImageLoader.getInstance().displayImage("file:///"+url,ivImg, SystemUtil.getImageLoaderDisplayImageOptions());
+        Glide.with(mContext)
+                .load("file:///"+url)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//让Glide既缓存全尺寸图片，下次在任何ImageView中加载图片的时候，全尺寸的图片将从缓存中取出，重新调整大小，然后缓存
+                .crossFade()
+                .into(ivImg);
+//        ImageLoader.getInstance().displayImage("file:///"+url,ivImg, SystemUtil.getImageLoaderDisplayImageOptions());
     }
 
     void isShowAdd(String txt){

@@ -1,5 +1,6 @@
 package com.yingshixiezuovip.yingshi.utils;
 
+import android.os.Build;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -31,13 +32,15 @@ public class WebUtils {
         setting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         setting.setLoadWithOverviewMode(true);
         setting.setAllowUniversalAccessFromFileURLs(true);
-
+        setting.setPluginState(WebSettings.PluginState.ON);
         setting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         setting.setAllowFileAccess(true);
         setting.setDomStorageEnabled(true);
         setting.setDatabaseEnabled(true);
         setting.setAppCacheEnabled(true);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webView.setWebChromeClient(new WebChromeClient());
         setting.setJavaScriptCanOpenWindowsAutomatically(true);
         webView.requestFocus();

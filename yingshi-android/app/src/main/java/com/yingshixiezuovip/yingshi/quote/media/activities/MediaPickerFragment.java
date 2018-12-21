@@ -2,6 +2,7 @@ package com.yingshixiezuovip.yingshi.quote.media.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.quote.media.MediaAdapter;
@@ -227,6 +229,10 @@ public class MediaPickerFragment extends BaseFragment implements
             PickerImageView pickerImageView = (PickerImageView) view
                     .findViewById(R.id.thumbnail);
             MediaItem mediaItem = new MediaItem(mMediaType, uri);
+            if(getRealPathFromUri(getActivity(),uri).contains("unlock")){
+                Toast.makeText(getActivity(),"图片不符合规则",Toast.LENGTH_LONG).show();
+                return;
+            }
             mMediaAdapter.updateMediaSelected(mediaItem, pickerImageView);
             mMediaSelectedList = mMediaAdapter.getMediaSelectedList();
 
@@ -238,7 +244,20 @@ public class MediaPickerFragment extends BaseFragment implements
             }
         }
     }
-
+    public static String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
     public void switchMediaSelector() {
         if (!mMediaOptions.canSelectPhotoAndVideo())
             return;

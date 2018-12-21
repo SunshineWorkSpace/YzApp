@@ -78,6 +78,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
     private AuthWindow mAuthWindow;
     private AuthWindow mAuthInfoWindow;
     private boolean isFirstShow = true;
+    private boolean isRefresh=false;
     private PublishIsOkModel mPublishIsOkModel;
 
     @Override
@@ -91,10 +92,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
 
         initView();
         loadData();
-
     }
-
-
 
     private void initView() {
         mAuthWindow = new AuthWindow(getActivity());
@@ -157,15 +155,15 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
     private PullToRefreshBase.OnRefreshListener2<ListView> onRefreshListener = new PullToRefreshBase.OnRefreshListener2<ListView>() {
         @Override
         public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-            long currentTime = System.currentTimeMillis();
-            mListView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新：" + TimeUtils.formatRefreshDate(currentTime));
-            SPUtils.saveRefreshTime(getActivity(), "home", currentTime);
+//            mListView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新：" + TimeUtils.formatRefreshDate(currentTime));
             if (mHomeTypeModel == null || mHomeTypeModel.data == null || mHomeTypeModel.data.size() == 0) {
                 loadData();
             } else {
                 mPage = 0;
                 loadListData();
             }
+            long currentTime = System.currentTimeMillis();
+            SPUtils.saveRefreshTime(getActivity(), "home", currentTime);
         }
 
         @Override
@@ -184,6 +182,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
     };
 
     private void loadData() {
+        isRefresh=true;
         HashMap<String, Object> params = new HashMap<>();
         params.put("type", 2);
         mLoadWindow.show(R.string.text_request);
@@ -490,6 +489,11 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
     @Override
     public void onResume() {
         super.onResume();
+
         initWindow();
+        if(!mListView.isRefreshing()&&!isRefresh){
+            loadData();
+        }
+
     }
 }

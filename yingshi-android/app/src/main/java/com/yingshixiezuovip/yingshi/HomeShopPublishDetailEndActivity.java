@@ -1,9 +1,12 @@
 package com.yingshixiezuovip.yingshi;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,8 +44,12 @@ import com.yingshixiezuovip.yingshi.model.VideoModel;
 import com.yingshixiezuovip.yingshi.quote.media.MediaItem;
 import com.yingshixiezuovip.yingshi.quote.media.MediaOptions;
 import com.yingshixiezuovip.yingshi.quote.media.activities.MediaPickerActivity;
+import com.yingshixiezuovip.yingshi.quote.media.utils.MediaUtils;
 import com.yingshixiezuovip.yingshi.utils.CommUtils;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
+import com.yingshixiezuovip.yingshi.utils.PictureManager;
+import com.yingshixiezuovip.yingshi.utils.SaveImg;
+import com.yingshixiezuovip.yingshi.utils.SystemUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,6 +73,7 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
 
     ArrayList<String> mImgs = new ArrayList<String>();
     private AlOssImgModel alOssImgModel;
+    private AlOssImgModel alOssOneImgModel;
     private int videoTime = 0;
     private AlOssVideoModel alOssVideoModel;
     OSS oss;
@@ -77,7 +85,7 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_detail_end);
         setActivityTitle("发布页(3/3)");
-
+        pushActivity(this);
         ((TextView) findViewById(R.id.right_btn_name)).setText("下一步");
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
         findViewById(R.id.right_btn_submit).setOnClickListener(this);
@@ -101,9 +109,9 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
 
 //该配置类如果不设置，会有默认配置，具体可看该类
         ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
-        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setConnectionTimeout(100 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(100 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(10); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
 
 //开启可以在控制台看到日志，并且会支持写入手机sd卡中的一份日志文件位置在SDCard_path\OSSLog\logs.csv  默认不开启
@@ -168,13 +176,17 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
         mLoadWindow.show(R.string.text_request);
         HttpUtils.doPost(TaskType.TASK_TYPE_OSS_IMG, params, this);
     }
-
+    private void sendPicOneDate() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("count", 1);
+        HttpUtils.doPost(TaskType.TASK_TYPE_OSS_IMG_ONE, params, this);
+    }
     private void sendVideoDate() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("count", 1);
         HttpUtils.doPost(TaskType.TASK_TYPE_OSS_VIDEO, params, this);
     }
-
+    Bitmap videobitmap;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -189,10 +201,15 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                     iv_video.setBackground(null);
                     Matrix matrix = new Matrix();
                     matrix.setScale(1f, 1f);
-                    Bitmap bitmap = Bitmap.createBitmap(getVideoThumbnail(getPath(mediaItem.getUriOrigin().toString()) + ""), 0, 0, 1000, 1000, matrix, false);
-                    iv_video.setImageBitmap(bitmap);
+                    PictureManager.displayImage(getPathFromUri(this,Uri.parse(mediaItem.getUriOrigin().toString())), iv_video);
+//                    Bitmap bitmap = Bitmap.createBitmap(getVideoThumbnail(getPath(mediaItem.getUriOrigin().toString()) + ""), 0, 0,1000, 1000, matrix, false);
+//                    iv_video.setImageBitmap(bitmap);
+
+                   /* iv_video.setDrawingCacheEnabled(true);
+                    videobitmap= Bitmap.createBitmap(iv_video.getDrawingCache());
+                    iv_video.setDrawingCacheEnabled(false);*/
                     videoFile = getPath(mediaItem.getUriOrigin().toString()) + "";
-                    videoImgFile=Bitmap2Bytes(bitmap);
+//                    videoImgFile=Bitmap2Bytes(bitmap);
 //                    mImgs.add(videoFile);
                     videoTime = CommUtils.getDuration(getPath(mediaItem.getUriOrigin().toString()) + "");
                 }
@@ -200,12 +217,30 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
             }
         }
     }
+    private String getPathFromUri(Context context, Uri uri) {
+        if (uri == null)
+            return null;
+        String scheme = uri.getScheme();
+        if (scheme.equals(ContentResolver.SCHEME_FILE)) {
+            return uri.getPath();
+        } else if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
+           /* if (isPhoto()) {
+                return MediaUtils.getRealImagePathFromURI(
+                        context.getContentResolver(), uri);
+            } else {*/
+                return MediaUtils.getRealVideoPathFromURI(
+                        context.getContentResolver(), uri);
+//            }
+        }
+        return uri.toString();
+    }
     /**
      * 把Bitmap转Byte
      */
     public static byte[] Bitmap2Bytes(Bitmap bm){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        bm.recycle();
         return baos.toByteArray();
     }
     public File getPath(String uris) {
@@ -271,13 +306,16 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                 if (alOssImgModel != null) {
                     if (videoTime != 0) {
                         sendVideoDate();
+                        videobitmap= ((BitmapDrawable) ((ImageView) iv_video).getDrawable()).getBitmap();
+
                         for (int i = 0; i < mImgs.size(); i++) {
                             if(!mImgs.get(i).equals("添加")){
                                 sendPicOss(i, alOssImgModel.data.get(i).createDir, mImgs.get(i));
                             }
 
                         }
-                        sendPicOssByte();
+
+//                        sendPicOssByte();
                     }else {
                         for (int i = 0; i < mImgs.size(); i++) {
                             if(!mImgs.get(i).equals("添加")){
@@ -294,6 +332,7 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
             case TASK_TYPE_OSS_VIDEO:
                 alOssVideoModel = GsonUtil.fromJson(result.toString(), AlOssVideoModel.class);
                 if (alOssVideoModel != null) {
+
                     sendPicOss(100, alOssVideoModel.data.get(0).createDir,videoFile);
                 } else {
                     showMessage(R.string.data_load_failed);
@@ -301,14 +340,77 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                 break;
             case TASK_TYPE_ASIDE_SEND:
                 mLoadWindow.cancel();
-                Intent it=new Intent(this,MainActivity.class);
-                startActivity(it);
+                showMessage("发布成功");
+                Intent userShop=new Intent(this,HomeShopUserActivity.class);
+                userShop.putExtra("uid",mUserInfo.id+"");
+                startActivity(userShop);
+
+                break;
+            case TASK_TYPE_OSS_IMG_ONE:
+                alOssOneImgModel = GsonUtil.fromJson(result.toString(), AlOssImgModel.class);
+                if (alOssOneImgModel != null) {
+                    sendPicOss(99, alOssOneImgModel.data.get(0).createDir,SaveImg.saveImg(videobitmap,"videoImg.png",HomeShopPublishDetailEndActivity.this).toString());
+                }
                 break;
         }
     }
 
+    private void sendPicVideoImg(String path) {
+        int i=0;
+        // 构造上传请求
+        if(mImgs.size()==9){
+            if(!mImgs.get(mImgs.size()-1).equals("添加")){
+                i= mImgs.size();
+            }else {
+                i =mImgs.size()-1;
+            }
+
+        }else {
+            i =mImgs.size()-1;
+        }
+
+        PutObjectRequest put = new PutObjectRequest(Configs.bucket, alOssImgModel.data.get(i).toString(), path);
+
+// 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+
+                Log.d("ETag", result.getETag());
+                Log.d("RequestId", result.getRequestId());
+                sendPublish();
+
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });
+
+    }
+
     private void sendPicOssByte() {
-        new Random().nextBytes(videoImgFile);
+//        new Random().nextBytes(videoImgFile);
         int i=0;
         // 构造上传请求
         if(mImgs.size()==9){
@@ -368,6 +470,16 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
 //                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                try
+                {
+                    if (videoTime != 0&&i==100) {
+                        mLoadWindow.showMessage("进度: "  + "  "+(int)((currentSize*100)/totalSize)+"%...");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
@@ -378,25 +490,45 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
 
                 Log.d("ETag", result.getETag());
                 Log.d("RequestId", result.getRequestId());
-                if (videoTime != 0&&i==100) {
-                    sendPublish();
-                }
-                if(mImgs.size()==9){
-                    if(mImgs.get(mImgs.size()-1).equals("添加")){
-                        if (i == mImgs.size()-2&&videoTime==0) {
-                            sendPublish();
-                        }
-                    }else {
-                        if (i == mImgs.size()-1&&videoTime==0) {
-                            sendPublish();
-                        }
-                    }
+                try
+                {
+                    if (videoTime != 0&&i==100) {
+//                    sendPicVideoImg(SaveImg.saveImg(videobitmap,"videoImg.png",HomeShopPublishDetailEndActivity.this).toString());
+//                            sendPicOss(99, alOssImgModel.data.get(i-1).createDir, mImgs.get(0));
+//                    showMessage("视频上传成功");
+//                        mLoadWindow.showMessage("视频上传成功");
+                        sendPicOneDate();
+                        mLoadWindow.showMessage("上传图片中....");
 
-                }else {
-                    if (i == mImgs.size()-2&&videoTime==0) {
+                    }
+                    if(videoTime!=0&&i==99){
                         sendPublish();
                     }
+                    if(mImgs.size()==9){
+                        if(mImgs.get(mImgs.size()-1).equals("添加")){
+                            if (i == mImgs.size()-2&&videoTime==0) {
+                                showMessage("图片上传成功");
+                                sendPublish();
+
+                            }
+                        }else {
+                            if (i == mImgs.size()-1&&videoTime==0) {
+                                showMessage("图片上传成功");
+                                sendPublish();
+                            }
+                        }
+
+                    }else {
+                        if (i == mImgs.size()-2&&videoTime==0) {
+                            showMessage("图片上传成功");
+                            sendPublish();
+                        }
+                    }
                 }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
 
             }
 
@@ -438,7 +570,7 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                 params.put("content", getIntent().getStringExtra("content"));
                 if(videoTime!=0){
                     params.put("video", alOssVideoModel.data.get(0).createDir);
-                    if(mImgs.size()==9){
+                 /*   if(mImgs.size()==9){
                         if(!mImgs.get(mImgs.size()-1).equals("添加")){
                             params.put("videofm", alOssImgModel.data.get(mImgs.size()).createDir);
                         }else {
@@ -447,7 +579,9 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
 
                     }else {
                         params.put("videofm", alOssImgModel.data.get(mImgs.size()-1).createDir);
-                    }
+                    }*/
+                    params.put("videofm", alOssOneImgModel.data.get(0).createDir);
+
 //                    params.put("videofm", alOssImgModel.data.get(mImgs.size()-1).createDir);
                     params.put("videotimer", videoTime+"");
 
@@ -475,6 +609,8 @@ public class HomeShopPublishDetailEndActivity extends BaseActivity {
                     for (AlOssImgModel.AlOssImgDetailModel mediaIten : alOssImgModel.data) {
                         mediaParam = new HashMap<>();
                         mediaParam.put("photo",mediaIten.createDir);
+                        mediaParam.put("width",SystemUtil.getImageWidth(HomeShopPublishDetailEndActivity.this,mediaIten.createDir));
+                        mediaParam.put("height",SystemUtil.getImageHeight(HomeShopPublishDetailEndActivity.this,mediaIten.createDir));
                         mediaParams.add(mediaParam);
                     }
                 }

@@ -103,9 +103,9 @@ public class MainAuthenticationShopActivity extends BaseActivity implements Pict
 
 //该配置类如果不设置，会有默认配置，具体可看该类
         ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
-        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setConnectionTimeout(100 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(100 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(10); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         OSSLog.enableLog();
 

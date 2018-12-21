@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
@@ -67,9 +68,29 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/line_color" />
+  <!--  <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:srlAccentColor="#85B6F1"
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="#85B6F1">
 
+    <com.scwang.smartrefresh.header.MaterialHeader
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_srlBackgroundColor="#85B6F1"
+        app:layout_srlSpinnerStyle="FixedFront"
+        app:wshAccentColor="@color/colorWhite"
+        app:wshPrimaryColor="#85B6F1"
+        app:wshShadowColor="#85B6F1" />-->
     <include
         layout="@layout/view_pulltorefreshlistview_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+<!--    </com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 </LinearLayout>

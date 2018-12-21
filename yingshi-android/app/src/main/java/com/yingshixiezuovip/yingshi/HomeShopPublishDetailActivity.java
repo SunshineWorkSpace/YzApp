@@ -37,6 +37,7 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_shop_publish);
+        pushActivity(this);
         et_title=(EditText) findViewById(R.id.et_title);
         et_single_price=(EditText)findViewById(R.id.et_single_price);
         et_num=(EditText)findViewById(R.id.et_num);

@@ -73,6 +73,7 @@ import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 import com.yingshixiezuovip.yingshi.utils.L;
 import com.yingshixiezuovip.yingshi.utils.PictureManager;
 import com.yingshixiezuovip.yingshi.utils.SaveImg;
+import com.yingshixiezuovip.yingshi.utils.SystemUtil;
 
 import org.json.JSONObject;
 
@@ -139,9 +140,9 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
 
 //该配置类如果不设置，会有默认配置，具体可看该类
         ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
-        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setConnectionTimeout(100 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(100 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(10); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         OSSLog.enableLog();
 
@@ -388,7 +389,8 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
     }
 
     public void doUploadVideo() {
-        mLoadWindow.show(R.string.text_is_upload_video);
+        if(!mLoadWindow.isShowing())
+        mLoadWindow.show(R.string.text_is_upload);
         HashMap<String, Object> params = new HashMap<>();
         params.put("count", 1);
         HttpUtils.doPost(TaskType.TASK_TYPE_OSS_VIDEO, params, this);
@@ -444,6 +446,7 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
                                 boolean isGif = mediaIten.mediaPath.toLowerCase().endsWith(".gif");
                                 mediaParam.put("photo", isGif ? PictureManager.getFileBase64(mediaIten.mediaPath) : PictureManager.getBase64(mediaIten.mediaPath));
                                 mediaParam.put("type", 1);
+
                                 mediaParam.put("ispic", isGif ? 2 : 1);
                             } else if (mediaIten.type == MediaItem.VIDEO) {
                                 mVideoModel = mVideoModels.get(mediaIten.mediaPath);
@@ -493,11 +496,14 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
     }
 
     private void doUploadPhotoNew(String type) {
+        showMessage("图片上传完成");
         final HashMap<String, Object> params = new HashMap<>();
         params.put("token", mUserInfo.token);
         params.put("tid", mPublishModel.tid);
         params.put("title", mPublishModel.title + "");
         params.put("fmphoto", fmImg);
+        params.put("fmwidth","500");
+        params.put("fmheight","300");
         params.put("label", lable + "");
         params.put("position", "");
 
@@ -514,6 +520,8 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
                     for (int j = 0; j < imgPath.size(); j++) {
                         if (imgPath.get(j).locaPath.equals(mPublishModel.medias.get(i).mediaPath)) {
                             mediaParam.put("photo", imgPath.get(j).ossImgPath);
+                            mediaParam.put("width",SystemUtil.getImageWidth(this,imgPath.get(j).ossImgPath));
+                            mediaParam.put("height",SystemUtil.getImageHeight(this,imgPath.get(j).ossImgPath));
                         }
                     }
 //                    mediaParam.put("isupdate", 1);
@@ -621,7 +629,12 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
             case TASK_TYPE_PUBLISH_DETAIL:
                 mLoadWindow.cancel();
                 showMessage("发布成功");
-                super.onBackPressed();
+               Intent intent = new Intent(this, MainCommonActivity.class);
+                intent.putExtra("item_type", MainCommonActivity.TYPE_MINE_WORK);
+                intent.putExtra("item_title", "作品集");
+                startActivity(intent);
+                finish();
+//                super.onBackPressed();
                 break;
             case TASK_TYPE_VIDEO_UPLOAD:
                 JSONObject uploadObject = (JSONObject) result;
@@ -647,7 +660,7 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
                 if (alOssVideoImgModelOne != null) {
                     Matrix matrix = new Matrix();
                     matrix.setScale(1f, 1f);
-                    final Bitmap bitmap = Bitmap.createBitmap(getVideoThumbnail(new File(mVideoPaths.get(videoPosition)) + ""), 0, 0, 1000, 1000, matrix, false);
+//                    final Bitmap bitmap = Bitmap.createBitmap(getVideoThumbnail(new File(mVideoPaths.get(videoPosition)) + ""), 0, 0, 1000, 1000, matrix, false);
                     videoImgOne = alOssVideoImgModelOne.data.get(0).createDir;
                     Glide.with(this).load(mVideoPaths.get(videoPosition)).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
@@ -694,6 +707,10 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
     public void onPictureCallback(Uri uri, Intent data) {
         mPublishModel.cover = uri.getPath();
         if (TextUtils.isEmpty(fmImg)) {
+            if(fmImg.contains("unlock")){
+                showMessage("该图片不符合标准");
+                return;
+            }
             sendPicDateOne();
         }
         initMediaData();
@@ -768,6 +785,11 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
 //                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                try {
+                    mLoadWindow.showMessage("进度视频: " + (videoPosition + 1) + "  " + (int) ((currentSize * 100) / totalSize) + "%...");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -778,7 +800,10 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
 
                 Log.d("ETag", result.getETag());
                 Log.d("RequestId", result.getRequestId());
+
+//                showMessage("1个视频上传完成");
                 sendVideoImgOne();
+                mLoadWindow.showMessage("视频上传完成");
             }
 
             @Override
@@ -901,6 +926,10 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
     private void sendPicFmOneOssByte(String serverUrl, String path) {
         boolean isGif = path.toLowerCase().endsWith(".gif");
         try {
+            if(path.contains("unlock")){
+                showMessage("该图片不符合规则");
+                return;
+            }
             new Random().nextBytes(isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
 
             PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
@@ -951,6 +980,11 @@ public class MainPublishActivity extends BaseActivity implements PictureManager.
     private void sendPicOssByte(final int i, String serverUrl, String path, final String type) {
         boolean isGif = path.toLowerCase().endsWith(".gif");
         try {
+            if(path.contains("unlock")){
+                showMessage("图片不符合规则");
+                return;
+            }
+            mLoadWindow.showMessage("上传图片中...");
             new Random().nextBytes(isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));
 
             PutObjectRequest put = new PutObjectRequest(Configs.bucket, serverUrl, isGif ? PictureManager.getFileToBase64(path) : PictureManager.getToBase64(path));

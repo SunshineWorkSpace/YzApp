@@ -7,8 +7,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 21
         applicationId "com.yingshixiezuovip.yingshi"
-        versionCode 27         //2018-11-27
-        versionName "3.0.1"  //2018-11-27
+        versionCode 31         //2018-12-10
+        versionName "3.0.2"  //2018-12-10
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
@@ -100,7 +100,7 @@ dependencies {
     implementation 'cn.jiguang.sdk:jpush:+'
     implementation 'cn.jiguang.sdk:jcore:+'
     testCompile 'junit:junit:4.12'
-    implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     implementation 'com.squareup.okio:okio:1.9.0'
     //相册

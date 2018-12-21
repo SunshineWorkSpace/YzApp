@@ -36,6 +36,7 @@ public class HomeShopUserActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(Bundle savedInstanceState){
+        exitAllActivity();
         tv_user_name= (TextView) findViewById(R.id.tv_user_name);
         tv_address= (TextView) findViewById(R.id.tv_address);
         tv_shop_type= (TextView) findViewById(R.id.tv_shop_type);
@@ -108,6 +109,7 @@ public class HomeShopUserActivity extends BaseActivity implements View.OnClickLi
         tv_user_name.setText(mShopUser.shopName+"  "+"消保金: "+mShopUser.vipMoney+"元");
         tv_address.setText(mShopUser.city);
         String typeName="";
+        if(mShopUser.type!=null)
         switch (mShopUser.type) {
             case 1 + "":
                 typeName = "普通个人用户";

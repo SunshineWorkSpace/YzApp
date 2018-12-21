@@ -51,6 +51,7 @@ public class UserInfo extends BaseResp.RespData {
     public int height;//图片高度
     public int guanzhu;//关注总数
     public int isguanzhu;//是否关注
+    public int isbangpwd;//是否绑定手机号
     public String share_photo;
     public String share_title;
     public String share_url;

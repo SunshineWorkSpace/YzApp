@@ -125,7 +125,7 @@ public class MainCommonActivity extends BaseActivity implements OnAdapterClickLi
 
             findViewById(R.id.right_btn_name).setVisibility(View.GONE);
             findViewById(R.id.right_iv_more).setVisibility(View.VISIBLE);
-            findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
+            findViewById(R.id.right_btn_submit).setVisibility(mTitle.equals("作品集")?View.GONE:View.VISIBLE);
 
             mBaseAdapter = new MineWorkAdapter(this);
         } else if (mType == TYPE_MINE_COMMENT) {

@@ -189,13 +189,24 @@ public class StartupLoginActivity extends BaseActivity implements UMAuthListener
                 UserModel userModel = GsonUtil.fromJson(result.toString(), UserModel.class);
                 if (userModel != null) {
                     if (userModel.result.code == 200) {
-                        if (userModel.data.iswritephone == 0) {
+          /*              if (userModel.data.iswritephone == 0) {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("userinfo", userModel.data);
                             Intent intent = new Intent(this, UserBindPhoneActivity.class);
                             intent.putExtras(bundle);
                             startActivity(intent);
                             return;
+                        }*/
+                        if (userModel.data.logintype == 2&&userModel.data.type!=2&&userModel.data.type!=4&&userModel.data.type!=6
+                                &&userModel.data.type!=7) {
+                            if(userModel.data.isbangpwd!=1){
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userinfo", userModel.data);
+                                Intent intent = new Intent(this, UserBindPhoneActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                return;
+                            }
                         }
                         SPUtils.saveAuthInfo(mAuthInfo);
                         SPUtils.saveUserInfo(userModel.data);

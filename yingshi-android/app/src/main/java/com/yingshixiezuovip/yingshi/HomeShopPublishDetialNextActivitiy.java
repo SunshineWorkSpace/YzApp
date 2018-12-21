@@ -67,7 +67,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_publish_next);
         setActivityTitle("发布页(2/3)");
-
+        pushActivity(this);
         ((TextView) findViewById(R.id.right_btn_name)).setText("下一步");
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
         findViewById(R.id.right_btn_submit).setOnClickListener(this);
@@ -192,8 +192,10 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
             @Override
             public void onClick(View view) {
                 //删除照片
+
                 mImgs.remove(position);
                 adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(0,mImgs.size());
                 isNeedShowAdd();
             }
         }).show();

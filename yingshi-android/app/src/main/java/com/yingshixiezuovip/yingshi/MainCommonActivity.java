@@ -137,6 +137,11 @@ public class MainCommonActivity extends BaseActivity implements OnAdapterClickLi
             mBaseAdapter.setOnAdapterClickListener(this);
             mListView.setAdapter(mBaseAdapter);
         }
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -384,10 +389,7 @@ public class MainCommonActivity extends BaseActivity implements OnAdapterClickLi
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

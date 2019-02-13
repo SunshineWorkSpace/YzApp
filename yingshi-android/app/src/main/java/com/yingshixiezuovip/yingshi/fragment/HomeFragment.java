@@ -336,6 +336,7 @@ public class HomeFragment extends BaseFragment implements OnAdapterClickListener
                 break;
             case R.id.tv_shop:
                 intent = new Intent(getActivity(), HomeShopPublishDetailActivity.class);
+                intent.putExtra("isfirst",true);
                 window.dismiss();
                 break;
             case R.id.pop_cancel:

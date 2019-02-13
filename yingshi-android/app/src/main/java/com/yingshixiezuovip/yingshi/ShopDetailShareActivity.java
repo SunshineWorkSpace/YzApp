@@ -24,6 +24,7 @@ import com.umeng.socialize.ShareContent;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.yingshixiezuovip.yingshi.quote.roundview.RoundedImageView;
 import com.yingshixiezuovip.yingshi.utils.Qrutils;
 
@@ -36,23 +37,24 @@ import com.yingshixiezuovip.yingshi.utils.Qrutils;
  * 修改备注:
  */
 public class ShopDetailShareActivity extends Activity implements View.OnClickListener {
-    private TextView tv_title,tv_content,tv_price,tv_au;
-    private ImageView iv_detail,iv_app;
-    private LinearLayout lin_save, lin_weixin, lin_friend, lin_copy,lin_clean;
+    private TextView tv_title, tv_content, tv_price, tv_au, tv_address;
+    private ImageView iv_detail, iv_app;
+    private LinearLayout lin_save, lin_weixin, lin_friend, lin_copy, lin_clean;
     private LinearLayout rel_share;
     Bitmap bitmap;
     private FrameLayout fl_no_data;
     RoundedImageView iv_au;
-    String url="";
+    String url = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_shop_share);
-        fl_no_data=(FrameLayout)findViewById(R.id.fl_no_data);
-        lin_clean=(LinearLayout)findViewById(R.id.lin_clean);
+        fl_no_data = (FrameLayout) findViewById(R.id.fl_no_data);
+        lin_clean = (LinearLayout) findViewById(R.id.lin_clean);
         lin_clean.setOnClickListener(this);
         fl_no_data.setOnClickListener(this);
-        rel_share=(LinearLayout) findViewById(R.id.rel_share);
+        rel_share = (LinearLayout) findViewById(R.id.rel_share);
         lin_save = (LinearLayout) findViewById(R.id.lin_save);
         lin_save.setOnClickListener(this);
         lin_weixin = (LinearLayout) findViewById(R.id.lin_weixin);
@@ -61,17 +63,19 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
         lin_friend.setOnClickListener(this);
         lin_copy = (LinearLayout) findViewById(R.id.lin_copy);
         lin_copy.setOnClickListener(this);
-        tv_title=(TextView)findViewById(R.id.tv_title);
-        tv_content=(TextView)findViewById(R.id.tv_content);
-        tv_price=(TextView)findViewById(R.id.tv_price);
-        tv_au=(TextView)findViewById(R.id.tv_au);
-        iv_detail=(ImageView)findViewById(R.id.iv_detail);
-        iv_au=(RoundedImageView)findViewById(R.id.iv_au);
-        iv_app=(ImageView)findViewById(R.id.iv_app);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_content = (TextView) findViewById(R.id.tv_content);
+        tv_price = (TextView) findViewById(R.id.tv_price);
+        tv_au = (TextView) findViewById(R.id.tv_au);
+        iv_detail = (ImageView) findViewById(R.id.iv_detail);
+        iv_au = (RoundedImageView) findViewById(R.id.iv_au);
+        tv_address = (TextView) findViewById(R.id.tv_address);
+        iv_app = (ImageView) findViewById(R.id.iv_app);
         tv_title.setText(getIntent().getStringExtra("title"));
         tv_content.setText(getIntent().getStringExtra("content"));
         tv_au.setText(getIntent().getStringExtra("autv"));
-        tv_price.setText("¥"+getIntent().getStringExtra("price"));
+        tv_price.setText("¥" + getIntent().getStringExtra("price"));
+        tv_address.setText(getIntent().getStringExtra("address"));
         Glide.with(this).load(getIntent().getStringExtra("img"))
 //                .bitmapTransform(new GlideCircleTransform(MyApplication.getInstance()))
 //                .placeholder(R.mipmap.ic_team_default)
@@ -86,8 +90,8 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
 //                .error(R.mipmap.ic_team_default)
                 .into(iv_au);
-        url=getIntent().getStringExtra("shareurl");
-        Bitmap mBitmap = Qrutils.generateBitmap(url, 100, 100);
+        url = getIntent().getStringExtra("shareurl");
+        Bitmap mBitmap = Qrutils.generateBitmap(url, 150, 150);
 
         Bitmap logoBitmap = Qrutils.getLogo(this);
         Bitmap mBitmaps = Qrutils.addLogo(mBitmap, logoBitmap);
@@ -107,27 +111,45 @@ public class ShopDetailShareActivity extends Activity implements View.OnClickLis
                 finish();
                 break;
             case R.id.lin_save:
-                Toast.makeText(this,"保存成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
                 MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "YzApp", "YzApp");
                 finish();
                 break;
             case R.id.lin_weixin:
                 UMImage images = new UMImage(this, bitmap);//bitmap文件
+                UMWeb web = new UMWeb(url);
+                web.setTitle(getIntent().getStringExtra("title"));//标题
+                web.setThumb(images);  //缩略图
+                web.setDescription(getIntent().getStringExtra("content"));//描述
+
+//                UMImage images = new UMImage(HomeNewsShareActivity.this, bitmap);//bitmap文件
+                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).
+                        withMedia(web).setCallback(shareListener).share();
+         /*       UMImage images = new UMImage(this, bitmap);//bitmap文件
                 ShareContent shareContents = new ShareContent();
                 shareContents.mFollow = ("coinMerit");
                 shareContents.mText = ("test1");
-                new ShareAction(this).setShareContent(shareContents).setPlatform(SHARE_MEDIA.WEIXIN).withMedia(images).setCallback(shareListener).share();
+                new ShareAction(this).setShareContent(shareContents).setPlatform(SHARE_MEDIA.WEIXIN).withMedia(images).setCallback(shareListener).share();*/
                 break;
             case R.id.lin_friend:
                 UMImage image = new UMImage(this, bitmap);//bitmap文件
+                UMWeb webs = new UMWeb(url);
+                webs.setTitle(getIntent().getStringExtra("title"));//标题
+                webs.setThumb(image);  //缩略图
+                webs.setDescription(getIntent().getStringExtra("content"));//描述
+
+//                UMImage images = new UMImage(HomeNewsShareActivity.this, bitmap);//bitmap文件
+                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).
+                        withMedia(webs).setCallback(shareListener).share();
+       /*         UMImage image = new UMImage(this, bitmap);//bitmap文件
                 ShareContent shareContent = new ShareContent();
                 shareContent.mFollow = ("test2");
                 shareContent.mText = ("test1");
-                new ShareAction(this).setShareContent(shareContent).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).withMedia(image).setCallback(shareListener).share();
+                new ShareAction(this).setShareContent(shareContent).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).withMedia(image).setCallback(shareListener).share();*/
                 break;
             case R.id.lin_copy:
-                Intent report=new Intent(this, HomeShopDetailReportActivity.class);
-                report.putExtra("id",getIntent().getStringExtra("id"));
+                Intent report = new Intent(this, HomeShopDetailReportActivity.class);
+                report.putExtra("id", getIntent().getStringExtra("id"));
                 startActivity(report);
                 //举报
         /*        Toast.makeText(this,"保存成功",Toast.LENGTH_LONG).show();

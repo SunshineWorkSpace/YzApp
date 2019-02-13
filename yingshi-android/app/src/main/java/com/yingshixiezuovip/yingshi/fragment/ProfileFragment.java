@@ -36,6 +36,7 @@ import com.yingshixiezuovip.yingshi.MallOrderActivity;
 import com.yingshixiezuovip.yingshi.ProfileConsumerPriceActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.StartupLoginActivity;
+import com.yingshixiezuovip.yingshi.StartupLoginNewActivity;
 import com.yingshixiezuovip.yingshi.UserAddressListActivity;
 import com.yingshixiezuovip.yingshi.UserAuthenticationSelectActivity;
 import com.yingshixiezuovip.yingshi.UserInfo2Activity;
@@ -159,7 +160,7 @@ public class ProfileFragment extends BaseFragment implements PictureManager.OnPi
                 if (v.getId() == R.id.alert_btn_submit) {
                     SPUtils.saveUserInfo(null);
                     LoginUtils.doLogout();
-                    Intent intent = new Intent(getContext(), StartupLoginActivity.class);
+                    Intent intent = new Intent(getContext(), StartupLoginNewActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     YingApplication.getInstance().startActivity(intent);
                 }

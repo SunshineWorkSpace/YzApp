@@ -6,7 +6,7 @@ package com.yingshixiezuovip.yingshi.datautils;
  */
 
 public class Configs {
-    public static final boolean isDebug = true;
+    public static final boolean isDebug = false;
     public static final String ServerUrl = isDebug ? "http://www.cftvc.com:8888/yingzhe" : "http://www.cftvc.com/yingzhe";
     public static final int TimeOut = 15;
 

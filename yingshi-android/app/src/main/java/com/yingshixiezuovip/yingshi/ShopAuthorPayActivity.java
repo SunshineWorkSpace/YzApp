@@ -1,6 +1,7 @@
 package com.yingshixiezuovip.yingshi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -58,8 +59,6 @@ public class ShopAuthorPayActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        findViewById(R.id.authmoney_btn_wechat).setOnClickListener(this);
-        findViewById(R.id.authmoney_btn_alipay).setOnClickListener(this);
         findViewById(R.id.authmoney_btn_submit).setOnClickListener(this);
         ((TextView) findViewById(R.id.authmoney_tv_money)).setText(price + "元");
 
@@ -68,12 +67,6 @@ public class ShopAuthorPayActivity extends BaseActivity {
     protected void onSingleClick(View v) {
         super.onSingleClick(v);
         switch (v.getId()) {
-            case R.id.authmoney_btn_wechat:
-                switchPayStyle(true);
-                break;
-            case R.id.authmoney_btn_alipay:
-                switchPayStyle(false);
-                break;
             case R.id.authmoney_btn_submit:
                 payMoneyDate();
                 break;
@@ -84,7 +77,7 @@ public class ShopAuthorPayActivity extends BaseActivity {
         HashMap<String, Object> orderParams = new HashMap<>();
         orderParams.put("token", mUserInfo.token);
         orderParams.put("vip", vip);
-        orderParams.put("paytype", isWecahtPay?2:1);
+        orderParams.put("paytype", 3);
         orderParams.put("truename", getIntent().getStringExtra("truename"));
         orderParams.put("sex", getIntent().getStringExtra("sex"));
         orderParams.put("school", getIntent().getStringExtra("school"));
@@ -102,11 +95,6 @@ public class ShopAuthorPayActivity extends BaseActivity {
         HttpUtils.doPost(TaskType.TASK_TYPE_SHOP_UPDATA, orderParams, this,true);
     }
 
-    private void switchPayStyle(boolean isWechat) {
-        isWecahtPay = isWechat;
-        ((CheckBox) findViewById(R.id.authmoney_cb_wechat)).setChecked(isWecahtPay);
-        ((CheckBox) findViewById(R.id.authmoney_cb_alipay)).setChecked(!isWecahtPay);
-    }
 
     @Override
     public void taskFinished(TaskType type, Object result, boolean isHistory) {
@@ -127,11 +115,15 @@ public class ShopAuthorPayActivity extends BaseActivity {
             case TASK_TYPE_SHOP_UPDATA:
                 if (((JSONObject) result).has("data")) {
                     mLoadWindow.cancel();
-                    if (isWecahtPay) {
+                    String url= ((JSONObject) result).optJSONObject("data").optString("url");
+                    Intent it=new Intent(this,PayWebActivity.class);
+                    it.putExtra("url",url);
+                    startActivity(it);
+                /*    if (isWecahtPay) {
                         doWXPay(((JSONObject) result).optJSONObject("data"));
                     } else {
                         doAlipay(((JSONObject) result).optJSONObject("data"));
-                    }
+                    }*/
                 } else {
                     mLoadWindow.cancel();
                     showMessage("支付订单获取失败，请稍后重试");

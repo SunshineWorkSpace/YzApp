@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/authmoney_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="商铺会员升级消保金"
+        android:textColor="@color/colorGray"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/authmoney_tv_money"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_color"
+        android:gravity="center"
+        android:text="299元"
+        android:textColor="@color/colorBlack"
+        android:textSize="15dp" />
+
+
+
+
+    <TextView
+        android:id="@+id/authmoney_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/details_book_btn_shape_blue"
+        android:gravity="center"
+        android:text="网银支付"
+        android:textColor="@color/colorWhite"
+        android:textSize="14dp" />
+</LinearLayout>

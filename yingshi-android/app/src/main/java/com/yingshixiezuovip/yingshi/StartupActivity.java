@@ -109,7 +109,7 @@ public class StartupActivity extends BaseActivity implements Runnable, ViewPager
         if (userInfo != null) {
             intent = mMainIntent;
         } else {
-            intent = new Intent(this, StartupLoginActivity.class);
+            intent = new Intent(this, StartupLoginNewActivity.class);
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         YingApplication.getInstance().startActivity(intent);

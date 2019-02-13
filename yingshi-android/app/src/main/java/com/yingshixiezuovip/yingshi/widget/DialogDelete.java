@@ -40,7 +40,7 @@ public class DialogDelete extends Dialog {
 
     public static class Builder implements View.OnClickListener {
         private Context context;
-        private TextView tv_clean, tv_yes;
+        private TextView tv_clean, tv_yes,tv_change;
         private DialogInterface.OnClickListener positiveButtonClickListener;
         DialogDelete dialog;
         public Builder(Context context) {
@@ -62,6 +62,8 @@ public class DialogDelete extends Dialog {
                     ViewGroup.LayoutParams.MATCH_PARENT, 500));
             tv_clean = (TextView) layout.findViewById(R.id.tv_clean);
             tv_yes = (TextView) layout.findViewById(R.id.tv_yes);
+            tv_change=(TextView)layout.findViewById(R.id.tv_change);
+            tv_change.setOnClickListener(this);
             tv_clean.setOnClickListener(this);
             tv_yes.setOnClickListener(this);
             dialog.setContentView(layout);
@@ -82,6 +84,12 @@ public class DialogDelete extends Dialog {
                     if (positiveButtonClickListener != null) {
                         positiveButtonClickListener.onClick(dialog,
                                 1);
+                    }
+                    break;
+                case R.id.tv_change:
+                    if (positiveButtonClickListener != null) {
+                        positiveButtonClickListener.onClick(dialog,
+                                2);
                     }
                     break;
 

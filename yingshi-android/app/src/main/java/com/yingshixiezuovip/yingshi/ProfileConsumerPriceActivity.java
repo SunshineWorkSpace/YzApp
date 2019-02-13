@@ -83,7 +83,7 @@ public class ProfileConsumerPriceActivity extends BaseActivity implements Consum
             }
         }
         if(isGoNext){
-            Intent it=new Intent(this,ConsumerPriceSubmitActivity.class);
+            Intent it=new Intent(this,ConsumerPriceSubmitWebActivity.class);
             it.putExtra("vip",vip);
             it.putExtra("price",price);
             startActivity(it);

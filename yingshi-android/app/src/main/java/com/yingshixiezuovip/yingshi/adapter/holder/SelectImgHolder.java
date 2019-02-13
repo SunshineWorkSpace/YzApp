@@ -63,12 +63,22 @@ public class SelectImgHolder extends RecyclerView.ViewHolder {
 
     void refreTxt(String url){
         ivImg.setImageResource(android.R.color.transparent);
-        Glide.with(mContext)
-                .load("file:///"+url)
-                .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//让Glide既缓存全尺寸图片，下次在任何ImageView中加载图片的时候，全尺寸的图片将从缓存中取出，重新调整大小，然后缓存
-                .crossFade()
-                .into(ivImg);
+        if(url.contains("https")){
+            Glide.with(mContext)
+                    .load(url)
+                    .dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)//让Glide既缓存全尺寸图片，下次在任何ImageView中加载图片的时候，全尺寸的图片将从缓存中取出，重新调整大小，然后缓存
+                    .crossFade()
+                    .into(ivImg);
+        }else {
+            Glide.with(mContext)
+                    .load("file:///"+url)
+                    .dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)//让Glide既缓存全尺寸图片，下次在任何ImageView中加载图片的时候，全尺寸的图片将从缓存中取出，重新调整大小，然后缓存
+                    .crossFade()
+                    .into(ivImg);
+        }
+
 //        ImageLoader.getInstance().displayImage("file:///"+url,ivImg, SystemUtil.getImageLoaderDisplayImageOptions());
     }
 

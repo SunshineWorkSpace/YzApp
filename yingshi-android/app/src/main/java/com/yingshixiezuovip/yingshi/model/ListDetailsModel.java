@@ -49,6 +49,15 @@ public class ListDetailsModel extends BaseResp {
         public String share_title;
         public String share_url;
         public String share_content;
+        public String iscalim;
+        public List<Calims> calims;
+    }
+
+    public static class Calims extends DetailsBaseItem {
+        public String userid;
+        public String position;
+        public String head;
+        public String nickname;
     }
 
     public static class DetailsImageItem extends DetailsBaseItem {

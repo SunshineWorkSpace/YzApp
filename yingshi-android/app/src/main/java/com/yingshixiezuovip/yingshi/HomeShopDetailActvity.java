@@ -171,6 +171,7 @@ public class HomeShopDetailActvity extends BaseActivity {
                         it.putExtra("autv",shopDetailType.data.nickname);
                         it.putExtra("price",shopDetailType.data.price);
                         it.putExtra("shareurl",shopDetailType.data.shareurl);
+                        it.putExtra("address",shopDetailType.data.city);
                         it.putExtra("id",id);
                         startActivity(it);
                     }
@@ -203,7 +204,7 @@ public class HomeShopDetailActvity extends BaseActivity {
 //                AppUtils.showToast(getActivity(), which + "");
                     if (which == 0) {
                         sendDelete();
-                    } else {
+                    } else if(which==1){
                         Intent it=new Intent(HomeShopDetailActvity.this,ShopDetailShareActivity.class);
                         it.putExtra("title",shopDetailType.data.title);
                         it.putExtra("content",shopDetailType.data.content);
@@ -212,8 +213,15 @@ public class HomeShopDetailActvity extends BaseActivity {
                         it.putExtra("autv",shopDetailType.data.nickname);
                         it.putExtra("price",shopDetailType.data.price);
                         it.putExtra("shareurl",shopDetailType.data.shareurl);
+                        it.putExtra("address",shopDetailType.data.city);
                         it.putExtra("id",id);
                         startActivity(it);
+                    }else {
+                        Intent it=new Intent(HomeShopDetailActvity.this,HomeShopPublishDetailActivity.class);
+                        it.putExtra("isfirst",false);
+                        it.putExtra("id",id);
+                        startActivity(it);
+
                     }
                     dialog.dismiss();
                 }

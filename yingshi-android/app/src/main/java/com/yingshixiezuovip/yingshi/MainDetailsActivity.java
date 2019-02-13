@@ -2,11 +2,14 @@ package com.yingshixiezuovip.yingshi;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 
 import com.yingshixiezuovip.yingshi.adapter.DetailsImageAdapter;
 import com.yingshixiezuovip.yingshi.adapter.HomeListAdapter;
+import com.yingshixiezuovip.yingshi.adapter.PositionAdapter;
 import com.yingshixiezuovip.yingshi.adapter.ReviewAdapter;
 import com.yingshixiezuovip.yingshi.base.BaseActivity;
 import com.yingshixiezuovip.yingshi.base.BaseEvent;
@@ -55,6 +59,10 @@ import com.yingshixiezuovip.yingshi.utils.SPUtils;
 import com.yingshixiezuovip.yingshi.utils.TimeUtils;
 import com.yingshixiezuovip.yingshi.utils.ToastUtils;
 import com.yingshixiezuovip.yingshi.utils.WebUtils;
+import com.yingshixiezuovip.yingshi.widget.DialogChangePosition;
+import com.yingshixiezuovip.yingshi.widget.DialogCleanPosition;
+import com.yingshixiezuovip.yingshi.widget.DialogDelete;
+import com.yingshixiezuovip.yingshi.widget.DialogPosition;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -166,7 +174,10 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.alert_btn_submit) {
-                    mShareWindow.show(mShareItem, MainDetailsActivity.this);
+                    Intent it=new Intent(MainDetailsActivity.this,MainShareActivity.class);
+                    it.putExtra("data",mShareItem);
+                    startActivity(it);
+//                    mShareWindow.show(mShareItem, MainDetailsActivity.this);
                 } else {
                     Intent intent = new Intent(MainDetailsActivity.this, MainDetailsChangeActivity.class);
                     intent.putExtra("works_id", mListDetailsModel.data.id);
@@ -205,9 +216,9 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
                 }
                 break;
             case R.id.details_btn_book:
-                if(price.equals("0")){
-                    ToastUtils.showMessage(this,"商户未设置价格，请先电话联系，谢谢");
-                }else {
+                if (price.equals("0")) {
+                    ToastUtils.showMessage(this, "商户未设置价格，请先电话联系，谢谢");
+                } else {
                     intent = new Intent(this, MainDetailsBookActivity.class);
                     intent.putExtra("item_id", mListDetailsModel.data.id);
                 }
@@ -215,9 +226,16 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
                 break;
             case R.id.right_btn_submit:
                 if (mListDetailsModel.data.easemob_token.equalsIgnoreCase(mUserInfo.token)) {
-                    mEditWindow.show("", "请选择对作品的操作", "修改作品", "分享");
+                    setOnRightDialogClick();
+//                    mEditWindow.show("", "请选择对作品的操作", "修改作品", "分享");
                 } else {
-                    mShareWindow.show(mShareItem, this);
+                    if (detailsModel.iscalim.equals("0")) {
+                        setChangeDialog();
+//                        mShareWindow.show(mShareItem, this);
+                    } else {
+                        setOnRightDialogClick();
+                    }
+
                 }
                 break;
             case R.id.details_btn_tuijian:
@@ -275,6 +293,13 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
                 intent.putExtra("item_type", MainDetailsCommentActivity.TYPE_LIST);
                 intent.putExtra("item_rid", mItemID);
                 break;
+            case R.id.tv_click:
+                if (detailsModel.iscalim.equals("0")) {
+                    setOnDialogClick();
+                } else {
+                    showMessage("已经认领，如修改请到自己作品取消");
+                }
+                break;
             default:
                 break;
         }
@@ -282,16 +307,140 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
             startActivity(intent);
         }
     }
-    String price="";
+
+    private void setChangeDialog() {
+
+        DialogChangePosition.Builder builder = new DialogChangePosition.Builder(this);
+        builder.setPositiveButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        Intent it=new Intent(MainDetailsActivity.this,MainShareActivity.class);
+                        it.putExtra("data",mShareItem);
+                        startActivity(it);
+//                        mShareWindow.show(mShareItem, MainDetailsActivity.this);
+                        break;
+                    case 1:
+                        setOnDialogClick();
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void setOnRightDialogClick() {
+
+        DialogCleanPosition.Builder builder = new DialogCleanPosition.Builder(this);
+        builder.setPositiveButton(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        if (detailsModel.iscalim.equals("0")) {
+                            Intent intent = new Intent(MainDetailsActivity.this, MainDetailsChangeActivity.class);
+                            intent.putExtra("works_id", mListDetailsModel.data.id);
+                            intent.putExtra("works_price", mListDetailsModel.data.price);
+                            intent.putExtra("works_unit", mListDetailsModel.data.unit);
+                            startActivityForResult(intent, 1000);
+                        } else {
+                            cleanPosition();
+                        }
+                        break;
+                    case 1:
+                        Intent it=new Intent(MainDetailsActivity.this,MainShareActivity.class);
+                        it.putExtra("data",mShareItem);
+                        startActivity(it);
+//                        mShareWindow.show(mShareItem, MainDetailsActivity.this);
+                        break;
+                    case 2:
+                        setOnCheckDialogClick();
+                        break;
+
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.create(detailsModel.iscalim).show();
+    }
+
+    private void cleanPosition() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", mUserInfo.token);
+        params.put("id", mItemID);
+        HttpUtils.doPost(TaskType.TASK_CLEAN_POSITION, params, this);
+    }
+
+    private void setOnCheckDialogClick() {
+        DialogPosition.Builder builder = new DialogPosition.Builder(this);
+        builder.setmOnItemClickListener(new DialogPosition.Builder.OnClickListener() {
+            @Override
+            public void onClick(DialogPosition dialog, int position, String content) {
+                if (position == 1) {
+                    if (TextUtils.isEmpty(content)) {
+                        showMessage("填写职位");
+                        return;
+                    }
+                    changePosition(content);
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void changePosition(String content) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", mUserInfo.token);
+        params.put("id", mItemID);
+        params.put("position", content);
+        HttpUtils.doPost(TaskType.TASK_CHANGE_POSITION, params, this);
+    }
+
+    private void setOnDialogClick() {
+        DialogPosition.Builder builder = new DialogPosition.Builder(this);
+        builder.setmOnItemClickListener(new DialogPosition.Builder.OnClickListener() {
+            @Override
+            public void onClick(DialogPosition dialog, int position, String content) {
+                if (position == 1) {
+                    if (TextUtils.isEmpty(content)) {
+                        showMessage("填写职位");
+                        return;
+                    }
+                    addPosition(content);
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void addPosition(String content) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", mUserInfo.token);
+        params.put("id", mItemID);
+        params.put("position", content);
+        HttpUtils.doPost(TaskType.TASK_ADD_POSITION, params, this);
+    }
+
+    String price = "";
+    ListDetailsModel.DetailsModel detailsModel;
+    PositionAdapter positionAdapter;
+
     private void inflateData() {
-        final ListDetailsModel.DetailsModel detailsModel = mListDetailsModel.data;
+        detailsModel =new ListDetailsModel.DetailsModel();
+        detailsModel = mListDetailsModel.data;
         SPUtils.saveBaseEaseUser(this, new BaseEaseUser(detailsModel.easemob_token, detailsModel.head, detailsModel.nickname));
         mShareItem = new ShareModel.ShareItem();
         mShareItem.photo = detailsModel.share_photo;
         mShareItem.title = detailsModel.share_title;
         mShareItem.url = detailsModel.share_url;
         mShareItem.content = detailsModel.share_content;
-
+        mShareItem.name=detailsModel.nickname;
+        mShareItem.position=detailsModel.userposition;
+        mShareItem.head=detailsModel.head;
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
         setTitle(detailsModel.typename);
 
@@ -334,9 +483,11 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
 
 
         mWebView.loadUrl(detailsModel.detailsUrl);
+        if(mImageListView.getRefreshableView().getHeaderViewsCount()==1){
+            mImageListView.getRefreshableView().addHeaderView(headView);
+        }
 
-        mImageListView.getRefreshableView().addHeaderView(headView);
-
+        //TODO
         View footerView = View.inflate(this, R.layout.activity_main_details_footer, null);
         footerView.findViewById(R.id.details_btn_tuijian).setOnClickListener(this);
         footerView.findViewById(R.id.details_btn_comment).setOnClickListener(this);
@@ -345,7 +496,9 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
         footerView.findViewById(R.id.details_btn_allcomemnt).setOnClickListener(this);
         footerView.findViewById(R.id.details_iv_headImage).setOnClickListener(this);
         footerView.findViewById(R.id.details_tv_salary).setOnClickListener(this);
-
+        final RecyclerView lv_hon_img = (RecyclerView) footerView.findViewById(R.id.lv_hon_img);
+        final TextView tv_click = (TextView) footerView.findViewById(R.id.tv_click);
+        tv_click.setOnClickListener(this);
         final TextView tvFollow = (TextView) footerView.findViewById(R.id.details_tv_follow);
         tvFollow.setText(detailsModel.isfollow == 0 ? "+关注" : "已关注");
         tvFollow.setOnClickListener(new View.OnClickListener() {
@@ -360,6 +513,20 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
         ((TextView) footerView.findViewById(R.id.details_tv_position)).setText(detailsModel.city + " " + detailsModel.userposition);
         footerView.findViewById(R.id.details_invite_layout).setVisibility(TextUtils.isEmpty(detailsModel.invite) ? View.GONE : View.VISIBLE);
         footerView.findViewById(R.id.details_invite_layout).setOnClickListener(this);
+
+        lv_hon_img.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//设置布局管理器
+        positionAdapter = new PositionAdapter(this, detailsModel.calims);
+        lv_hon_img.setAdapter(positionAdapter);
+        if (detailsModel.iscalim.equals("0")) {
+            if (mListDetailsModel.data.easemob_token.equalsIgnoreCase(mUserInfo.token)) {
+                tv_click.setText("用户作品");
+            }else {
+                tv_click.setText("点击认领作品");
+            }
+
+        } else {
+            tv_click.setText("已认领作品");
+        }
         if (detailsModel.productionType == 1 || detailsModel.productionType == 3 || detailsModel.productionType == 5) {
             ((ImageView) footerView.findViewById(R.id.details_tv_authStatus)).setImageResource(R.mipmap.icon_unauth);
         } else {
@@ -373,10 +540,9 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
             ((ImageView) footerView.findViewById(R.id.details_is_vip)).setImageResource(R.mipmap.auth_company);
         } else if (detailsModel.productionType == 6) {
             ((ImageView) footerView.findViewById(R.id.details_is_vip)).setImageResource(R.mipmap.auth_student);
-        } else if(detailsModel.productionType == 7){
+        } else if (detailsModel.productionType == 7) {
             ((ImageView) footerView.findViewById(R.id.details_is_vip)).setImageResource(R.mipmap.ic_shop_user);
-        }
-            else {
+        } else {
             footerView.findViewById(R.id.details_is_vip).setVisibility(View.GONE);
         }
 
@@ -385,10 +551,10 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
         } else if (detailsModel.usertype == 1 || detailsModel.usertype == 3 || detailsModel.usertype == 5) {
             ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("酬劳：该用户未认证");
         } else {
-            price=detailsModel.price;
-            if(detailsModel.price.equals("0")){
+            price = detailsModel.price;
+            if (detailsModel.price.equals("0")) {
                 ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("薪酬面议");
-            }else {
+            } else {
                 ((TextView) footerView.findViewById(R.id.details_tv_salary)).setText("薪酬：" + detailsModel.price + "元/" + detailsModel.unit);
             }
 
@@ -591,6 +757,19 @@ public class MainDetailsActivity extends BaseActivity implements OnAdapterClickL
                     showMessage(R.string.data_load_failed);
                 }
                 break;
+            case TASK_CHANGE_POSITION:
+                showMessage("修改成功");
+                loadData();
+                break;
+            case TASK_ADD_POSITION:
+                showMessage("添加成功");
+                loadData();
+                break;
+            case TASK_CLEAN_POSITION:
+                showMessage("取消成功");
+                finish();
+                break;
+
         }
     }
 

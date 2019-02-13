@@ -62,6 +62,10 @@
             android:name=".StartupLoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
+            android:name=".StartupLoginNewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
             android:name=".StartupLoginAccountActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_startup_login_account" />
@@ -299,6 +303,12 @@
         <activity
             android:name=".MainCompanyInfoSetActivity"
             android:label="@string/activity_feedback_title" />
+        <activity
+            android:name=".ConsumerPriceSubmitWebActivity"
+           />
+        <activity
+            android:name=".PayWebActivity"
+            />
 
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -408,6 +418,10 @@
         <activity android:name=".MainShopInfoSetActivity"
             android:launchMode="singleTask"
             />
+        <activity android:name=".MainShareActivity"
+            android:launchMode="singleTask"
+            />
+
         <activity
             android:name=".ShopDetailShareActivity"
             android:launchMode="singleTask"

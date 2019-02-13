@@ -638,6 +638,24 @@ public class HttpUtils {
                 case TASK_TYPE_SHOP_DELETE:
                     methodName="/v2/asideShopPallMeDel.spr";
                     break;
+                case TASK_KJ_PAY:
+                    methodName="/kuaijiepay.spr";
+                    break;
+                case TASK_SHOP_DETAIL_DATE:
+                    methodName="/v2/asideUpdatePage.spr";
+                    break;
+                case TASK_SHOP_UPDATA:
+                    methodName="/v2/asideUpdate.spr";
+                    break;
+                case TASK_ADD_POSITION:
+                    methodName="/v2/claimWorks.spr";
+                    break;
+                case TASK_CHANGE_POSITION:
+                    methodName="/v2/updateWorksPosition.spr";
+                    break;
+                case TASK_CLEAN_POSITION:
+                    methodName="/v2/cancelClaimWorks.spr";
+                    break;
                 default:
                     break;
             }

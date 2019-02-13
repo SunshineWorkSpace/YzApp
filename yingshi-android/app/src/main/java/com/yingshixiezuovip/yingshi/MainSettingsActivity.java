@@ -73,7 +73,7 @@ public class MainSettingsActivity extends BaseActivity {
                 if (v.getId() == R.id.alert_btn_submit) {
                     SPUtils.saveUserInfo(null);
                     LoginUtils.doLogout();
-                    Intent intent = new Intent(MainSettingsActivity.this, StartupLoginActivity.class);
+                    Intent intent = new Intent(MainSettingsActivity.this, StartupLoginNewActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     YingApplication.getInstance().startActivity(intent);
                 }

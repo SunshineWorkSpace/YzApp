@@ -30,7 +30,9 @@ public class Qrutils {
       public static Bitmap getLogo(Activity context) {
            return BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
        }
-
+    public static Bitmap getLogoNew(Activity context) {
+        return BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon_share_video);
+    }
     public static Bitmap generateBitmap(String content, int width, int height) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, String> hints = new HashMap<>();

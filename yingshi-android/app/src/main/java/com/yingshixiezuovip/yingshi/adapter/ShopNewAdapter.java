@@ -43,7 +43,7 @@ public class ShopNewAdapter extends BaseQuickAdapter<ShopTypeModel.ShopType, Bas
                 item.photo, imageView);*/
         PictureManager.displayHead(item.head,
                 iv_user_head);
-       tv_price.setText("￥"+item.price);
+       tv_price.setText("¥"+CommUtils.subZeroAndDot(item.price));
     }
 
 }

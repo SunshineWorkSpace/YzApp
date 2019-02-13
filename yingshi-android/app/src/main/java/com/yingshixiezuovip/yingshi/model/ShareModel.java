@@ -2,6 +2,8 @@ package com.yingshixiezuovip.yingshi.model;
 
 import com.yingshixiezuovip.yingshi.base.BaseResp;
 
+import java.io.Serializable;
+
 /**
  * Created by Resmic on 2017/5/9.
  * Email:xiangyx@wenwen-tech.com
@@ -10,7 +12,7 @@ import com.yingshixiezuovip.yingshi.base.BaseResp;
  * describe：
  */
 
-public class ShareModel extends BaseResp {
+public class ShareModel extends BaseResp implements Serializable {
     public ShareItem data;
 
     public static class ShareItem extends BaseResp.RespData {
@@ -18,5 +20,8 @@ public class ShareModel extends BaseResp {
         public String title;
         public String url;
         public String content;
+        public String name;
+        public String position;
+        public String head;
     }
 }

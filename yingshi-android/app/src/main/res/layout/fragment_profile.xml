@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp">
+        android:layout_height="240dp">
 
         <ImageView
             android:id="@+id/profile_iv_background"
@@ -243,7 +243,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11.5dp"
-                    android:text="个人资料"
+                    android:text="个人资料-会员续费"
                     android:textColor="@color/colorGray"
                     android:textSize="13sp" />
 

@@ -50,8 +50,6 @@ public class HomeShopOrderPayActivity extends BaseActivity {
     }
 
     private void initView(){
-        findViewById(R.id.authmoney_btn_wechat).setOnClickListener(this);
-        findViewById(R.id.authmoney_btn_alipay).setOnClickListener(this);
         findViewById(R.id.authmoney_btn_submit).setOnClickListener(this);
 
         flow_trade_no=getIntent().getStringExtra("flow_trade_no");
@@ -67,12 +65,6 @@ public class HomeShopOrderPayActivity extends BaseActivity {
     protected void onSingleClick(View v) {
         super.onSingleClick(v);
         switch (v.getId()) {
-            case R.id.authmoney_btn_wechat:
-                switchPayStyle(true);
-                break;
-            case R.id.authmoney_btn_alipay:
-                switchPayStyle(false);
-                break;
             case R.id.authmoney_btn_submit:
                 payMoneyDate();
                 break;
@@ -89,7 +81,7 @@ public class HomeShopOrderPayActivity extends BaseActivity {
         HashMap<String, Object> orderParams = new HashMap<>();
         orderParams.put("token", mUserInfo.token);
         orderParams.put("flow_trade_no", flow_trade_no);
-        orderParams.put("pay_type", isWecahtPay?2:1);
+        orderParams.put("pay_type", 3);
         mLoadWindow.show(R.string.waiting);
         HttpUtils.doPost(TaskType.TASK_TYPE_SHOP_ORDER_PAY, orderParams, this);
     }
@@ -137,11 +129,15 @@ public class HomeShopOrderPayActivity extends BaseActivity {
                 System.out.println("支付参数:"+result.toString());
                 if (((JSONObject) result).has("data")) {
                     mLoadWindow.cancel();
-                    if (isWecahtPay) {
+                    String url= ((JSONObject) result).optJSONObject("data").optString("url");
+                    Intent it=new Intent(this,PayWebActivity.class);
+                    it.putExtra("url",url);
+                    startActivity(it);
+                 /*   if (isWecahtPay) {
                         doWXPay(((JSONObject) result).optJSONObject("data"));
                     } else {
                         doAlipay(((JSONObject) result).optJSONObject("data"));
-                    }
+                    }*/
                 } else {
                     mLoadWindow.cancel();
                     showMessage("支付订单获取失败，请稍后重试");

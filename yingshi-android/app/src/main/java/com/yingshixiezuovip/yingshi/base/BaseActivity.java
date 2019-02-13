@@ -22,6 +22,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yingshixiezuovip.yingshi.MainChatListActivity;
 import com.yingshixiezuovip.yingshi.R;
 import com.yingshixiezuovip.yingshi.StartupLoginActivity;
+import com.yingshixiezuovip.yingshi.StartupLoginNewActivity;
 import com.yingshixiezuovip.yingshi.custom.AlertWindow;
 import com.yingshixiezuovip.yingshi.custom.LoadWindow;
 import com.yingshixiezuovip.yingshi.datautils.Configs;
@@ -62,7 +63,7 @@ public abstract class BaseActivity extends FragmentActivity implements TaskListe
         mLoadWindow = new LoadWindow(this);
         mUserInfo = SPUtils.getUserInfo(this);
         if (needAuth && mUserInfo == null) {
-            Intent intent = new Intent(this, StartupLoginActivity.class);
+            Intent intent = new Intent(this, StartupLoginNewActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             YingApplication.getInstance().startActivity(intent);
         }

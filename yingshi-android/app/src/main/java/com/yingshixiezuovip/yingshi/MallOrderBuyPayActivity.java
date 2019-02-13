@@ -1,6 +1,7 @@
 package com.yingshixiezuovip.yingshi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -87,7 +88,7 @@ public class MallOrderBuyPayActivity extends BaseActivity {
         HashMap<String, Object> orderParams = new HashMap<>();
         orderParams.put("token", mUserInfo.token);
         orderParams.put("id", id);
-        orderParams.put("pay_type", isWecahtPay ? 2 : 1);
+        orderParams.put("pay_type", 3);
         mLoadWindow.show(R.string.waiting);
         HttpUtils.doPost(TaskType.TASK_TYPE_MALL_BUY_PAY, orderParams, this);
     }
@@ -117,11 +118,15 @@ public class MallOrderBuyPayActivity extends BaseActivity {
             case TASK_TYPE_MALL_BUY_PAY:
                 if (((JSONObject) result).has("data")) {
                     mLoadWindow.cancel();
-                    if (isWecahtPay) {
+               /*     if (isWecahtPay) {
                         doWXPay(((JSONObject) result).optJSONObject("data"));
                     } else {
                         doAlipay(((JSONObject) result).optJSONObject("data"));
-                    }
+                    }*/
+                    String url= ((JSONObject) result).optJSONObject("data").optString("url");
+                    Intent it=new Intent(this,PayWebActivity.class);
+                    it.putExtra("url",url);
+                    startActivity(it);
                 } else {
                     mLoadWindow.cancel();
                     showMessage("支付订单获取失败，请稍后重试");

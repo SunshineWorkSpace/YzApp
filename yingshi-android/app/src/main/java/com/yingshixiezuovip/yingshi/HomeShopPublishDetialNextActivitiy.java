@@ -23,6 +23,7 @@ import com.yingshixiezuovip.yingshi.custom.CPDialog;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
 import com.yingshixiezuovip.yingshi.model.HomeListModel;
+import com.yingshixiezuovip.yingshi.model.ShopDetailUpDataModel;
 import com.yingshixiezuovip.yingshi.utils.DefaultItemTouchHelpCallback;
 import com.yingshixiezuovip.yingshi.utils.DefaultItemTouchHelper;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
@@ -44,14 +45,14 @@ import rx.functions.Action1;
  * 修改人: sht
  * 修改备注:
  */
-public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements SelectImgsAdapter.Callback{
+public class HomeShopPublishDetialNextActivitiy extends BaseActivity implements SelectImgsAdapter.Callback {
     private static final int REQUEST_IMAGE = 1001;
     /**
      * 默认最多选择6张
      */
     int maxImg = 9;
     private RecyclerView recycleView;
-    String add="添加";
+    String add = "添加";
 
     ArrayList<String> mImgs;
 
@@ -61,6 +62,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
     private EditText et_note;
     private TextView tv_note;
 
+    ShopDetailUpDataModel shopDetailUpDataModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +73,32 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
         ((TextView) findViewById(R.id.right_btn_name)).setText("下一步");
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
         findViewById(R.id.right_btn_submit).setOnClickListener(this);
-        recycleView=(RecyclerView)findViewById(R.id.recycleView);
-        et_note=(EditText)findViewById(R.id.et_note);
-        tv_note=(TextView)findViewById(R.id.tv_note);
+        recycleView = (RecyclerView) findViewById(R.id.recycleView);
+        et_note = (EditText) findViewById(R.id.et_note);
+        tv_note = (TextView) findViewById(R.id.tv_note);
         mImgs = new ArrayList<>();
-        mImgs.add(add);
-        adapter = new SelectImgsAdapter(mImgs,this);
+
+        if (!getIntent().getBooleanExtra("isFirst", true)) {
+            shopDetailUpDataModel = (ShopDetailUpDataModel) getIntent().getSerializableExtra("shopDetailUpDataModel");
+            List<ShopDetailUpDataModel.PhotoImageItem> msgList = shopDetailUpDataModel.data.photoList;
+            if (msgList.size() < 9) {
+                mImgs.add(add);
+            }
+            for (int i = 0; i < msgList.size(); i++) {
+                mImgs.add(msgList.get(i).photo);
+            }
+            et_note.setText(shopDetailUpDataModel.data.content);
+        } else {
+            mImgs.add(add);
+        }
+
+
+        adapter = new SelectImgsAdapter(mImgs, this);
         adapter.setCallback(this);
         helper = new DefaultItemTouchHelper(new DefaultItemTouchHelpCallback(onItemTouchCallbackListener));
         helper.attachToRecyclerView(recycleView);
-        recycleView.setLayoutManager(new GridLayoutManager(this,3));
-        recycleView.addItemDecoration(new SpaceItemDecoration(3,11,false));
+        recycleView.setLayoutManager(new GridLayoutManager(this, 3));
+        recycleView.addItemDecoration(new SpaceItemDecoration(3, 11, false));
         recycleView.setAdapter(adapter);
 
         et_note.addTextChangedListener(new TextWatcher() {
@@ -92,7 +109,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tv_note.setText(s.length()+"/1000");
+                tv_note.setText(s.length() + "/1000");
             }
 
             @Override
@@ -100,12 +117,13 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
 
             }
         });
+
     }
 
     @Override
     protected void onSingleClick(View v) {
         super.onSingleClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.right_btn_submit:
                 checkDate();
                 break;
@@ -113,28 +131,33 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
     }
 
     private void checkDate() {
-        if(TextUtils.isEmpty(et_note.getText().toString())){
+        if (TextUtils.isEmpty(et_note.getText().toString())) {
             showMessage("请输入您的商品介绍");
             return;
         }
-        if(mImgs.size()<=1){
+        if (mImgs.size() <= 1) {
             showMessage("请选择图片");
             return;
         }
-        Intent it=new Intent(this,HomeShopPublishDetailEndActivity.class);
-        it.putExtra("title",getIntent().getStringExtra("title"));
-        it.putExtra("singleprice",getIntent().getStringExtra("singleprice"));
-        it.putExtra("num",getIntent().getStringExtra("num"));
-        it.putExtra("new",getIntent().getStringExtra("new"));
-        it.putExtra("phone",getIntent().getStringExtra("phone"));
-        it.putExtra("area",getIntent().getStringExtra("area"));
-        it.putExtra("areadetail",getIntent().getStringExtra("areadetail"));
-        it.putExtra("type",getIntent().getStringExtra("type"));
-        it.putExtra("content",et_note.getText().toString());
+        Intent it = new Intent(this, HomeShopPublishDetailEndActivity.class);
+        it.putExtra("title", getIntent().getStringExtra("title"));
+        it.putExtra("singleprice", getIntent().getStringExtra("singleprice"));
+        it.putExtra("num", getIntent().getStringExtra("num"));
+        it.putExtra("new", getIntent().getStringExtra("new"));
+        it.putExtra("phone", getIntent().getStringExtra("phone"));
+        it.putExtra("area", getIntent().getStringExtra("area"));
+        it.putExtra("areadetail", getIntent().getStringExtra("areadetail"));
+        it.putExtra("type", getIntent().getStringExtra("type"));
+        it.putExtra("content", et_note.getText().toString());
         it.putStringArrayListExtra("infoList", mImgs);
+        //========
+        it.putExtra("isFirst", getIntent().getBooleanExtra("isFirst", true));
+        if (!getIntent().getBooleanExtra("isFirst", true))
+            it.putExtra("shopDetailUpDataModel", shopDetailUpDataModel);
         startActivity(it);
 //        loadData();
     }
+
     private DefaultItemTouchHelpCallback.OnItemTouchCallbackListener onItemTouchCallbackListener = new DefaultItemTouchHelpCallback.OnItemTouchCallbackListener() {
         @Override
         public void onSwiped(int adapterPosition) {
@@ -149,7 +172,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
         public boolean onMove(int srcPosition, int targetPosition) {
             //除了+按钮不允许移动
             if (mImgs != null) {
-                if(!mImgs.get(targetPosition).equals(add)) {
+                if (!mImgs.get(targetPosition).equals(add)) {
                     // 更换数据源中的数据Item的位置
                     Collections.swap(mImgs, srcPosition, targetPosition);
                     // 更新UI中的Item的位置，主要是给用户看到交互效果
@@ -195,33 +218,35 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
 
                 mImgs.remove(position);
                 adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeChanged(0,mImgs.size());
+                adapter.notifyItemRangeChanged(0, mImgs.size());
                 isNeedShowAdd();
             }
         }).show();
     }
 
-    public void addImgs(String img){
+    public void addImgs(String img) {
         /**添加的图片需要在+之前**/
-        int index = mImgs.size()-1;
-        mImgs.add(index,img);
+        int index = mImgs.size() - 1;
+        mImgs.add(index, img);
         adapter.notifyDataSetChanged();
         isNeedShowAdd();
     }
 
-    /**是否显示添加图片的按钮**/
-    void isNeedShowAdd(){
+    /**
+     * 是否显示添加图片的按钮
+     **/
+    void isNeedShowAdd() {
         /**满足6张图片则隐藏+**/
-        if(mImgs.size() > maxImg)
-            mImgs.remove(mImgs.size() -1);
-        else if(!mImgs.contains(add))
+        if (mImgs.size() > maxImg)
+            mImgs.remove(mImgs.size() - 1);
+        else if (!mImgs.contains(add))
             mImgs.add(add);
         showUrl();
     }
 
-    public List<String> getImgs(){
+    public List<String> getImgs() {
         /**移除添加文字**/
-        if(mImgs != null)
+        if (mImgs != null)
             mImgs.remove(add);
         return mImgs;
     }
@@ -238,7 +263,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
                         // whether show camera
                         intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, granted);
                         // max select image amount
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, (9-(mImgs.size()-1)));
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, (9 - (mImgs.size() - 1)));
                         // select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
                         intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
                         startActivityForResult(intent, REQUEST_IMAGE);
@@ -249,10 +274,10 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE){
-            if(resultCode == RESULT_OK){
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == RESULT_OK) {
                 List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                for (int i=0;i<path.size();i++){
+                for (int i = 0; i < path.size(); i++) {
                     addImgs(path.get(i));
                 }
 
@@ -260,7 +285,9 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
         }
     }
 
-    /**GridView间距**/
+    /**
+     * GridView间距
+     **/
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spanCount;
@@ -269,7 +296,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
 
         public SpaceItemDecoration(int spanCount, int spacing, boolean includeEdge) {
             this.spanCount = spanCount;
-            this.spacing = SystemUtil.dpToPx(HomeShopPublishDetialNextActivitiy.this,spacing);
+            this.spacing = SystemUtil.dpToPx(HomeShopPublishDetialNextActivitiy.this, spacing);
             this.includeEdge = includeEdge;
         }
 
@@ -300,7 +327,7 @@ public  class HomeShopPublishDetialNextActivitiy extends BaseActivity implements
     /**
      * 打印路劲
      */
-    void showUrl(){
+    void showUrl() {
         int count = mImgs.size();
   /*      tvUrl.setText("");
         for (int i=0;i<count;i++){

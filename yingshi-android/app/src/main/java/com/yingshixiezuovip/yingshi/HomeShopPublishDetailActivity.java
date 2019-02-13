@@ -13,6 +13,8 @@ import com.yingshixiezuovip.yingshi.custom.SelectWindow;
 import com.yingshixiezuovip.yingshi.datautils.HttpUtils;
 import com.yingshixiezuovip.yingshi.datautils.TaskType;
 import com.yingshixiezuovip.yingshi.model.PlaceModel;
+import com.yingshixiezuovip.yingshi.model.ShopDetailTypeModel;
+import com.yingshixiezuovip.yingshi.model.ShopDetailUpDataModel;
 import com.yingshixiezuovip.yingshi.utils.EventUtils;
 import com.yingshixiezuovip.yingshi.utils.GsonUtil;
 
@@ -29,25 +31,29 @@ import java.util.HashMap;
  * 修改备注:
  */
 public class HomeShopPublishDetailActivity extends BaseActivity {
-    private EditText et_title,et_single_price,et_num,et_type,et_phone,et_area_detail;
-    private TextView tv_new,tv_area;
+    private EditText et_title,et_single_price,et_num,et_type;
+    private TextView tv_new,tv_area,et_area_detail,et_phone;
     private SelectWindow mCitySelectWindow,mNewOldWindow;
     private PlaceModel mPlaceModel;
+    private boolean isFirst=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_shop_publish);
         pushActivity(this);
+        isFirst=getIntent().getBooleanExtra("isfirst",true);
         et_title=(EditText) findViewById(R.id.et_title);
         et_single_price=(EditText)findViewById(R.id.et_single_price);
         et_num=(EditText)findViewById(R.id.et_num);
         tv_new=(TextView)findViewById(R.id.tv_new);
         tv_new.setOnClickListener(this);
         et_type=(EditText)findViewById(R.id.et_type);
-        et_phone=(EditText)findViewById(R.id.et_phone);
+        et_phone=(TextView)findViewById(R.id.et_phone);
+        et_phone.setOnClickListener(this);
         tv_area=(TextView)findViewById(R.id.tv_area);
         tv_area.setOnClickListener(this);
-        et_area_detail=(EditText)findViewById(R.id.et_area_detail);
+        et_area_detail=(TextView)findViewById(R.id.et_area_detail);
+        et_area_detail.setOnClickListener(this);
         setActivityTitle("发布页(1/3)");
         ((TextView) findViewById(R.id.right_btn_name)).setText("下一步");
         findViewById(R.id.right_btn_submit).setVisibility(View.VISIBLE);
@@ -67,7 +73,17 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
                 tv_new.setText(selectContent);
             }
         });
-     initView();
+//     initView();
+     if(!isFirst){
+         getDate();
+     }
+    }
+
+    private void getDate() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", mUserInfo.token);
+        params.put("id", getIntent().getStringExtra("id"));
+        HttpUtils.doPost(TaskType.TASK_SHOP_DETAIL_DATE, params, this);
     }
 
     private void initView() {
@@ -84,17 +100,33 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
                 mNewOldWindow.show(1,"");
                 break;
             case R.id.tv_area:
-                if (mPlaceModel == null || mPlaceModel.data == null || mPlaceModel.data.size() == 0) {
+              /*  if (mPlaceModel == null || mPlaceModel.data == null || mPlaceModel.data.size() == 0) {
                     showMessage("城市数据获取失败，请稍后重试");
                     return;
                 }
-                mCitySelectWindow.show(mPlaceModel, "请选择地区");
-
+                mCitySelectWindow.show(mPlaceModel, "请选择地区");*/
+            case R.id.et_area_detail:
+            case R.id.et_phone:
+                Intent addAddress=new Intent(this,
+                        UserAddressListActivity.class);
+                addAddress.putExtra("type",1);
+                startActivityForResult(addAddress,110);
                 break;
             case R.id.right_btn_submit:
                 checkDate();
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK) {
+            tv_area.setText(data.getStringExtra("city"));
+            et_area_detail.setText(data.getStringExtra("address"));
+            et_phone.setText(data.getStringExtra("telphone"));
+        }
+
     }
 
     private void checkDate() {
@@ -135,9 +167,12 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
         it.putExtra("area",tv_area.getText().toString());
         it.putExtra("areadetail",et_area_detail.getText().toString());
         it.putExtra("type",et_type.getText().toString());
+        //========
+        it.putExtra("isFirst",isFirst);
+        it.putExtra("shopDetailUpDataModel",shopDetailUpDataModel);
         startActivity(it);
     }
-
+    ShopDetailUpDataModel shopDetailUpDataModel;
     @Override
     public void taskFinished(TaskType type, Object result, boolean isHistory) {
         if (result instanceof Throwable) {
@@ -157,6 +192,16 @@ public class HomeShopPublishDetailActivity extends BaseActivity {
                     mPlaceModel = null;
                     showMessage("城市数据获取失败，请稍后重试");
                 }
+                break;
+            case TASK_SHOP_DETAIL_DATE:
+                shopDetailUpDataModel= GsonUtil.fromJson(result.toString(), ShopDetailUpDataModel.class);
+                et_title.setText(shopDetailUpDataModel.data.title);
+                et_single_price.setText(shopDetailUpDataModel.data.price);
+                et_num.setText(shopDetailUpDataModel.data.num);
+                tv_new.setText(shopDetailUpDataModel.data.isnew);
+                et_phone.setText(shopDetailUpDataModel.data.constans);
+                tv_area.setText(shopDetailUpDataModel.data.city);
+                et_area_detail.setText(shopDetailUpDataModel.data.address);
                 break;
         }
     }

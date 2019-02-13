@@ -77,6 +77,8 @@ public class MainAuthenticationMoneyActivity extends BaseActivity {
             ((TextView) findViewById(R.id.authmoney_tv_money)).setText(Configs.AUTH_MONEY + "元");
             ((TextView) findViewById(R.id.authmoney_tv_title)).setText("你需要缴纳的认证年费");
         } else {
+            findViewById(R.id.authmoney_btn_wechat).setVisibility(View.GONE);
+            findViewById(R.id.authmoney_btn_alipay).setVisibility(View.GONE);
             setActivityTitle("提交订单");
             ((TextView) findViewById(R.id.authmoney_tv_money)).setText(mBuyerItem.total + "元");
             ((TextView) findViewById(R.id.authmoney_tv_title)).setText("此次交易您需要支付");
@@ -156,14 +158,14 @@ public class MainAuthenticationMoneyActivity extends BaseActivity {
             return;
         }
         mLoadWindow.show(R.string.waiting);
-        if (isWecahtPay) {
+//        if (isWecahtPay) {
             HashMap<String, Object> orderParams = new HashMap<>();
             orderParams.put("token", mUserInfo.token);
             orderParams.put("flowingorderno", mOrderObjectInfo.optString("flowingorderno"));
-            HttpUtils.doPost(TaskType.TASK_TYPE_QRY_ORDER_PAYINFO_WHIT_WECHAT, orderParams, this);
-        } else {
+            HttpUtils.doPost(TaskType.TASK_KJ_PAY, orderParams, this);
+      /*  } else {
             doAlipay(mOrderObjectInfo);
-        }
+        }*/
     }
 
     private void doGetOrderInfo() {
@@ -304,7 +306,6 @@ public class MainAuthenticationMoneyActivity extends BaseActivity {
             case TASK_TYPE_QRY_PAY_ORDER_WECHAT:
             case TASK_TYPE_QRY_PAY_ORDER_ALIPAY:
             case TASK_TYPE_COMPANY_PAY_BY_ALIPAY:
-            case TASK_TYPE_QRY_ORDER_PAYINFO_WHIT_WECHAT:
             case TASK_TYPE_COMPANY_PAY_BY_WECHAT:
             case TASK_TYPE_USERINFO_PAY_BY_WECHAT:
             case TASK_TYPE_USERINFO_PAY_BY_ALIPAY:
@@ -333,6 +334,24 @@ public class MainAuthenticationMoneyActivity extends BaseActivity {
                     }
                     closeLoadLayout();
                 } else {
+                    showMessage("支付订单获取失败，请稍后重试");
+                }
+                break;
+            case TASK_KJ_PAY:
+                System.out.println("支付参数:"+result.toString());
+                if (((JSONObject) result).has("data")) {
+                    mLoadWindow.cancel();
+                    String url= ((JSONObject) result).optJSONObject("data").optString("url");
+                    Intent it=new Intent(this,PayWebActivity.class);
+                    it.putExtra("url",url);
+                    startActivity(it);
+                 /*   if (isWecahtPay) {
+                        doWXPay(((JSONObject) result).optJSONObject("data"));
+                    } else {
+                        doAlipay(((JSONObject) result).optJSONObject("data"));
+                    }*/
+                } else {
+                    mLoadWindow.cancel();
                     showMessage("支付订单获取失败，请稍后重试");
                 }
                 break;

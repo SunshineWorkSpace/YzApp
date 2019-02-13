@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_exchange_white_cicle"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="作品职位"
+            android:textColor="#82c5ca"
+            android:textSize="@dimen/dimen_sp_16"
+            />
+        <EditText
+            android:id="@+id/et_position"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/gray_pressed"
+            android:textSize="14sp"
+            android:hint="请描述您在此作品中的职位，可以领取到你的作品集中，限制10个字以内..."
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f2f2f2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:background="@drawable/bg_left_down_cirle"
+            android:layout_weight="1"
+            android:id="@+id/tv_clean"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="取消"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/dimen_sp_14" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#f2f2f2" />
+
+        <TextView
+            android:background="@drawable/bg_right_down_circle"
+            android:layout_weight="1"
+            android:id="@+id/tv_yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="确定"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/dimen_sp_14" />
+    </LinearLayout>
+
+</LinearLayout>
